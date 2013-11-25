@@ -1,7 +1,8 @@
 *.class
+
 target
 *.log
-logs
+
 .classpath
 .settings
 .project
@@ -11,4 +12,5 @@ logs
 # Package Files #
 *.jar
 *.war
+
 *.ear
