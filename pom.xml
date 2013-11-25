@@ -1,5 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>evanq.game</groupId>
@@ -37,9 +37,28 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	
+	
+  <dependencyManagement>
+  	<dependencies>
+  		<dependency>
+  		  <groupId>evanq.game</groupId>
+		  <artifactId>game-net-api</artifactId>
+		  <version>${project.version}</version>
+  		</dependency>
+  		<dependency>
+  		  <groupId>evanq.game</groupId>
+		  <artifactId>game-net-netty</artifactId>
+		  <version>${project.version}</version>
+  		</dependency>
+  	</dependencies>
+  	
+  </dependencyManagement>
+  
 	<modules>
 		<module>game-net-api</module>
 		<module>game-rpg</module>
 		<module>game-helper</module>
-	</modules>
+    	<module>game-net-netty</module>
+  </modules>
 </project>

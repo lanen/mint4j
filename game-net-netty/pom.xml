@@ -8,13 +8,14 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>evanq.game</groupId>
-  <artifactId>game-net-api</artifactId>
+  <artifactId>game-net-netty</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>game-net-api</name>
+  <name>game-net-netty</name>
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
+  
   <dependencies>
     <dependency>
       <groupId>junit</groupId>
@@ -22,33 +23,11 @@
       <version>3.8.1</version>
       <scope>test</scope>
     </dependency>
-  </dependencies>
-  
-	<build>
-		<plugins>
-			<plugin>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<version>1.7</version>
-				<executions>
-					<execution>
-						<phase>package</phase>
-						<configuration>
-							<target>
-								<!-- Place any Ant task here. You can add anything you can add between 
-									<target> and </target> in a build.xml. -->
-					          <tasks>
-					            <echo>Removing evanq/game/net/impl class</echo>
-					            <delete dir="target/classes/evanq/game/net/impl"/>
-					          </tasks>
-							</target>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
-	</build>
     
+    <dependency>
+      <groupId>evanq.game</groupId>
+      <artifactId>game-net-api</artifactId>
+      <version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
 </project>

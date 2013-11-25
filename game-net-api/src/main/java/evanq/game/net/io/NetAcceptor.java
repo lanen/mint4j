@@ -1,6 +1,5 @@
 package evanq.game.net.io;
 
-import evanq.game.net.INetHandler;
 import evanq.game.net.INetInterface;
 
 /**
@@ -9,7 +8,7 @@ import evanq.game.net.INetInterface;
  *
  * @param <H>
  */
-public class NetAcceptor<H extends INetHandler> implements INetInterface {
+public class NetAcceptor implements INetInterface {
 
 	public int open() {
 		return 0;

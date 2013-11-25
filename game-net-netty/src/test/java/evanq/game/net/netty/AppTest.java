@@ -1,4 +1,4 @@
-package evanq.game.net;
+package evanq.game.net.netty;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -10,9 +10,6 @@ import junit.framework.TestSuite;
 public class AppTest 
     extends TestCase
 {
-	
-	static INetInterface ni = NetInterfaceFactory.getNetInterface("");
-	
     /**
      * Create the test case
      *

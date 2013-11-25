@@ -1,9 +1,8 @@
 package evanq.game.net.io;
 
-import evanq.game.net.INetHandler;
 import evanq.game.net.INetInterface;
 
-public class NetConnector<H extends INetHandler> implements INetInterface {
+public class NetConnector implements INetInterface {
 
 	public int open() {
 		// TODO Auto-generated method stub
