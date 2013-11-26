@@ -33,6 +33,14 @@ public class Registry<K, V> {
 		registryMap.clear();
 	}
 	
+	public int size(){
+		return registryMap.size();
+	}
+	
+	public boolean isEmpty(){
+		return registryMap.isEmpty();
+	}
+	
 	public static <K, V> Registry<K, V> getThreadContextInstance() {
 		Registry<K, V> pr = (Registry<K, V>)inheritableThreadLocal.get();
 		if (pr == null) {

@@ -12,6 +12,7 @@ public class AbstractNetInterface implements INetInterface {
 	@Override
 	public int open() {
 		System.out.println("open");
+		//
 		return 0;
 	}
 

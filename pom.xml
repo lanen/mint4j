@@ -60,5 +60,6 @@
 		<module>game-rpg</module>
 		<module>game-helper</module>
     	<module>game-net-netty</module>
+    <module>game-client</module>
   </modules>
 </project>
