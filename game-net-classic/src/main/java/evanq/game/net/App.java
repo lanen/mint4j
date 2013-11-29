@@ -1,4 +1,4 @@
-package evanq.game.rpg;
+package evanq.game.net;
 
 /**
  * Hello world!

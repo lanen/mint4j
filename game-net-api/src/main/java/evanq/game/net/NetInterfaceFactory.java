@@ -21,14 +21,10 @@ public final class NetInterfaceFactory {
 	static final String BIND_UNSUCCESS_MSG = "无法绑定 [evanq.game.net.INetInterface] 的实现";
 	
 	
-	static public INetInterface getNetInterface(String name){
+	static public INetInterface getNetInterface(INetOption optional){
 		INetInterfaceFactory iNetInterfaceFactory = getINetInterfaceFactory();
 	
-		return 	iNetInterfaceFactory.getNetInterface(name);
-	}
-	
-	static public INetInterface getNetInterface(Class<?> clazz){
-		return getNetInterface(clazz.getName());
+		return 	iNetInterfaceFactory.getNetInterface(optional);
 	}
 	
 	//静态绑定的状态

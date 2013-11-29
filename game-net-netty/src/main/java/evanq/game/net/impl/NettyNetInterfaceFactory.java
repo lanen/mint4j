@@ -3,9 +3,9 @@ package evanq.game.net.impl;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
-import evanq.game.net.AbstractNetInterface;
 import evanq.game.net.INetInterface;
 import evanq.game.net.INetInterfaceFactory;
+import evanq.game.net.INetOption;
 
 /**
  * 
@@ -14,28 +14,25 @@ import evanq.game.net.INetInterfaceFactory;
  */
 public class NettyNetInterfaceFactory implements INetInterfaceFactory {
 	
-	ConcurrentMap<String, INetInterface> mapping;
+	ConcurrentMap<INetOption, INetInterface> mapping;
 	
 	public NettyNetInterfaceFactory(){
-		mapping = new ConcurrentHashMap<String, INetInterface>();
+		mapping = new ConcurrentHashMap<INetOption, INetInterface>();
 	}
 	
 	@Override
-	public INetInterface getNetInterface(String name) {
+	public INetInterface getNetInterface(INetOption optional) {
 		
-		INetInterface iNetInterface = mapping.get(name);
+		INetInterface iNetInterface = mapping.get(optional);
 		if(null != iNetInterface){
 		
 			return iNetInterface;
 		}else{
-			if("agent".equals(name)){
-				iNetInterface = new AbstractNetInterface();
-			}
-			mapping.put(name, iNetInterface);
-			return iNetInterface;
+			
+			//在这里进行具体的初始化
+			
+			return null;
 		}
-		
 	}
-
 
 }

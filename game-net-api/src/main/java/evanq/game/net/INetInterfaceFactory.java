@@ -10,6 +10,6 @@ public interface INetInterfaceFactory {
 	 * @param name
 	 * @return
 	 */
-	public INetInterface getNetInterface(String name);
+	public INetInterface getNetInterface(INetOption optional);
 	
 }

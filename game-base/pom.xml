@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>evanq.game</groupId>
+    <artifactId>wrapper</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+  <groupId>evanq.game</groupId>
+  <artifactId>game-base</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <name>game-base</name>
+  <url>http://maven.apache.org</url>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+    	<groupId>evanq.game</groupId>
+    	<artifactId>game-helper</artifactId>
+    	<version>0.0.1-SNAPSHOT</version>
+    </dependency>
+  </dependencies>
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<configuration>
+							<target>
+								<!-- Place any Ant task here. You can add anything you can add between 
+									<target> and </target> in a build.xml. -->
+					          <tasks>
+					            <echo>Removing evanq/game/net/impl class</echo>
+					            <delete dir="target/classes/evanq/game/impl"/>
+					          </tasks>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+  
+	<description>根据业务涉及model与 引擎</description>
+</project>

@@ -1,4 +1,4 @@
-package evanq.game.rpg;
+package evanq.game.loader;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
