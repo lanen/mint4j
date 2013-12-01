@@ -1,15 +1,14 @@
 package evanq.game.impl;
 
-import evanq.game.design_traits.IEngine;
-import evanq.game.module.IModule;
-import evanq.game.module.IModuleware;
+import evanq.game.facade.IRoleFacade;
 
 /**
  * 
  * @author Evan cppmain@gmail.com
  *
  */
-public class RoleEngine implements IModuleware, IEngine {
+public class RoleEngine implements IRoleFacade {
+
 
 	private static class Singleton {
 		public static RoleEngine INSTANCE = new RoleEngine();
@@ -23,12 +22,20 @@ public class RoleEngine implements IModuleware, IEngine {
 	}
 
 	@Override
-	public IModule getModule() {
-		return null;
+	public void createRole() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void setModule(IModule m) {
+	public void selectRole() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteRole() {
+		// TODO Auto-generated method stub
 		
 	}
 	
