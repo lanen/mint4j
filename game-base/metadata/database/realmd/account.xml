@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table name="account">
+
+	<desc>
+		<!-- 分区的id -->
+		<column name="id" type="int" default=""></column>
+		
+		<!-- 账号 -->
+		<column name="username" type="varchar" default=""></column>
+		
+		<!-- 密码 -->
+		<column name="passwd_sha" type="varchar" default=""></column>
+		
+		<!-- Game Manager Level  -->
+		<column name="gmLevel" type="tinyint unsigned" default=""></column>
+		
+		<!-- Session Key -->
+		<column name="sessionkey" type="longtext" default=""></column>
+		
+		<!-- 留待解答 -->
+		<column name="s" type="longtext" default=""></column>
+		
+		<!-- 留待解答 -->
+		<column name="v" type="longtext" default=""></column>
+		
+		<!-- E-mail -->
+		<column name="email" type="text" default=""></column>
+		
+		<!-- locale -->
+		<column name="locale" type="tinyint unsigned" default=""></column>
+		
+		<!-- 账号创建事件 -->
+		<column name="createdate" type="timestamp" default=""></column>
+		
+		<!-- 最进一次登录 -->
+		<column name="lastip" type="varchar" default=""></column>
+		
+		<!-- 最近一次登录时间 -->
+		<column name="lastlogindate" type="timestamp" default=""></column>
+		
+		<!-- 失败登录次数 -->
+		<column name="failed_login" type="tinyint unsigned" default=""></column>
+		
+		<!-- 解锁时间 -->
+		<column name="mutetime" type="bigint" default=""></column>
+		
+		<!-- 锁住状态 -->
+		<column name="locked" type="tinyint unsigned" default=""></column>
+		
+
+	</desc>
+</table>

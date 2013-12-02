@@ -64,5 +64,6 @@
     <module>game-loader</module>
     <module>game-net-classic</module>
     <module>game-base</module>
+    <module>game-webapp</module>
   </modules>
 </project>

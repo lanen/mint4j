@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table name="uptime">
+
+	<desc>
+		<!-- 分区的id -->
+		<column name="realmid" type="int" default=""></column>
+		
+		<!-- 启动时间 -->
+		<column name="starttime" type="bigint unsigned" default=""></column>
+		
+		<!-- 留待探索 -->
+		<column name="uptime" type="bigint unsigned" default=""></column>
+		
+		<!-- 最高玩家在线 -->
+		<column name="maxplayers" type="smallint" default=""></column>
+		
+	</desc>
+</table>

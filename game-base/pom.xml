@@ -31,20 +31,41 @@
 	<build>
 		<plugins>
 			<plugin>
+				<dependencies>
+				  <dependency>
+                            <groupId>ant-contrib</groupId>
+                            <artifactId>ant-contrib</artifactId>
+                            <version>1.0b3</version>
+                            <exclusions>
+                                <exclusion>
+                                    <groupId>ant</groupId>
+                                    <artifactId>ant</artifactId>
+                                </exclusion>
+                            </exclusions>
+                        </dependency>
+                        <dependency>
+                            <groupId>org.apache.ant</groupId>
+                            <artifactId>ant-nodeps</artifactId>
+                            <version>1.8.1</version>
+                        </dependency>
+				</dependencies>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<version>1.7</version>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>prepare-package</phase>
 						<configuration>
-							<target>
-								<!-- Place any Ant task here. You can add anything you can add between 
-									<target> and </target> in a build.xml. -->
-					          <tasks>
-					            <echo>Removing evanq/game/net/impl class</echo>
-					            <delete dir="target/classes/evanq/game/impl"/>
-					          </tasks>
-							</target>
+							<project name="game-net-api" default="removeClass">
+								<taskdef resource="net/sf/antcontrib/antcontrib.properties" classpath="maven.plugin.classpath" />
+								<target name="removeClass"  >
+									<!-- Place any Ant task here. You can add anything you can add between 
+										<target> and </target> in a build.xml. 
+										-->
+						            <echo>Removing evanq/game/net/impl class</echo>
+						            <delete dir="target/classes/evanq/game/impl" />
+						       
+								</target>
+							</project>
 						</configuration>
 						<goals>
 							<goal>run</goal>

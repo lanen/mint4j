@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<table name="realmlist">
+
+	<desc>
+		<!-- 分区的id -->
+		<column name="id" type="int" default=""></column>
+		
+		<!-- 分区名字 -->
+		<column name="name" type="varchar" default=""></column>
+		
+		<!-- 服务器地址 -->
+		<column name="host" type="varchar" default=""></column>
+		
+		<!-- 服务器端口 -->
+		<column name="post" type="int" default=""></column>
+		
+		<!-- 服务器标示 -->
+		<column name="reamldflags" type="tinyint" default=""></column>
+		
+		<!-- 服务器构建版本 -->
+		<column name="reamldbuilds" type="tinyint" default=""></column>
+		
+		<!-- 服务器图标 -->
+		<column name="icon" type="tinyint" default=""></column>
+		
+	</desc>
+</table>
