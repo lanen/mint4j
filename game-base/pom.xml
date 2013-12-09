@@ -61,8 +61,8 @@
 									<!-- Place any Ant task here. You can add anything you can add between 
 										<target> and </target> in a build.xml. 
 										-->
-						            <echo>Removing evanq/game/net/impl class</echo>
-						            <delete dir="target/classes/evanq/game/impl" />
+						            <echo>Removing game/module/rpg/impl class</echo>
+						            <delete dir="target/classes/evanq/game/module/rpg/impl" />
 						       
 								</target>
 							</project>
