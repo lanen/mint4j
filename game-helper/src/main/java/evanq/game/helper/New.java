@@ -6,6 +6,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * 
@@ -96,4 +98,12 @@ public class New {
         return new Registry<K,V>();
     }
     
+    
+    /**
+     * Creates a new fastest {@link ConcurrentMap} implementaion for the current platform.
+     */
+    public static <K, V> ConcurrentMap<K, V> newConcurrentHashMap() {
+    	return new ConcurrentHashMap<K, V>();
+    }
+
 }
