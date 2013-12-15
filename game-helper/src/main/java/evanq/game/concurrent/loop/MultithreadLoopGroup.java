@@ -24,11 +24,12 @@ public abstract class MultithreadLoopGroup extends
     private static final int DEFAULT_EVENT_LOOP_THREADS;
 
     static {
+    	//线程池默认线程数
         DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
-                "io.netty.eventLoopThreads", Runtime.getRuntime().availableProcessors() * 2));
+                "pool.thread.defaultSize", Runtime.getRuntime().availableProcessors() * 2));
 
         if (logger.isDebugEnabled()) {
-            logger.debug("-Dio.netty.eventLoopThreads: {}", DEFAULT_EVENT_LOOP_THREADS);
+            logger.debug("-Dpool.thread.defaultSize: {}", DEFAULT_EVENT_LOOP_THREADS);
         }
     }
 
@@ -53,4 +54,11 @@ public abstract class MultithreadLoopGroup extends
 	public ITaskFuture register(ITask task) {
 		return next().register(task);
 	}
+
+	@Override
+	public ITaskFuture register(ITask task, long nanaTime, long period) {
+		return next().register(task,nanaTime,period);
+	}
+	
+	
 }

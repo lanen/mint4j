@@ -6,7 +6,7 @@ import java.util.concurrent.Delayed;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 
-class ScheduledFutureTask<V> extends PromiseTask<V> implements
+public class ScheduledFutureTask<V> extends PromiseTask<V> implements
 		ScheduledFuture<V> {
 	
 	//
@@ -127,6 +127,7 @@ class ScheduledFutureTask<V> extends PromiseTask<V> implements
 					if (!executor().isShutdown()) {
 						long p = periodNanos;
 						if (p > 0) {
+							//在指定时间后面开始
 							deadlineNanos += p;
 						} else {
 							//p < 0 ,当前时间+Math.abs(p)

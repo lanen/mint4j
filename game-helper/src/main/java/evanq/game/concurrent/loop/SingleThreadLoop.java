@@ -3,6 +3,7 @@ package evanq.game.concurrent.loop;
 import java.util.concurrent.ThreadFactory;
 
 import evanq.game.concurrent.EventExecutorGroup;
+import evanq.game.concurrent.ScheduledFuture;
 import evanq.game.concurrent.SingleThreadEventExecutor;
 
 /**
@@ -37,11 +38,19 @@ public abstract class SingleThreadLoop extends SingleThreadEventExecutor
 		if (task == null) {
 			throw new NullPointerException("task");
 		}
+		return register(task,);
+	}
+
+	@Override
+	public ITaskFuture register(ITask task, long nanaTime, long period) {
 		
 		ITaskPromise newTaskPromise = task.newTaskPromise();
 		task.register(this, newTaskPromise);
-		return newTaskPromise;
+		
+		return null;
 	}
+	
+	
 	
 	
 }

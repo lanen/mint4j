@@ -22,6 +22,7 @@ public class DefaultLoopGroup extends MultithreadLoopGroup {
 	protected ILoop newChild(ThreadFactory threadFactory,
 			Object... args) throws Exception {
 		// TODO Auto-generated method stub
+		
 		return new DefaultLoop(this,threadFactory);
 	}
 

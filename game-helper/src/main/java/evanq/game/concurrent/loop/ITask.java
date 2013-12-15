@@ -1,5 +1,7 @@
 package evanq.game.concurrent.loop;
 
+import evanq.game.concurrent.ScheduledFutureTask;
+
 /**
  * 
  * 提交给线程执行的任务
@@ -27,8 +29,6 @@ public interface ITask {
 	 * @return
 	 */
 	public ILoop currentLoop();
-	
-	
 	
 	/**
 	 * Return <i>true</i> if this task is register to a loop

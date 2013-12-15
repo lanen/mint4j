@@ -6,6 +6,8 @@ import java.util.concurrent.ThreadFactory;
 import evanq.game.concurrent.EventExecutorGroup;
 
 /**
+ * 
+ * 
  * @author Evan cppmain@gmail.com
  * 
  */
@@ -17,8 +19,8 @@ public class DefaultLoop extends SingleThreadLoop {
 
 	@Override
 	public List<Runnable> shutdownNow() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException(
+				"DefaultLoop.shutdownNow()");
 	}
 
 	@Override
@@ -28,7 +30,7 @@ public class DefaultLoop extends SingleThreadLoop {
 			if (task != null) {
 				System.out.println("Running Task");
 				task.run();
-				updateLastExecutionTime();
+				updateLastExecutionTime();			
 			}
 
 			if (confirmShutdown()) {

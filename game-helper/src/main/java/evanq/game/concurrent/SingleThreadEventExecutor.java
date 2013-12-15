@@ -113,6 +113,7 @@ public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
 				boolean success = false;
 				updateLastExecutionTime();
 				try {
+					//具体的业务在这里执行。
 					SingleThreadEventExecutor.this.run();
 					success = true;
 				} catch (Throwable t) {
@@ -241,6 +242,7 @@ public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
 				long delayNanos = delayedTask.delayNanos();
 				Runnable task = null;
 				if (delayNanos > 0) {
+					//没有延迟执行的任务。
 					try {
 						task = taskQueue.poll(delayNanos, TimeUnit.NANOSECONDS);
 					} catch (InterruptedException e) {
@@ -633,6 +635,7 @@ public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
 	}
 
 	/**
+	 * 确认关闭前，
 	 * Confirm that the shutdown if the instance should be done now!
 	 */
 	protected boolean confirmShutdown() {
@@ -888,6 +891,7 @@ public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
 		@Override
 		public void run() {
 			Iterator<ScheduledFutureTask<?>> i = delayedTaskQueue.iterator();
+			System.out.println("PurgeTask");
 			while (i.hasNext()) {
 				ScheduledFutureTask<?> task = i.next();
 				if (task.isCancelled()) {
