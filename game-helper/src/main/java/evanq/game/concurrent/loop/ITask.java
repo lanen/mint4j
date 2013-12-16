@@ -1,6 +1,5 @@
 package evanq.game.concurrent.loop;
 
-import evanq.game.concurrent.ScheduledFutureTask;
 
 /**
  * 
@@ -30,12 +29,24 @@ public interface ITask {
 	 */
 	public ILoop currentLoop();
 	
+	ITask parent();
+	
+	ITaskWorkFlow workflow();
+	
 	/**
-	 * Return <i>true</i> if this task is register to a loop
-	 * otherwise <i>false</i>
+	 * 当前任务被注册到线程队列中
 	 * @return
 	 */
-	public boolean isRegistered();
+	boolean isRegistered();
+	
+	boolean isActived();
+	
+	boolean isOpen();
+	
+	boolean isDeActived();
+	
+	boolean isDeRegistered();
+	
 	
 	public void register(ILoop loop, ITaskPromise promise);
 	

@@ -26,18 +26,30 @@ public class DefaultLoop extends SingleThreadLoop {
 	@Override
 	protected void run() {
 		for (;;) {
+			
+			//if has task
+			//run task
+			//else perform movement.
 			Runnable task = takeTask();
 			if (task != null) {
 				System.out.println("Running Task");
 				task.run();
 				updateLastExecutionTime();			
-			}
-
+			}			
+			
+			强势插入();			
+			
 			if (confirmShutdown()) {
 				break;
 			}
 
 		}
+		
 	}
+	
+	void 强势插入(){
+	System.out.println("DefaultLoop.强势插入()");	
+	}
+
 
 }

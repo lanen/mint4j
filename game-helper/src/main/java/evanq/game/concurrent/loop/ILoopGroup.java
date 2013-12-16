@@ -25,16 +25,6 @@ public interface ILoopGroup extends EventExecutorGroup {
      * @param task
      * @return
      */
-    ITaskFuture register(ITask task);
-    
-    /**
-     * 注册 {@link ITask} 到 {@link ILoop} 事件循环中。
-     *  
-     * @param task
-     * @param nanaTime 开始执行的时间
-     * @param period 执行的间隔时间
-     * @return
-     */
-    ITaskFuture register(ITask task, long nanaTime,long period);
+    ITaskFuture register(ITask task);    
  
 }

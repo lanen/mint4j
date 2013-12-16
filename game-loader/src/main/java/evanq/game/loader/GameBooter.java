@@ -49,16 +49,75 @@ public class GameBooter {
 		
 	}
 	
-	static class SimpleTask extends AbstractTask implements Runnable {
+	static class SimpleTask extends AbstractTask  {
 
+		public SimpleTask() {
+			super(null);
+		}
 		@Override
-		public void run() {
-			System.out.println("GameBooter.SimpleTask.run()");
+		public boolean isActived() {
+			// TODO Auto-generated method stub
+			return false;
 		}
 
+		@Override
+		public boolean isOpen() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isDeActived() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public boolean isDeRegistered() {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		protected void doRegister() {
+			// TODO Auto-generated method stub
+			
+			
+			System.out.println("GameBooter.SimpleTask.doRegister()");
+		}
+
+		@Override
+		protected void doActive() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void doDeRegister() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void doDeActive() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void doOpen() {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		protected void run() {
+			// TODO Auto-generated method stub
+			System.out.println("GameBooter.SimpleTask.run()");
+		}
+		
 		
 	}
-	
 	
 	private static void testSingleThreadTask(){
 		

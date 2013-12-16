@@ -55,10 +55,4 @@ public abstract class MultithreadLoopGroup extends
 		return next().register(task);
 	}
 
-	@Override
-	public ITaskFuture register(ITask task, long nanaTime, long period) {
-		return next().register(task,nanaTime,period);
-	}
-	
-	
 }
