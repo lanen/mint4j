@@ -12,6 +12,8 @@ public abstract class AbstractTask implements ITask {
 //    private final VoidChannelPromise unsafeVoidPromise = new VoidChannelPromise(this, false);
 //    private final CloseFuture closeFuture = new CloseFuture(this);
 
+    
+    
     private ITask parent;
     
     private DefaultTaskWorkFlow workflow;
@@ -96,6 +98,11 @@ public abstract class AbstractTask implements ITask {
 	}
 	
 	
+	@Override
+	public void close(ILoop loop, ITaskPromise promise) {
+		
+	}
+
 	private void register0(ITaskPromise promise) {
 		try {
 			doRegister();

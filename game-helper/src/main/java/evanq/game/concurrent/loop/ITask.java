@@ -50,4 +50,6 @@ public interface ITask {
 	
 	public void register(ILoop loop, ITaskPromise promise);
 	
+	public void close(ILoop loop, ITaskPromise promise);
+	
 }

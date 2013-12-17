@@ -35,7 +35,8 @@ public class DefaultLoop extends SingleThreadLoop {
 				System.out.println("Running Task");
 				task.run();
 				updateLastExecutionTime();			
-			}			
+			}
+			
 			
 			强势插入();			
 			
