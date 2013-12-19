@@ -13,7 +13,6 @@ public abstract class AbstractTask implements ITask {
 //    private final CloseFuture closeFuture = new CloseFuture(this);
 
     
-    
     private ITask parent;
     
     private DefaultTaskWorkFlow workflow;
@@ -43,7 +42,7 @@ public abstract class AbstractTask implements ITask {
 
 	@Override
 	public ITaskWorkFlow workflow() {
-		return null;
+		return workflow;
 	}
 
 	protected abstract void doRegister();
@@ -52,13 +51,10 @@ public abstract class AbstractTask implements ITask {
 	protected abstract void doDeActive();
 	protected abstract void doOpen();
 	
-	
-	@Override
 	public boolean isRegistered() {
 		return registered;
 	}
 
-	protected abstract void run() ;
 	
 	@Override
 	public void register(ILoop loop, final ITaskPromise promise) {
@@ -97,11 +93,31 @@ public abstract class AbstractTask implements ITask {
          }
 	}
 	
+	protected abstract void doAccept(ICommand command);
 	
+	@Override
+	public void accept(final ICommand command) {
+		if (null == command) {
+			throw new NullPointerException("command");
+		}
+
+        if (eventLoop.inEventLoop()) {
+        	doAccept(command);
+        } else {
+        	eventLoop.execute(new Runnable() {
+        		@Override
+        		public void run() {
+        			doAccept(command);
+        		}
+        	}); 
+        }		
+	}
+
 	@Override
 	public void close(ILoop loop, ITaskPromise promise) {
 		
 	}
+	
 
 	private void register0(ITaskPromise promise) {
 		try {
@@ -109,9 +125,8 @@ public abstract class AbstractTask implements ITask {
 			registered = true;
 			promise.setSuccess();
 			workflow.fireRegistered();
-			if (isActived()) {
-				workflow.fireActived();
-			}
+			workflow.fireActived();
+			
 		} catch (Throwable t) {
 
 			if (!promise.tryFailure(t)) {

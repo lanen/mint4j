@@ -1,5 +1,5 @@
 package evanq.game.module.rpg;
 
-public interface ITaskFacade {
+public interface IItem {
 
 }

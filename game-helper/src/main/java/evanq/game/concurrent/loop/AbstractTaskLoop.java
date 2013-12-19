@@ -5,10 +5,9 @@ import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadFactory;
 
-import org.logicalcobwebs.concurrent.LinkedQueue;
-
 import evanq.game.concurrent.EventExecutorGroup;
 
+//理论还没有理清。可行性存在问题
 public abstract class AbstractTaskLoop extends SingleThreadLoop {
 	
 	private Queue<ITask> tasksInLooping;

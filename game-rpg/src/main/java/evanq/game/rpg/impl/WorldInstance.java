@@ -36,9 +36,14 @@ public class WorldInstance implements IWorldFacade, Runnable {
 		//游戏线程
 		Thread worldThread = new Thread(this,"world");
 		worldThread.start();
-
+		
+		SceneManager.getInstance();
+		
+		//统计任务
 		Thread t__ = new Thread(new WorldStats(), WORLD_STAT_THREAD_NAME);
 		t__.start();
+		
+		
 	}
 	
 	@Override	

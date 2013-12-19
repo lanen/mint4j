@@ -25,6 +25,7 @@ public class DefaultLoop extends SingleThreadLoop {
 
 	@Override
 	protected void run() {
+		
 		for (;;) {
 			
 			//if has task
@@ -32,13 +33,10 @@ public class DefaultLoop extends SingleThreadLoop {
 			//else perform movement.
 			Runnable task = takeTask();
 			if (task != null) {
-				System.out.println("Running Task");
+				System.out.println("Running Task  "+ Thread.currentThread());
 				task.run();
 				updateLastExecutionTime();			
 			}
-			
-			
-			强势插入();			
 			
 			if (confirmShutdown()) {
 				break;
@@ -48,9 +46,4 @@ public class DefaultLoop extends SingleThreadLoop {
 		
 	}
 	
-	void 强势插入(){
-	System.out.println("DefaultLoop.强势插入()");	
-	}
-
-
 }

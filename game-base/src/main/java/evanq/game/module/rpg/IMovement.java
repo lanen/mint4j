@@ -1,4 +1,4 @@
-package evanq.game.rpg;
+package evanq.game.module.rpg;
 
 /**
  * @author Evan cppmain@gmail.com

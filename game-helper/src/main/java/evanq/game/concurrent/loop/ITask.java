@@ -15,7 +15,6 @@ package evanq.game.concurrent.loop;
  */
 public interface ITask {
 
-	
 	/**
 	 * 
 	 * 建立一个当前任务的执行结果
@@ -32,24 +31,11 @@ public interface ITask {
 	ITask parent();
 	
 	ITaskWorkFlow workflow();
-	
-	/**
-	 * 当前任务被注册到线程队列中
-	 * @return
-	 */
-	boolean isRegistered();
-	
-	boolean isActived();
-	
-	boolean isOpen();
-	
-	boolean isDeActived();
-	
-	boolean isDeRegistered();
-	
+			
+	public void accept(ICommand cmd);
 	
 	public void register(ILoop loop, ITaskPromise promise);
-	
+		
 	public void close(ILoop loop, ITaskPromise promise);
 	
 }

@@ -25,6 +25,6 @@ public interface ILoopGroup extends EventExecutorGroup {
      * @param task
      * @return
      */
-    ITaskFuture register(ITask task);    
+    ITaskFuture register(ITask task);
  
 }
