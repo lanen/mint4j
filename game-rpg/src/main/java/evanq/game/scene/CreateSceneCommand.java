@@ -7,7 +7,7 @@ public class CreateSceneCommand implements ICommand {
 	@Override
 	public void execute() {
 		
-		System.err.println("创建场景 "+ Thread.currentThread());
+		
 	}
 
 }

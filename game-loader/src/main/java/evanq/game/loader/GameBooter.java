@@ -14,9 +14,7 @@ import evanq.game.rpg.impl.WorldInstance;
 public class GameBooter {
 
 	public static void main(String[] args) throws Exception {
-		Impl(args);
-		
-		
+		Impl(args);		
 	}
 	
 	public static void Impl(String[] args){		
