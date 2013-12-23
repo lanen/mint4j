@@ -3,12 +3,13 @@ package evanq.game.net;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-class NettyHandler extends SimpleChannelInboundHandler<String> {
+class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
 	@Override
-	protected void channelRead0(ChannelHandlerContext ctx, String msg)
+	protected void channelRead0(ChannelHandlerContext ctx, IPacket msg)
 			throws Exception {
 		System.out.println("NettyHandler.channelRead0()");
+		msg.handleImpl();
 	}
 
 	@Override

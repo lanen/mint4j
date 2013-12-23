@@ -1,4 +1,4 @@
-package evanq.game.net.codec;
+package evanq.game.net;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -11,6 +11,7 @@ import java.io.OutputStream;
 public class OutputSerializer {
 
 	private OutputStream out;
+	
 	private int protocolVersion = 0;
 
 	/**

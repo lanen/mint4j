@@ -9,4 +9,6 @@ package evanq.game.net;
  */
 public interface IPacket {
 
+	public void handleImpl();
+	
 }

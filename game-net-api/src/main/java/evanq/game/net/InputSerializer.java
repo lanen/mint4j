@@ -1,4 +1,4 @@
-package evanq.game.net.codec;
+package evanq.game.net;
 
 import java.io.IOException;
 import java.io.InputStream;

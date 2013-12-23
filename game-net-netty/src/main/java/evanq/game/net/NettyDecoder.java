@@ -3,10 +3,12 @@ package evanq.game.net;
 import java.util.List;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufInputStream;
+import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
-class NettyDecoder extends ByteToMessageDecoder {
+public class NettyDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
@@ -14,7 +16,21 @@ class NettyDecoder extends ByteToMessageDecoder {
 		
 		System.out.println("NettyDecoder.decode()");
 		
-		out.add("ddd");
+		
+		int commandKey = in.readInt();
+		//opcode 
+		
+		Class<?> class1 = CommandOpcode.clazz.get(commandKey);
+		
+		ByteBufInputStream os = new ByteBufInputStream(in);
+		InputSerializer serializer = new InputSerializer(os);
+			
+		AbstractPacket newInstance =(AbstractPacket) class1.newInstance();
+		newInstance.readObject(serializer);
+		
+		out.add(newInstance);
+		
+		
 	}
 
 }

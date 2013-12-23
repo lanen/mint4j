@@ -1,4 +1,4 @@
-package evanq.game.net.codec;
+package evanq.game.net;
 
 import java.io.IOException;
 
@@ -15,7 +15,9 @@ public interface Input {
 	public short readShort() throws IOException ;
 	
 	public int readInt() throws IOException;
+	
 	public long readLong() throws IOException;
+	
 	public double readDouble() throws IOException;
 	
 	public float readFloat() throws IOException ;

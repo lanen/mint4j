@@ -4,12 +4,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-import evanq.net.packet.ClientPacket;
+import evanq.game.net.AbstractPacket;
+import evanq.game.net.InputSerializer;
+import evanq.game.net.OutputSerializer;
 
 public class TestReadWritePacket {
 
 	
-	public static class One extends ClientPacket{
+	public static class One extends AbstractPacket {
 	
 		public String aString;
 		public int aInt;
@@ -31,7 +33,6 @@ public class TestReadWritePacket {
 
 		@Override
 		public void handleImpl() {
-			// TODO Auto-generated method stub
 			
 		}
 		
@@ -44,6 +45,7 @@ public class TestReadWritePacket {
 		one.aInt=100;
 		one.aByte=1;
 		
+			
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		OutputSerializer serializer = new OutputSerializer(baos);
 		

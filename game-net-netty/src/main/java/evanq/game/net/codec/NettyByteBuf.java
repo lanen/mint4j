@@ -1,10 +1,11 @@
 package evanq.game.net.codec;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.ByteBufOutputStream;
-import io.netty.buffer.ByteBufUtil;
 
 import java.io.IOException;
+
+import evanq.game.net.Input;
+import evanq.game.net.Output;
 
 public class NettyByteBuf implements Input , Output{
 
