@@ -10,6 +10,9 @@ class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
+		
+		PacketAllocator.getInstance().doRegister();
+		
 		ChannelPipeline pipeline = ch.pipeline();
 
 		// 压缩算法
@@ -17,8 +20,8 @@ class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 		// 加密算法
 
 		// 解码器
-//		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
-//		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
+		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
+		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
 		
 		pipeline.addLast("decoder", new NettyDecoder());		
 		pipeline.addLast("encoder", new NettyEncoder());

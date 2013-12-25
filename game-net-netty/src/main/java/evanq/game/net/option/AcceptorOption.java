@@ -1,6 +1,6 @@
 package evanq.game.net.option;
 
-import evanq.game.net.INetOption;
+import evanq.game.net.sapi.INetOption;
 
 /**
  * 

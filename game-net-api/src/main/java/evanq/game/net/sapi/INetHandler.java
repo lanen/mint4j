@@ -1,4 +1,6 @@
-package evanq.game.net;
+package evanq.game.net.sapi;
+
+import evanq.game.net.INetConnection;
 
 /**
  * 

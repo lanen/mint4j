@@ -13,6 +13,14 @@ public interface INetCommand {
 
 	/**
 	 * 
+	 * Return the connection of this command.
+	 * 
+	 * @return {@link INetConnection}
+	 */
+	INetConnection connection();
+	
+	/**
+	 * 
 	 */
 	public void execute();
 	

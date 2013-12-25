@@ -1,5 +1,7 @@
 package evanq.game.net;
 
+import evanq.game.net.sapi.INetInterface;
+
 public class DefaultNioSupport implements INetInterface {
 
 	@Override

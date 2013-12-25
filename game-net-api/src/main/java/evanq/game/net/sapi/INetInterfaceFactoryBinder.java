@@ -1,6 +1,5 @@
 package evanq.game.net.sapi;
 
-import evanq.game.net.INetInterfaceFactory;
 
 /**
  * 

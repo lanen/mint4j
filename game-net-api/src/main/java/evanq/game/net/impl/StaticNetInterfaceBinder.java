@@ -1,6 +1,6 @@
 package evanq.game.net.impl;
 
-import evanq.game.net.INetInterfaceFactory;
+import evanq.game.net.sapi.INetInterfaceFactory;
 import evanq.game.net.sapi.INetInterfaceFactoryBinder;
 
 /**

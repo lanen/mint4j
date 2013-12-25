@@ -1,5 +1,7 @@
 package evanq.game.net;
 
+import evanq.game.net.sapi.INetInterface;
+
 /**
  * 
  * 专门针对网络包的代码

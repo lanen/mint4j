@@ -1,8 +1,9 @@
-package abc;
+package evanq.game.client.net;
 
+import evanq.game.net.PacketConst;
+import evanq.game.net.packets.CRequestConnection;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import evanq.game.net.O;
 
 public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 
@@ -11,7 +12,13 @@ public class NettyClientHandler extends ChannelInboundHandlerAdapter {
 		// TODO Auto-generated method stub
 		super.channelActive(ctx);
 		System.out.println("NettyClientHandler.channelActive()");
-		O o = new O();
+		
+		
+		//发送激活数据		
+		CRequestConnection requestConnection = new CRequestConnection();
+		requestConnection.setPacketId(PacketConst.C_CONNECT_REQUEST);
+		//ctx.write(requestConnection);
+		ctx.writeAndFlush(requestConnection);
 	}
 
 	@Override

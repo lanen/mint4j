@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufOutputStream;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
+import evanq.game.net.io.OutputSerializer;
 
 public class NettyEncoder extends MessageToByteEncoder<AbstractPacket> {
 
@@ -12,12 +13,15 @@ public class NettyEncoder extends MessageToByteEncoder<AbstractPacket> {
 			throws Exception {
 		
 		ByteBufOutputStream os = new ByteBufOutputStream(out);
+		os.writeChar(msg.getPacketId());
 		
 		OutputSerializer outputSerializer = new OutputSerializer(os);
 		
 		msg.writeObject(outputSerializer);
 		
-		ctx.write(out);
+		//TODO 了解Netty的Flush 机制。控制单位时间的flush频率。
+		
+		ctx.writeAndFlush(os);
 	}
 
 }

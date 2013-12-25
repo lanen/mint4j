@@ -1,4 +1,4 @@
-package evanq.game.net;
+package evanq.game.net.sapi;
 
 import java.io.IOException;
 import java.net.URL;

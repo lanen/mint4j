@@ -1,4 +1,5 @@
-package evanq.game.net;
+package evanq.game.net.sapi;
+
 
 /**
  * @author Evan cppmain@gmail.com
