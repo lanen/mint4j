@@ -1,7 +1,8 @@
 package evanq.game.net;
 
-public class NettyConnection {
-	
+import io.netty.channel.Channel;
+
+class NettyConnection implements INetConnection {
 
 	//如何标示链接
 	//思路来自linux对socket handle标记方式，每一个链接都作为一个file descriptor
@@ -19,6 +20,32 @@ public class NettyConnection {
 	//链接通讯状态  channel state
 	//客户端与服务端的时间差值
 	
+	private Channel channel;
 	
+	NettyConnection(Channel channel){
+		this.channel = channel;
+	}
 	
+
+	@Override
+	public void onAccepted() {
+		//连接接入
+	}
+
+	@Override
+	public void onDisconnected() {
+		//连接断开
+	}
+
+	@Override
+	public void send(IPacket packet) {
+		channel.write(packet);
+	}
+
+	@Override
+	public void recv(IPacket packet) {
+		packet.connection(this)	;
+		packet.execute();
+	}
+		
 }

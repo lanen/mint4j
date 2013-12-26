@@ -12,4 +12,11 @@ package evanq.game.net;
 public interface INetConnection {
 	
 	
+	public void onAccepted();
+	
+	public void onDisconnected();
+	
+	public void send(IPacket packet);
+	
+	public void recv(IPacket packet);
 }

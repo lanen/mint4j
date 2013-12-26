@@ -27,11 +27,9 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
 		
-		super.channelActive(ctx);
-		
-		System.out.println("NettyHandler.channelActive()");
+		NettyConnection nc = new NettyConnection(ctx.channel());
+		nc.onAccepted();		
 	}
 
 	@Override
@@ -39,6 +37,7 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 		// TODO Auto-generated method stub
 		super.channelInactive(ctx);
 		Channel channel = ctx.channel();
+		
 		System.out.println(channel);
 		System.out.println("NettyHandler.channelInactive()");
 	}
