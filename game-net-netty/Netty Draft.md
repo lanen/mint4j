@@ -43,6 +43,51 @@ Netty 应用
 ### Netty 调优
 
 
+### 基于Netty的连接跟踪机制
 
+
+	public interface INetCommand {
+
+		/**
+		 * 
+		 * Return the connection of this command.
+		 * 
+		 * @return {@link INetConnection}
+		 */
+		INetConnection connection();
+		
+		/**
+		 * 设置当前的连接
+		 * @param nc
+		 * @return
+		 */
+		INetConnection connection(INetConnection nc);
+		
+		/**
+		 * 
+		 */
+		public void execute();
+		
+	}
+
+	public interface IPacket extends INetCommand {
+
+	
+	}
+
+	public interface INetConnect{
+
+		public void onAccepted();
+		
+		public void onDisconnected();
+		
+		public void send(IPacket packet);
+		
+		public void recv(IPacket packet);
+
+	}
+
+
+	//心跳机制
 ## 参考
 

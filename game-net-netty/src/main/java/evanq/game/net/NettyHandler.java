@@ -1,9 +1,6 @@
 package evanq.game.net;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelConfig;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelMetadata;
 import io.netty.channel.SimpleChannelInboundHandler;
 
 class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
@@ -12,9 +9,7 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	protected void channelRead0(ChannelHandlerContext ctx, IPacket msg)
 			throws Exception {
 		System.out.println("NettyHandler.channelRead0()");
-		System.out.println(ctx.channel().remoteAddress());
-		
-		msg.execute();
+		NettyConnection.messageReceived(msg);
 	}
 
 	@Override
@@ -29,51 +24,16 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		
 		NettyConnection nc = new NettyConnection(ctx.channel());
-		nc.onAccepted();		
+		nc.onAccepted();	
 	}
 
 	@Override
 	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelInactive(ctx);
-		Channel channel = ctx.channel();
 		
-		System.out.println(channel);
-		System.out.println("NettyHandler.channelInactive()");
+		NettyDisconnection dis = new NettyDisconnection(ctx.channel());
+		dis.onDisconnected();
 	}
 
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelReadComplete(ctx);
-		System.out.println("NettyHandler.channelReadComplete()");
-		
-	}
-
-	@Override
-	public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelRegistered(ctx);
-		System.out.println("NettyHandler.channelRegistered()");
-		
-	}
-
-	@Override
-	public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
-		// TODO Auto-generated method stub
-		super.channelUnregistered(ctx);
-		System.out.println("NettyHandler.channelUnregistered()");
-		
-	}
-
-	@Override
-	public void channelWritabilityChanged(ChannelHandlerContext ctx)
-			throws Exception {
-		// TODO Auto-generated method stub
-		super.channelWritabilityChanged(ctx);
-		System.out.println("NettyHandler.channelWritabilityChanged()");
-		
-	}
 
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt)

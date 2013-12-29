@@ -11,8 +11,6 @@ class NettyServerInitializer extends ChannelInitializer<SocketChannel> {
 	@Override
 	protected void initChannel(SocketChannel ch) throws Exception {
 		
-		PacketAllocator.getInstance().doRegister();
-		
 		ChannelPipeline pipeline = ch.pipeline();
 
 		// 压缩算法

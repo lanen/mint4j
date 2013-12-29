@@ -50,6 +50,13 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 		return (AbstractNetConnection)connection;
 	}
 	
+	
+	@Override
+	public INetConnection connection(INetConnection nc) {
+		this.connection=nc;
+		return connection;
+	}
+
 	protected abstract StringBuffer toStringBuffer();
 	
 	public String toString(){

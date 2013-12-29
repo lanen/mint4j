@@ -19,4 +19,5 @@ public interface INetConnection {
 	public void send(IPacket packet);
 	
 	public void recv(IPacket packet);
+	
 }

@@ -6,8 +6,23 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public final class Netty {
+	
+	private int port;
+	
+	public Netty(int port) {
+		
+		if(port<1024 || port > 63365){
+			throw new IllegalArgumentException("端口控制在1024-63365之间");
+		}
+	
+		this.port = port;
+	}
 
 	public void initNettyAcceptor(){
+		
+		//绑定数据包
+		PacketAllocator.getInstance().doRegister();
+		
 		
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workGroup = new NioEventLoopGroup();
@@ -19,7 +34,7 @@ public final class Netty {
 			channel(NioServerSocketChannel.class).
 			childHandler(new NettyServerInitializer());
 			
-			boot.bind(10000).sync().channel().closeFuture().sync();
+			boot.bind(this.port).sync().channel().closeFuture().sync();
 			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -32,8 +47,7 @@ public final class Netty {
 	
 	public static void main(String[] args) {
 		
-		
-		Netty ny = new Netty();
+		Netty ny = new Netty(10000);
 		ny.initNettyAcceptor();
 		
 	}

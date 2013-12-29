@@ -24,7 +24,8 @@ public class CRequestConnection extends AbstractPacket {
 	
 	@Override
 	public void execute() {
-		System.out.println("CRequestConnection.execute()");
+		System.out.println("CRequestConnection.execute() - "+ connection());		
+		
 	}
 
 
@@ -44,5 +45,6 @@ public class CRequestConnection extends AbstractPacket {
 	protected StringBuffer toStringBuffer() {
 		return null;
 	}
+
 
 }
