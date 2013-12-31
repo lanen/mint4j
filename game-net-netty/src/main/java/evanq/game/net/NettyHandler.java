@@ -25,6 +25,16 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 		
 		NettyConnection nc = new NettyConnection(ctx.channel());
 		nc.onAccepted();	
+		
+		//TODO 新建连接
+		
+		//TODO 交给管理组
+		
+		//TODO 连接进行验证
+		
+		//TODO 验证完毕，将连接交给holder
+		
+		
 	}
 
 	@Override

@@ -9,8 +9,9 @@ package evanq.game.net;
  * @author Evan
  *
  */
-public interface INetConnection {
+public interface INetConnection extends INetConnectionGroup {
 	
+	INetConnectionGroup group();
 	
 	public void onAccepted();
 	

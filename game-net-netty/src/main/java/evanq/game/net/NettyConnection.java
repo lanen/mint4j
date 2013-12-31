@@ -1,14 +1,15 @@
 package evanq.game.net;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 
 import io.netty.channel.Channel;
 
-class NettyConnection implements INetConnection {
+class NettyConnection extends AbstractNetConnection implements INetConnection {
 
 	//如何标示链接
 	//思路来自linux对socket handle标记方式，每一个链接都作为一个file descriptor
-	//map<connecion,connectowner>,建立一个单线程来管理链接，
+	//map<connecion,INetConnectionHolder>,建立一个单线程来管理链接，
 	//在链接管理中会遇到的情况。
 	//客户端正常登陆、退出。
 	//ping 超时
@@ -73,6 +74,48 @@ class NettyConnection implements INetConnection {
 	
 	public static void messageReceived(IPacket packet){
 		
+	}
+
+
+	@Override
+	public boolean isClosed() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void close() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void close(int typeId) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Iterator<INetConnection> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public INetConnection connection(int typeId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public INetConnectionGroup group() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
