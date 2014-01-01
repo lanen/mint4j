@@ -9,11 +9,11 @@ package evanq.game.net;
  * @author Evan
  *
  */
-public interface INetConnection extends INetConnectionGroup {
+public interface INetConnection  {	
 	
-	INetConnectionGroup group();
+	NetConnectionType type();
 	
-	public void onAccepted();
+	public void onConnected();
 	
 	public void onDisconnected();
 	
