@@ -14,8 +14,6 @@ import io.netty.util.concurrent.GenericFutureListener;
 import java.util.LinkedList;
 import java.util.List;
 
-import evanq.game.net.client.NettyClientInitializer;
-
 /**
  * 
  * 网络服务驱动
@@ -45,6 +43,7 @@ public class NetServiceAdaptor implements Runnable {
 	protected Channel channel;
 
 	private Thread thread;
+	private boolean runInThread=true;//false 的情况调试没有通过，没有阻塞直接运行shutdown代码
 
 	private byte state = NET_SERVICE_STATE_IDLE;
 	private Object stateLock = new Object();
@@ -74,8 +73,11 @@ public class NetServiceAdaptor implements Runnable {
 		
 		this.type = type;
 		this.port = port;
-
-		thread = new Thread(this,""+type);
+		
+		if (runInThread) {
+			thread = new Thread(this,""+type);
+		}
+		
 	}
 
 	protected INetConnectionManager newINetManager(){
@@ -127,7 +129,9 @@ public class NetServiceAdaptor implements Runnable {
 			if (state == NET_SERVICE_STATE_IDLE) {
 
 				state = NET_SERVICE_STATE_OPENING;
-				thread.start();
+				if (runInThread) {
+					thread.start();
+				}
 			}
 		}
 	}
@@ -162,10 +166,9 @@ public class NetServiceAdaptor implements Runnable {
 			});
 			
 			channel =  bindFuture.sync().channel();
-
-			channel.closeFuture().sync();
-			
-			
+			if (runInThread) {
+				channel.closeFuture().sync();
+			}
 
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -199,9 +202,11 @@ public class NetServiceAdaptor implements Runnable {
 				}
 			});
 			try {
-				channel = connectFutrue.sync().channel();	
-				//发生关闭，阻塞到关闭完成
-				channel.closeFuture().sync();
+				channel = connectFutrue.sync().channel();
+				if (runInThread) {
+					//发生关闭，阻塞到关闭完成
+					channel.closeFuture().sync();
+				}
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

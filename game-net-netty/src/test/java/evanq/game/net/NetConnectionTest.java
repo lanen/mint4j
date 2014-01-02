@@ -17,7 +17,7 @@ public class NetConnectionTest {
 	NetServiceAdaptor client ;
 	
 	@Before
-	public void setUp(){
+	public synchronized void setUp(){
 		server = new NetServiceAdaptor(NetServiceType.SERVER,8001,null);
 		server.addStartListener(new INetStartListener() {
 			
@@ -28,6 +28,14 @@ public class NetConnectionTest {
 			
 		});
 		server.open();
+		//等待服务端启动完毕
+		
+			
+		try {
+			wait(5000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
 		//客户端
 		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8001,null);
@@ -58,6 +66,7 @@ public class NetConnectionTest {
 	
 	@Test
 	public void testConnection() {
+		
 		while( ! client.isOpen() ){
 			whileFor0();
 			break;

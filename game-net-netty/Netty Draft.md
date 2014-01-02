@@ -129,3 +129,40 @@ Netty 应用
 
 ## 参考
 
+
+## eclipse 插件
+
+
+[Eclipse SQL Explorer](http://eclipsesql.sourceforge.net/)
+
+
+[Eclipse十六进制编辑器插件](http://ehep.sourceforge.net/)
+
+[ a Java framework for building modern web applications](https://vaadin.com/home)
+
+
+Lockness 用于分析Java 线程堆
+
+
+[Log4e](http://log4e.jayefem.de/ "Log4e")
+
+
+AmaterasUML
+
+
+[Memory Analyzer (MAT)](http://www.eclipse.org/mat/ "Memory Analyzer (MAT)")
+
+
+
+[moreclipboard](http://moreclipboard.sourceforge.net/)
+
+
+
+[Apache Directory Server](http://directory.apache.org/)
+
+
+
+Skia 图形引擎
+
+http://javaposse.com/
+
