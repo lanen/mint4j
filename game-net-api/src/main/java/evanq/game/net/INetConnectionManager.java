@@ -11,11 +11,6 @@ public interface INetConnectionManager {
 	//final 
 	public void accpet(INetConnection connection);
 
-	public void close(INetConnectionHolder holder);
-	
-	/**
-	 * 心跳
-	 */
-	public void heat();
+	public void close(INetConnection connection);
 	
 }

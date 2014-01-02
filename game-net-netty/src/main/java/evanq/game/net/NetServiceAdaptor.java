@@ -14,6 +14,11 @@ import io.netty.util.concurrent.GenericFutureListener;
 import java.util.LinkedList;
 import java.util.List;
 
+//TODO 增加断线重连特性
+//TODO 增加关闭通知所有客户端特性
+//TODO 增加连接心跳特性
+//TODO 增加连接状态管理
+
 /**
  * 
  * 网络服务驱动
@@ -43,7 +48,7 @@ public class NetServiceAdaptor implements Runnable {
 	protected Channel channel;
 
 	private Thread thread;
-	private boolean runInThread=true;//false 的情况调试没有通过，没有阻塞直接运行shutdown代码
+	//private boolean runInThread=true;//false 的情况调试没有通过，没有阻塞直接运行shutdown代码
 
 	private byte state = NET_SERVICE_STATE_IDLE;
 	private Object stateLock = new Object();
@@ -54,40 +59,44 @@ public class NetServiceAdaptor implements Runnable {
 	//start listener
 	private List<INetStartListener> startListeners = new LinkedList<INetStartListener>();
 	
+	
 	/**
 	 * 
 	 * @see INetConnectionManager
 	 */
 	private INetConnectionManager netManager;
 	
+	/**
+	 * 
+	 * 服务初始化工具，能够根据连接的类型，分配不同的编码、解码器
+	 * 
+	 * @see NettyInitializer
+	 */
+	private NettyInitializer nettyInitializer;
+	
 	public NetServiceAdaptor(NetServiceType type, int port,INetConnectionManager netManager) {
+		this(type,null,port,netManager,null);
+	}
 
+	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager) {
+
+		this(type, host, port,netManager,null);		
+	}
+
+	/**
+	 * 
+	 * @param type
+	 * @param host
+	 * @param port
+	 * @param netManager
+	 * @param nettyInitializer
+	 */
+	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,NettyInitializer nettyInitializer) {
+		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
 		}
-
-		if (null == netManager) {
-			netManager = newINetManager();
-		}
-		this.netManager = netManager;
 		
-		this.type = type;
-		this.port = port;
-		
-		if (runInThread) {
-			thread = new Thread(this,""+type);
-		}
-		
-	}
-
-	protected INetConnectionManager newINetManager(){
-		return AbstractNetConnectionManager.getInstance();
-	}
-	
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager) {
-
-		this(type, port,netManager);
-
 		if (null == host) {
 			if (type == NetServiceType.SERVER) {
 				host = "0.0.0.0";
@@ -96,7 +105,32 @@ public class NetServiceAdaptor implements Runnable {
 			}
 		}
 
+		
+		
+		if (null == netManager) {
+			netManager = newINetManager();
+		}
+		this.netManager = netManager;
+		
+		if (null == nettyInitializer) {
+			nettyInitializer = newNettyInitializer();
+		}
+		
+		this.nettyInitializer = nettyInitializer;		
+		this.type = type;
 		this.host = host;
+		this.port = port;
+		
+		thread = new Thread(this,""+type);
+		
+	}
+	
+	protected INetConnectionManager newINetManager(){
+		return AbstractNetConnectionManager.getInstance();
+	}
+	
+	protected NettyInitializer newNettyInitializer(){
+		return new NettyInitializer(this.netManager);
 	}
 
 	@Override
@@ -129,9 +163,7 @@ public class NetServiceAdaptor implements Runnable {
 			if (state == NET_SERVICE_STATE_IDLE) {
 
 				state = NET_SERVICE_STATE_OPENING;
-				if (runInThread) {
-					thread.start();
-				}
+				thread.start();
 			}
 		}
 	}
@@ -150,7 +182,7 @@ public class NetServiceAdaptor implements Runnable {
 			ServerBootstrap boot = new ServerBootstrap();
 			boot.group(bossGroup, workGroup)
 					.channel(NioServerSocketChannel.class)
-					.childHandler(new NettyInitializer(netManager));
+					.childHandler(nettyInitializer);
 			ChannelFuture bindFuture = boot.bind(this.port	);
 			
 			bindFuture.addListener(new GenericFutureListener<Future<? super Void>>() {
@@ -166,15 +198,24 @@ public class NetServiceAdaptor implements Runnable {
 			});
 			
 			channel =  bindFuture.sync().channel();
-			if (runInThread) {
-				channel.closeFuture().sync();
-			}
+			channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
 
+				@Override
+				public void operationComplete(
+						Future<? super Void> future) throws Exception {
+					for (INetCloseListener l : closeListeners) {
+						l.onClose(NetServiceAdaptor.this.channel); 
+					}
+				}
+			}).sync();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
 			bossGroup.shutdownGracefully();
 			workGroup.shutdownGracefully();
+			
+			startListeners.clear();
+			closeListeners.clear();
 		}
 	}
 
@@ -186,7 +227,7 @@ public class NetServiceAdaptor implements Runnable {
 		EventLoopGroup group = new NioEventLoopGroup();
 		try {
 			Bootstrap b = new Bootstrap();
-			b.group(group).handler(new NettyInitializer(netManager))
+			b.group(group).handler(nettyInitializer)
 					.channel(NioSocketChannel.class);
 
 			ChannelFuture connectFutrue = b.connect(host, port);
@@ -203,15 +244,25 @@ public class NetServiceAdaptor implements Runnable {
 			});
 			try {
 				channel = connectFutrue.sync().channel();
-				if (runInThread) {
-					//发生关闭，阻塞到关闭完成
-					channel.closeFuture().sync();
-				}
+				//发生关闭，阻塞到关闭完成
+				channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
+
+					@Override
+					public void operationComplete(
+							Future<? super Void> future) throws Exception {
+						for (INetCloseListener l : closeListeners) {
+							l.onClose(NetServiceAdaptor.this.channel); 
+						}
+					}
+				}).sync();
+				
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		} finally {
 			group.shutdownGracefully();
+			startListeners.clear();
+			closeListeners.clear();
 		}
 		
 	}
@@ -221,28 +272,7 @@ public class NetServiceAdaptor implements Runnable {
 		synchronized (stateLock) {
 
 			if (null != channel ) {
-
-				try {
-					//发生关闭，阻塞到关闭完成
-					ChannelFuture closeFuture = channel.close();
-					closeFuture.addListener(new GenericFutureListener<Future<? super Void>>() {
-
-						@Override
-						public void operationComplete(
-								Future<? super Void> future) throws Exception {
-							for (INetCloseListener l : closeListeners) {
-								l.onClose(NetServiceAdaptor.this.channel); 
-							}
-						}
-					});
-					closeFuture.sync();
-					
-					startListeners.clear();
-					closeListeners.clear();
-					
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				channel.close();				
 			}
 
 			state = NET_SERVICE_STATE_CLOSEED;

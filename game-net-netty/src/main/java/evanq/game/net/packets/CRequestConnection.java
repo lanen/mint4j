@@ -15,11 +15,12 @@ import evanq.game.net.io.OutputSerializer;
  */
 public class CRequestConnection extends AbstractPacket {
 
+	private byte connectionType;
 	
 	public CRequestConnection(){
 		super(PacketConst.PACKET_TYPE_CLIENT);
 	}
-
+	
 	
 	
 	@Override
@@ -31,12 +32,12 @@ public class CRequestConnection extends AbstractPacket {
 
 	@Override
 	public void writeObject(OutputSerializer out) throws IOException {
-		
+		out.write(connectionType);
 	}
 
 	@Override
 	public void readObject(InputSerializer in) throws IOException {
-
+		connectionType=in.readByte();
 	}
 
 
@@ -44,6 +45,15 @@ public class CRequestConnection extends AbstractPacket {
 	@Override
 	protected StringBuffer toStringBuffer() {
 		return null;
+	}
+
+
+	public byte getConnectionType() {
+		return connectionType;
+	}
+
+	public void setConnectionType(byte connectionType) {
+		this.connectionType = connectionType;
 	}
 
 

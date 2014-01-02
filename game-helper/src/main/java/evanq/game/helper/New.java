@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * 
@@ -104,6 +105,13 @@ public class New {
      */
     public static <K, V> ConcurrentMap<K, V> newConcurrentHashMap() {
     	return new ConcurrentHashMap<K, V>();
+    }
+    
+    /**
+     * Creates a new fastest {@link LinkedBlockingQueue} implementaion for the current platform.
+     */
+    public static <V> LinkedBlockingQueue<V> newLinkedQueue() {
+    	return new LinkedBlockingQueue<V>();
     }
 
 }

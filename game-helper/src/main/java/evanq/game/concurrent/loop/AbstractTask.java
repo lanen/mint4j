@@ -46,11 +46,11 @@ public abstract class AbstractTask implements ITask {
 	}
 
 	protected abstract void doRegister();
-	protected abstract void doActive();
-	protected abstract void doDeRegister();
-	protected abstract void doDeActive();
-	protected abstract void doOpen();
-	
+//	protected abstract void doActive();
+//	protected abstract void doDeRegister();
+//	protected abstract void doDeActive();
+//	protected abstract void doOpen();
+//	
 	public boolean isRegistered() {
 		return registered;
 	}

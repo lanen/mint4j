@@ -891,7 +891,7 @@ public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
 		@Override
 		public void run() {
 			Iterator<ScheduledFutureTask<?>> i = delayedTaskQueue.iterator();
-			System.out.println("PurgeTask");
+//			System.out.println("PurgeTask");
 			while (i.hasNext()) {
 				ScheduledFutureTask<?> task = i.next();
 				if (task.isCancelled()) {

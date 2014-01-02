@@ -33,7 +33,7 @@ public class DefaultLoop extends SingleThreadLoop {
 			//else perform movement.
 			Runnable task = takeTask();
 			if (task != null) {
-				System.out.println("Running Task  "+ Thread.currentThread());
+//				System.out.println("Running Task  "+ Thread.currentThread());
 				task.run();
 				updateLastExecutionTime();			
 			}

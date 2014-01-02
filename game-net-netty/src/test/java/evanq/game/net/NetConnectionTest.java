@@ -29,30 +29,10 @@ public class NetConnectionTest {
 		});
 		server.open();
 		//等待服务端启动完毕
-		
 			
-		try {
-			wait(5000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+			
 		
-		//客户端
 		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8001,null);
-		client.addStartListener(new INetStartListener() {
-			
-			@Override
-			public void onStart(Channel channel_) {				
-				System.out.println("客户端连接完毕");
-				
-				flag = CLIENT_STARTED;
-				
-				channel = channel_;
-				event = EVENT_CONNECT_OPEN;
-			}
-		});
-		
-		client.open();
 
 	}
 	
@@ -65,12 +45,35 @@ public class NetConnectionTest {
 	
 	
 	@Test
-	public void testConnection() {
-		
-		while( ! client.isOpen() ){
-			whileFor0();
-			break;
-		}
+	public synchronized void testConnection() {
+//		while( ! client.isOpen() ){
+//			whileFor0();
+//			break;
+//		}
+		//客户端
+				
+				client.addStartListener(new INetStartListener() {
+					
+					@Override
+					public void onStart(Channel channel_) {				
+						System.out.println("客户端连接完毕");
+						
+						flag = CLIENT_STARTED;
+						
+						channel = channel_;
+						event = EVENT_CONNECT_OPEN;
+						
+						whileFor0();
+					}
+				});
+				client.open();
+				try {
+					wait();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
 	}
 	
 	private static final int CLIENT_STARTED  = 1;
@@ -81,8 +84,7 @@ public class NetConnectionTest {
 	
 	//连接状态循环
 	private synchronized void whileFor0(){
-		System.out.println(flag);
-		while(client.isOpen()){
+		while(true){
 			
 			switch(flag){
 			case CLIENT_STARTED:
@@ -104,9 +106,10 @@ public class NetConnectionTest {
 	private Channel channel;
 	private int event;
 	private static final int EVENT_CONNECT_OPEN = 1;
+	
 	//数据包状态循环
 	private void data(){
-		
+
 		switch(event){
 		
 		case EVENT_CONNECT_OPEN:
@@ -114,7 +117,10 @@ public class NetConnectionTest {
 			//发送激活数据
 			CRequestConnection requestConnection = new CRequestConnection();
 			requestConnection.setPacketId(PacketConst.C_CONNECT_REQUEST);
-			channel.writeAndFlush(requestConnection);
+			requestConnection.setConnectionType(NetConnectionType.CLIENT_MASTER.value());
+			channel.write(requestConnection);
+			channel.flush();
+				
 		}
 			break;
 		}

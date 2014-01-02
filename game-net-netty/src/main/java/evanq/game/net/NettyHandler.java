@@ -3,6 +3,13 @@ package evanq.game.net;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
+/**
+ * 
+ * 来自客户端的数据（读写），连接（开/关）处理器
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
 	private NettyNetConnectionManagerAdaptor netConnectionManager;
@@ -10,18 +17,17 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	NettyHandler(NettyNetConnectionManagerAdaptor adptor) {
 		netConnectionManager = adptor;
 	}
-	
-	
+		
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, IPacket msg)
 			throws Exception {
-		System.out.println("NettyHandler.channelRead0()");
-		INetConnection iNetConnection = netConnectionManager.get(ctx.channel());
-	
+		
+		INetConnection iNetConnection = netConnectionManager.get(ctx.channel());	
 		if(null !=iNetConnection){
-			
 			msg.connection(iNetConnection);
 			msg.execute();
+		}else{
+			throw new NullPointerException("不能到达这里");
 		}
 	}
 
@@ -34,6 +40,7 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		System.out.println(ctx.channel().toString());
 		netConnectionManager.accpet(ctx.channel());	
 	}
 

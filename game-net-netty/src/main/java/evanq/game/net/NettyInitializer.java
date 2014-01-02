@@ -31,7 +31,7 @@ class NettyInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("encoder", new NettyEncoder());
 
 		// 处理器
-		pipeline.addLast("handler", new NettyHandler(new NettyNetConnectionManagerAdaptor(manager)));
+		pipeline.addLast("handler", new NettyHandler(new NettyNetConnectionManagerAdaptor((AbstractNetConnectionManager)manager)));
 
 	}
 	

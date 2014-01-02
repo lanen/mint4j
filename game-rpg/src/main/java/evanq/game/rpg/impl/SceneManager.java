@@ -34,26 +34,7 @@ public class SceneManager extends AbstractTask {
 		
 	}
 
-	@Override
-	protected void doActive() {
 
-	}
-
-	@Override
-	protected void doDeRegister() {
-
-	}
-
-	@Override
-	protected void doDeActive() {
-
-	}
-
-	@Override
-	protected void doOpen() {
-
-	}
-	
 	//两套方案：1）使用队列来处理。
 	//2）直接处理
 	@Override
