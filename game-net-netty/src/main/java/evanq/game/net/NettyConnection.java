@@ -38,7 +38,7 @@ class NettyConnection extends AbstractNetConnection implements INetConnection {
 	
 
 	@Override
-	public void onAccepted() {
+	public void onConnected() {
 		//连接接入
 		
 		state = NetConnectionState.CONNECTING;
@@ -118,4 +118,29 @@ class NettyConnection extends AbstractNetConnection implements INetConnection {
 		return null;
 	}
 
+
+	@Override
+	public boolean equals(Object obj) {
+		
+		if (null == channel) {
+			return false;
+		}
+		if (null == obj) {
+			return false;
+		}
+		
+		if(! (obj instanceof NettyConnection)){
+			return false;
+		}
+		NettyConnection nc = (NettyConnection)obj;
+		
+		if (null == nc.channel) {
+			return false;
+		}
+		
+		return channel.equals(nc.channel);
+	}
+
+	
+	
 }

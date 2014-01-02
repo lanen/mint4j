@@ -14,7 +14,7 @@ class NettyDisconnection implements INetConnection {
 	}
 	
 	@Override
-	public void onAccepted() {
+	public void onConnected() {
 		// TODO Auto-generated method stub
 		
 	}

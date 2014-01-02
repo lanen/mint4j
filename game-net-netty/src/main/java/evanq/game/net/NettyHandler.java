@@ -24,7 +24,7 @@ class NettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		
 		NettyConnection nc = new NettyConnection(ctx.channel());
-		nc.onAccepted();	
+		nc.onConnected();	
 		
 		//TODO 新建连接
 		

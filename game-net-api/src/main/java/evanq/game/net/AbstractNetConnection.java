@@ -4,6 +4,14 @@ import java.util.Iterator;
 
 public abstract class AbstractNetConnection implements INetConnection {
 
+	
+	
+	@Override
+	public NetConnectionType type() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public boolean isClosed() {
 		// TODO Auto-generated method stub
@@ -41,7 +49,7 @@ public abstract class AbstractNetConnection implements INetConnection {
 	}
 
 	@Override
-	public void onAccepted() {
+	public void onConnected() {
 		// TODO Auto-generated method stub
 		
 	}

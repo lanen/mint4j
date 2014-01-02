@@ -11,9 +11,14 @@ package evanq.game.net;
  */
 public interface INetConnection extends INetConnectionGroup {
 	
+	NetConnectionType type();
+	
 	INetConnectionGroup group();
 	
-	public void onAccepted();
+	/**
+	 * 
+	 */
+	public void onConnected();
 	
 	public void onDisconnected();
 	

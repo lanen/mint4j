@@ -1,5 +1,12 @@
 package evanq.game.net;
 
+/**
+ * 
+ * 经过验证之后，连接拥有明确的类型
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public enum NetConnectionType {
 	
 	/** 空类型 */
