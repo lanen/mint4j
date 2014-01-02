@@ -1,6 +1,6 @@
 package evanq.game.net;
 
-public interface INetManager {
+public interface INetConnectionManager {
 
 	//map<INetConnectionGroup,INetConnectionHolder>
 	
@@ -9,9 +9,8 @@ public interface INetManager {
 	//final HeartBeatTask
 	//final ServerClosingTask
 	//final 
-	public void accpet(INetConnectionGroup group);
-	
-	
+	public void accpet(INetConnection connection);
+
 	public void close(INetConnectionHolder holder);
 	
 	/**

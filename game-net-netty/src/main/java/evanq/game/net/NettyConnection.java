@@ -5,7 +5,7 @@ import java.util.LinkedList;
 
 import io.netty.channel.Channel;
 
-class NettyConnection extends AbstractNetConnection implements INetConnection {
+class NettyConnection extends AbstractNetConnection {
 
 	//如何标示链接
 	//思路来自linux对socket handle标记方式，每一个链接都作为一个file descriptor
@@ -72,48 +72,9 @@ class NettyConnection extends AbstractNetConnection implements INetConnection {
 		packet.execute();
 	}
 	
-	public static void messageReceived(IPacket packet){
-		
-	}
-
 
 	@Override
-	public boolean isClosed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void close(int typeId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public Iterator<INetConnection> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public INetConnection connection(int typeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public INetConnectionGroup group() {
+	public NetConnectionType type() {
 		// TODO Auto-generated method stub
 		return null;
 	}

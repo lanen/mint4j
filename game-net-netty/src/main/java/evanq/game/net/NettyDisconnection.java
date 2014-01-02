@@ -1,10 +1,8 @@
 package evanq.game.net;
 
-import java.util.Iterator;
-
 import io.netty.channel.Channel;
 
-class NettyDisconnection implements INetConnection {
+class NettyDisconnection extends AbstractNetConnection {
 
 	private Channel channel;
 	
@@ -12,7 +10,13 @@ class NettyDisconnection implements INetConnection {
 
 		this.channel = channel;
 	}
-	
+
+	@Override
+	public NetConnectionType type() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	@Override
 	public void onConnected() {
 		// TODO Auto-generated method stub
@@ -21,8 +25,8 @@ class NettyDisconnection implements INetConnection {
 
 	@Override
 	public void onDisconnected() {
+		// TODO Auto-generated method stub
 		
-		System.out.println("NettyDisconnection.onDisconnected() - "+channel);
 	}
 
 	@Override
@@ -35,42 +39,6 @@ class NettyDisconnection implements INetConnection {
 	public void recv(IPacket packet) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public boolean isClosed() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void close() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void close(int typeId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Iterator<INetConnection> iterator() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public INetConnection connection(int typeId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public INetConnectionGroup group() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }
