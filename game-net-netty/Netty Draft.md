@@ -166,3 +166,7 @@ Skia 图形引擎
 
 http://javaposse.com/
 
+
+[基于 OAuth 安全协议的 Java 应用编程](http://www.ibm.com/developerworks/cn/java/j-lo-oauth/)
+
+OAuth Solution解决账号和连接授权问题，在开发阶段，客户端直接请求agent服务器，服务器等待握手请求，否则在连接timeout.握手请求包含access_token（编码了账号id,过期时间）

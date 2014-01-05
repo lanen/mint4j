@@ -203,12 +203,13 @@ public class InputSerializer {
 			throw new IOException("Declared array size=" + size
 			        + " is not equal to actually read bytes count(" + bytes_read_total + ")!");
 		}
-
+		
 //		int result = data[0] & 0xFF;
 //
 //		result += (data[1] & 0xFF) << 8;
 //		result += (data[2] & 0xFF) << 16;
 //		result += (data[3] & 0xFF) << 24;
+		
 		return bytesToInt(data);
 	}
 	

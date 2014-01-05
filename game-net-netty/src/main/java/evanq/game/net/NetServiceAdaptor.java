@@ -13,6 +13,7 @@ import io.netty.util.concurrent.GenericFutureListener;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 //TODO 增加断线重连特性
 //TODO 增加关闭通知所有客户端特性
@@ -48,6 +49,7 @@ public class NetServiceAdaptor implements Runnable {
 	protected Channel channel;
 
 	private Thread thread;
+	private static AtomicInteger threadCounter = new AtomicInteger(1);
 	//private boolean runInThread=true;//false 的情况调试没有通过，没有阻塞直接运行shutdown代码
 
 	private byte state = NET_SERVICE_STATE_IDLE;
@@ -70,9 +72,9 @@ public class NetServiceAdaptor implements Runnable {
 	 * 
 	 * 服务初始化工具，能够根据连接的类型，分配不同的编码、解码器
 	 * 
-	 * @see NettyInitializer
+	 * @see DefaultNettyInitializer
 	 */
-	private NettyInitializer nettyInitializer;
+	private DefaultNettyInitializer nettyInitializer;
 	
 	public NetServiceAdaptor(NetServiceType type, int port,INetConnectionManager netManager) {
 		this(type,null,port,netManager,null);
@@ -80,7 +82,7 @@ public class NetServiceAdaptor implements Runnable {
 
 	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager) {
 
-		this(type, host, port,netManager,null);		
+		this(type, host, port,netManager,null);
 	}
 
 	/**
@@ -91,7 +93,7 @@ public class NetServiceAdaptor implements Runnable {
 	 * @param netManager
 	 * @param nettyInitializer
 	 */
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,NettyInitializer nettyInitializer) {
+	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,DefaultNettyInitializer nettyInitializer) {
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -104,7 +106,6 @@ public class NetServiceAdaptor implements Runnable {
 				throw new NullPointerException("host");
 			}
 		}
-
 		
 		
 		if (null == netManager) {
@@ -121,7 +122,7 @@ public class NetServiceAdaptor implements Runnable {
 		this.host = host;
 		this.port = port;
 		
-		thread = new Thread(this,""+type);
+		thread = new Thread(this,""+type +"-"+threadCounter.getAndIncrement());
 		
 	}
 	
@@ -129,8 +130,8 @@ public class NetServiceAdaptor implements Runnable {
 		return AbstractNetConnectionManager.getInstance();
 	}
 	
-	protected NettyInitializer newNettyInitializer(){
-		return new NettyInitializer(this.netManager);
+	protected DefaultNettyInitializer newNettyInitializer(){
+		return new DefaultNettyInitializer(this.netManager);
 	}
 
 	@Override
@@ -211,6 +212,7 @@ public class NetServiceAdaptor implements Runnable {
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} finally {
+			
 			bossGroup.shutdownGracefully();
 			workGroup.shutdownGracefully();
 			

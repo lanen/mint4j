@@ -5,8 +5,8 @@ import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
-import evanq.game.net.NettyDecoder;
-import evanq.game.net.NettyEncoder;
+import evanq.game.net.DefaultNettyDecoder;
+import evanq.game.net.DefaultNettyEncoder;
 @Deprecated
 
 public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
@@ -19,8 +19,8 @@ public class NettyClientInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
 		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
 
-		pipeline.addLast("decoder", new NettyDecoder());		
-		pipeline.addLast("encoder", new NettyEncoder());
+		pipeline.addLast("decoder", new DefaultNettyDecoder());		
+		pipeline.addLast("encoder", new DefaultNettyEncoder());
 
 		// and then business logic.
 		pipeline.addLast("handler", new NettyClientHandler());

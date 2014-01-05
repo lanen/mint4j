@@ -12,10 +12,10 @@ package evanq.game.net;
 public interface INetConnection  {	
 	
 	NetConnectionType type();
-
-	public void onConnected();
 	
-	public void onDisconnected();
+	INetConnectionFSM fsm();
+	
+	INetConnectionFSM fsm(INetConnectionFSM fsm);
 	
 	public void send(IPacket packet);
 	

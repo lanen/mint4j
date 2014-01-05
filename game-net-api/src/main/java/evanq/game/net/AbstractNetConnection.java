@@ -3,37 +3,39 @@ package evanq.game.net;
 
 public abstract class AbstractNetConnection implements INetConnection {
 	
+	//授权完毕后，就有明确的连接类型
+	protected NetConnectionType type;
+	
+	protected AbstractNetConnection(NetConnectionType type){
+		this.type = type;
+	}
+
 	@Override
 	public NetConnectionType type() {
-		// TODO Auto-generated method stub
-		return null;
+		return type;
 	}
 
 
-	@Override
-	public void onConnected() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void onDisconnected() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void send(IPacket packet) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void recv(IPacket packet) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	private INetConnectionFSM fsm;
 	
-	
+	@Override
+	public INetConnectionFSM fsm() {
+		return fsm;
+	}
+
+
+	@Override
+	public INetConnectionFSM fsm(INetConnectionFSM fsm) {
+		if (null == fsm) {
+			throw new NullPointerException("fsm");
+		}
+		if(this.fsm !=null){
+			throw new IllegalAccessError("不可重复设定状态机");
+		}
+		
+		this.fsm = fsm;
+		
+		return this.fsm;
+	}
+
 }

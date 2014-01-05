@@ -28,9 +28,9 @@ public class NetConnectionTest {
 			
 		});
 		server.open();
-		//等待服务端启动完毕
-			
-			
+		
+		
+		//等待服务端启动完毕	
 		
 		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8001,null);
 
@@ -117,6 +117,7 @@ public class NetConnectionTest {
 			//发送激活数据
 			CRequestConnection requestConnection = new CRequestConnection();
 			requestConnection.setPacketId(PacketConst.C_CONNECT_REQUEST);
+			requestConnection.setAccessToken(999);
 			requestConnection.setConnectionType(NetConnectionType.CLIENT_MASTER.value());
 			channel.write(requestConnection);
 			channel.flush();

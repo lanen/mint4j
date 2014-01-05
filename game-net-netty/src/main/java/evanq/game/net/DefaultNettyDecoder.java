@@ -10,7 +10,7 @@ import java.util.List;
 
 import evanq.game.net.io.InputSerializer;
 
-public class NettyDecoder extends ByteToMessageDecoder {
+public class DefaultNettyDecoder extends ByteToMessageDecoder {
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,

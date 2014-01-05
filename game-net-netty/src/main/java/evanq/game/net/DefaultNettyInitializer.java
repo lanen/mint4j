@@ -6,11 +6,16 @@ import io.netty.channel.socket.SocketChannel;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 
-class NettyInitializer extends ChannelInitializer<SocketChannel> {
+/**
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
+class DefaultNettyInitializer extends ChannelInitializer<SocketChannel> {
 	
 	private INetConnectionManager manager;
 	
-	public NettyInitializer(INetConnectionManager manager) {
+	public DefaultNettyInitializer(INetConnectionManager manager) {
 		this.manager = manager;
 	}
 	
@@ -27,11 +32,11 @@ class NettyInitializer extends ChannelInitializer<SocketChannel> {
 		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
 		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
 		
-		pipeline.addLast("decoder", new NettyDecoder());		
-		pipeline.addLast("encoder", new NettyEncoder());
+		pipeline.addLast("decoder", new DefaultNettyDecoder());		
+		pipeline.addLast("encoder", new DefaultNettyEncoder());
 
 		// 处理器
-		pipeline.addLast("handler", new NettyHandler(new NettyNetConnectionManagerAdaptor((AbstractNetConnectionManager)manager)));
+		pipeline.addLast("handler", new DefaultNettyHandler(new NettyNetConnectionManagerAdaptor((AbstractNetConnectionManager)manager)));
 
 	}
 	

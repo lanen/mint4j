@@ -18,19 +18,14 @@ public class SRequestConnection_OK extends AbstractPacket {
 		super(PacketConst.PACKET_TYPE_SERVER);
 	}
 	
-	
 
 	@Override
 	public void execute() {
-		// TODO Auto-generated method stub
 		
 	}
 
-
-
 	@Override
 	public void writeObject(OutputSerializer out) throws IOException {
-		// TODO Auto-generated method stub
 		
 	}
 

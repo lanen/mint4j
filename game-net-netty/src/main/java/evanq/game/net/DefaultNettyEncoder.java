@@ -6,7 +6,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToByteEncoder;
 import evanq.game.net.io.OutputSerializer;
 
-public class NettyEncoder extends MessageToByteEncoder<AbstractPacket> {
+public class DefaultNettyEncoder extends MessageToByteEncoder<AbstractPacket> {
 
 	@Override
 	protected void encode(ChannelHandlerContext ctx, AbstractPacket msg, ByteBuf out)

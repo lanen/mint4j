@@ -1,8 +1,5 @@
 package evanq.game.net;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-
 import io.netty.channel.Channel;
 
 class NettyConnection extends AbstractNetConnection {
@@ -23,42 +20,16 @@ class NettyConnection extends AbstractNetConnection {
 	//链接通讯状态  channel state
 	//客户端与服务端的时间差值
 	
-	private NetConnectionState state;
-	
 	//连接号
 	//授权验证号
 	private Channel channel;
 	
-	public static LinkedList<NettyConnection> wait_connect = new LinkedList<NettyConnection>();
-	public static LinkedList<NettyConnection> wait_close = new LinkedList<NettyConnection>();
+//	public static LinkedList<NettyConnection> wait_connect = new LinkedList<NettyConnection>();
+//	public static LinkedList<NettyConnection> wait_close = new LinkedList<NettyConnection>();
 	
-	NettyConnection(Channel channel){
+	NettyConnection(Channel channel,NetConnectionType type){
+		super(type);
 		this.channel = channel;
-	}
-	
-
-	@Override
-	public void onConnected() {
-		//连接接入
-		
-		state = NetConnectionState.CONNECTING;
-		wait_connect.add(this);
-		//交给wait_connect
-		
-		
-		//TODO 是否使用三次握手
-		//1. xxx
-		//2. xxx+1,sessionkey
-		//3. 1,sessionkey
-	}
-
-	@Override
-	public void onDisconnected() {
-		//连接断开
-		
-		state = NetConnectionState.BROKEN;
-		//交给wait_close;
-		wait_close.add(this);
 	}
 
 	@Override
@@ -68,15 +39,7 @@ class NettyConnection extends AbstractNetConnection {
 
 	@Override
 	public void recv(IPacket packet) {
-		packet.connection(this)	;
-		packet.execute();
-	}
-	
-
-	@Override
-	public NetConnectionType type() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new UnsupportedOperationException();
 	}
 
 
@@ -102,6 +65,4 @@ class NettyConnection extends AbstractNetConnection {
 		return channel.equals(nc.channel);
 	}
 
-	
-	
 }
