@@ -2,6 +2,13 @@ package evanq.game.utils;
 
 import java.util.concurrent.ConcurrentMap;
 
+/**
+ * 
+ * 检测是否有重命名
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class UniqueUtils {
 	
 	/**

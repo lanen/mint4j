@@ -9,9 +9,13 @@ import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
 import evanq.game.net.packets.CRequestConnection;
+import evanq.game.trace.Trace;
+import evanq.game.trace.LogSystem;
 
 @RunWith(JUnit4.class)
 public class NetConnectionTest {
+	
+
 	
 	NetServiceAdaptor server ;
 	NetServiceAdaptor client ;
@@ -28,6 +32,7 @@ public class NetConnectionTest {
 			
 		});
 		server.open();
+		
 		
 		
 		//等待服务端启动完毕	

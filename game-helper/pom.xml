@@ -14,7 +14,6 @@
   <url>http://maven.apache.org</url>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <project.hibernateVersion>4.2.3.Final</project.hibernateVersion>		
     
   </properties>
   <dependencies>
@@ -33,7 +32,7 @@
     
     
     <!-- //数据库{{{
-	 -->
+	 
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -57,8 +56,9 @@
 			<artifactId>hibernate-ehcache</artifactId>
 			<version>${project.hibernateVersion}</version>
 		</dependency>
-
-	 <!-- //数据库}}}
+	
+	 
+	 //数据库}}}
 	  -->
     
   </dependencies>
