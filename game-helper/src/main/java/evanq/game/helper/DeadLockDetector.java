@@ -6,10 +6,8 @@ import java.lang.management.MonitorInfo;
 import java.lang.management.ThreadInfo;
 import java.lang.management.ThreadMXBean;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import evanq.game.errno.ExitCode;
+import evanq.game.utils.ExceptionUtils;
 
 
 /**
@@ -21,8 +19,7 @@ import evanq.game.errno.ExitCode;
  */
 public class DeadLockDetector extends Thread {
 
-	private Logger logger = LoggerFactory.getLogger("exception");
-
+	
 	/** 出现死锁，什么都不做 */
 	public static final byte NOTHING = 0;
 
@@ -88,7 +85,7 @@ public class DeadLockDetector extends Thread {
 									+ dl.getLockOwnerName() + "\n";
 						}
 					}
-					logger.error(info);
+					ExceptionUtils.getTrace().error(info);
 
 					if (doWhenDL == RESTART) {
 						System.exit(ExitCode.CODE_RESTART);
@@ -96,7 +93,7 @@ public class DeadLockDetector extends Thread {
 				}
 				Thread.sleep(sleepTime);
 			} catch (Exception e) {
-				logger.error("DeadLockDetector: " + e, e);
+				ExceptionUtils.getTrace().error("{}",e);
 			}
 		}
 

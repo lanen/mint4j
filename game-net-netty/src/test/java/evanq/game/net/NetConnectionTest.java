@@ -11,6 +11,7 @@ import org.junit.runners.JUnit4;
 import evanq.game.net.packets.CRequestConnection;
 import evanq.game.trace.Trace;
 import evanq.game.trace.LogSystem;
+import evanq.game.trace.TraceConstant;
 
 @RunWith(JUnit4.class)
 public class NetConnectionTest {
@@ -61,7 +62,10 @@ public class NetConnectionTest {
 					
 					@Override
 					public void onStart(Channel channel_) {				
-						System.out.println("客户端连接完毕");
+						
+						LogSystem logSystem = new LogSystem(TraceConstant.GAME_SYSTEM);
+						Trace trace = logSystem.getTrace(NettyConnection.class);
+						trace.info("客户端连接完毕");
 						
 						flag = CLIENT_STARTED;
 						

@@ -19,6 +19,9 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+
 /**
  * 
  * 单线程执行提交上来的所有任务
@@ -27,8 +30,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public abstract class SingleThreadEventExecutor extends AbstractEventExecutor {
-	
-	private static final Logger logger = LoggerFactory.getLogger(SingleThreadEventExecutor.class);
+	private static final Trace logger = LogSystem.getDefaultTrace(SingleThreadEventExecutor.class);
+
 	
 	//线程的5个状态
 	private static final int ST_NOT_STARTED = 1;

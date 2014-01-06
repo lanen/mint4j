@@ -1,6 +1,6 @@
 package evanq.game.env.impl;
 
-import evanq.game.env.IOptionRegistry;
+import evanq.game.utils.DefaultAttributeMap;
 
 /**
  * 
@@ -10,7 +10,7 @@ import evanq.game.env.IOptionRegistry;
  * @author Evan
  *
  */
-public class ConsoleArgumentOptions extends IOptionRegistry {
+public class ConsoleArgumentOptions extends DefaultAttributeMap {
 
 	//-c The config file
 	//-p Server Port

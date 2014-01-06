@@ -1,5 +1,7 @@
 package evanq.game.env;
 
+import evanq.game.utils.AttributeMap;
+
 /**
  * 
  * 运行游戏世界的环境
@@ -22,7 +24,7 @@ env.notifySetup();
 public interface IEnvironment {
 
 	//获取环境参数
-	public IEnvironment accept(IOptionRegistry option);
+	public IEnvironment accept(AttributeMap option);
 	
 	//环境解释参数
 	public IEnvironment notifySetup();

@@ -2,8 +2,8 @@ package evanq.game.env.impl;
 
 import evanq.game.database.DB;
 import evanq.game.env.IEnvironment;
-import evanq.game.env.IOptionRegistry;
 import evanq.game.helper.DeadLockDetector;
+import evanq.game.utils.AttributeMap;
 
 /**
  * 
@@ -17,8 +17,7 @@ public class SimpleEnvironment implements IEnvironment {
 
 	
 	@Override
-	public IEnvironment accept(IOptionRegistry option) {
-
+	public IEnvironment accept(AttributeMap option) {
 		return this;
 	}
 

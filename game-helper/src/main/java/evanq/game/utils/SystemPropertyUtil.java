@@ -1,10 +1,9 @@
 package evanq.game.utils;
 
-import java.util.logging.Level;
 import java.util.regex.Pattern;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
 
 /**
  * 
@@ -16,11 +15,11 @@ public final class SystemPropertyUtil {
 	@SuppressWarnings("all")
 
 	private static boolean initializedLogger;
-	private static final Logger logger;
+	private static final Trace logger;
 	private static boolean loggedException;
 
 	static {
-		logger = LoggerFactory.getLogger(SystemPropertyUtil.class);
+		logger = LogSystem.getDefaultTrace(SystemPropertyUtil.class);
 		initializedLogger = true;
 	}
 
@@ -172,21 +171,13 @@ public final class SystemPropertyUtil {
 
 	private static void log(String msg) {
 		if (initializedLogger) {
-			logger.warn(msg);
-		} else {
-			// Use JDK logging if logger was not initialized yet.
-			java.util.logging.Logger.getLogger(SystemPropertyUtil.class.getName()).log(
-					Level.WARNING, msg);
+			logger.error(msg);
 		}
 	}
 
 	private static void log(String msg, Exception e) {
 		if (initializedLogger) {
-			logger.warn(msg, e);
-		} else {
-			// Use JDK logging if logger was not initialized yet.
-			java.util.logging.Logger.getLogger(SystemPropertyUtil.class.getName()).log(
-					Level.WARNING, msg, e);
+			logger.error(msg, e);
 		}
 	}
 

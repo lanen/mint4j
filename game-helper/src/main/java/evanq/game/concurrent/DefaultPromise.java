@@ -5,10 +5,9 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import java.util.concurrent.CancellationException;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import evanq.game.errno.Signal;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
 import evanq.game.utils.EmptyArrays;
 import evanq.game.utils.ExceptionUtils;
 import evanq.game.utils.StringUtil;
@@ -20,7 +19,7 @@ import evanq.game.utils.StringUtil;
  */
 public class DefaultPromise<V> extends AbstractFuture<V> implements Promise<V> {
 
-    private static final Logger logger = LoggerFactory.getLogger(DefaultPromise.class);
+	private static final Trace logger = LogSystem.getDefaultTrace(DefaultPromise.class);
 
     private static final int MAX_LISTENER_STACK_DEPTH = 8;
     private static final ThreadLocal<Integer> LISTENER_STACK_DEPTH = new ThreadLocal<Integer>() {

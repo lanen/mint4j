@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import evanq.game.helper.New;
+import evanq.game.utils.ExceptionUtils;
 import evanq.game.utils.IOUtils;
 
 
@@ -140,11 +141,7 @@ public class LogSystem implements LogWriter {
      */
     public static void traceThrowable(Throwable e) {
     	//TODO 将异常重定向到制定的日志writer
-    	e.printStackTrace();
-//        PrintWriter writer = DriverManager.getLogWriter();
-//        if (writer != null) {
-//            e.printStackTrace(writer);
-//        }
+    	ExceptionUtils.printStackTrace(e);
     }
 
     /**
@@ -186,6 +183,15 @@ public class LogSystem implements LogWriter {
     	
     }
 
+    private static LogSystem LOGSYSTEM;
+    public static Trace getDefaultTrace(Class<?> clazz){
+    	if(null == LOGSYSTEM){
+    		LOGSYSTEM = new LogSystem(TraceConstant.GAME_SYSTEM);
+    		LOGSYSTEM.setLogLevel(LogLevel.INFO);
+    	}
+    	return LOGSYSTEM.getTrace(clazz	);
+    }
+    
     @Override
     public boolean isEnabled(int level) {
         return level <= this.levelMax;
@@ -209,10 +215,6 @@ public class LogSystem implements LogWriter {
         levelSystemOut = level;
         updateLogLevel();
     }
-
- 
-
-    
 
     private synchronized String format(String module, String s) {
         if (dateFormat == null) {

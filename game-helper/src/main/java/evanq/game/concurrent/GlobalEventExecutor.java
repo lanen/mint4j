@@ -15,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+
 /**
  * 
  * 此类被设计为单例，提供一个公用的{@link EventExecutor}。
@@ -25,8 +28,8 @@ import org.slf4j.LoggerFactory;
  *
  */
 public final class GlobalEventExecutor extends AbstractEventExecutor {
+	private static final Trace logger = LogSystem.getDefaultTrace(GlobalEventExecutor.class);
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalEventExecutor.class);
 
     private static final int ST_NOT_STARTED = 1;
     private static final int ST_STARTED = 2;

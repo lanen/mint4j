@@ -15,6 +15,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+import evanq.game.trace.TraceConstant;
+
 //TODO 增加断线重连特性
 //TODO 增加关闭通知所有客户端特性
 //TODO 增加连接心跳特性
@@ -29,6 +33,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class NetServiceAdaptor implements Runnable {
 
+	private Trace logger;
+	private LogSystem logSystem;
 	/**
 	 * 以下罗列出此对象的服务状态
 	 */
@@ -106,6 +112,8 @@ public class NetServiceAdaptor implements Runnable {
 				throw new NullPointerException("host");
 			}
 		}
+		
+		logSystem = new LogSystem(TraceConstant.CONNECTION);
 		
 		
 		if (null == netManager) {

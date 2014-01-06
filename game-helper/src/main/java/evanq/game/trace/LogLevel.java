@@ -15,17 +15,19 @@ public interface LogLevel {
      * This log level means only errors should be written.
      */
     public static final int ERROR = 1;
+    
+    public static final int WARN = 2;
 
     /**
      * This log level means errors and informational messages should be
      * written.
      */
-    public static final int INFO = 2;
+    public static final int INFO = 3;
 
     /**
      * This log level means all type of messages should be written.
      */
-    public static final int DEBUG = 3;
+    public static final int DEBUG = 4;
 
 
 }

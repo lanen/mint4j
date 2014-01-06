@@ -40,7 +40,9 @@ class LogWriterAdapter implements LogWriter {
         case LogLevel.INFO:
             return logger.isInfoEnabled();
         case LogLevel.ERROR:
-            return logger.isErrorEnabled();
+        	return logger.isErrorEnabled();
+        case LogLevel.WARN:
+            return logger.isWarnEnabled();
         default:
             return false;
         }
@@ -57,6 +59,9 @@ class LogWriterAdapter implements LogWriter {
     			break;
     		case LogLevel.INFO:
     			logger.info(format,objects);
+    			break;
+    		case LogLevel.WARN:
+    			logger.warn(format,objects);
     			break;
     		case LogLevel.ERROR:
     			logger.error(format,objects);
@@ -75,6 +80,9 @@ class LogWriterAdapter implements LogWriter {
 				break;
 			case LogLevel.INFO:
 				logger.info(s);
+				break;
+			case LogLevel.WARN:
+				logger.warn(s);
 				break;
 			case LogLevel.ERROR:
 				logger.error(s);

@@ -38,5 +38,7 @@ public interface TraceConstant {
      * The trace module name for netty.
      */
     public static final String CONNECTION = "connection";
+    
+    public static final String EXCEPTION = "exception";
 
 }

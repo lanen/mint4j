@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 
 import evanq.game.concurrent.DefaultThreadFactory;
 import evanq.game.concurrent.MultithreadEventExecutorGroup;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
 import evanq.game.utils.SystemPropertyUtil;
 
 /**
@@ -19,7 +21,7 @@ import evanq.game.utils.SystemPropertyUtil;
 public abstract class MultithreadLoopGroup extends
 		MultithreadEventExecutorGroup implements ILoopGroup {
 
-    private static final Logger logger = LoggerFactory.getLogger(MultithreadLoopGroup.class);
+	private static final Trace logger = LogSystem.getDefaultTrace(MultithreadLoopGroup.class);
 
     private static final int DEFAULT_EVENT_LOOP_THREADS;
 

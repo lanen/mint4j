@@ -1,11 +1,11 @@
 package evanq.game.concurrent.loop;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
 
 public abstract class AbstractTask implements ITask {
     
-    private static final Logger logger = LoggerFactory.getLogger(AbstractTask.class);
+	private static final Trace logger = LogSystem.getDefaultTrace(AbstractTask.class);
 
 //    private final ITaskFuture succeededFuture = new SucceededChannelFuture(this, null);
 //    private final VoidChannelPromise voidPromise = new VoidChannelPromise(this, true);
@@ -85,9 +85,9 @@ public abstract class AbstractTask implements ITask {
                      }
                  });
              } catch (Throwable t) {
-                 logger.warn(
+                 logger.error(
                          "Force-closing a channel whose registration task was not accepted by an event loop: {}",
-                         AbstractTask.this, t);               
+                          t);               
                  promise.setFailure(t);
              }
          }
@@ -130,9 +130,9 @@ public abstract class AbstractTask implements ITask {
 		} catch (Throwable t) {
 
 			if (!promise.tryFailure(t)) {
-				logger.warn(
+				logger.error(
 						"Tried to fail the registration promise, but it is complete already. "
-								+ "Swallowing the cause of the registration failure:",
+								+ "Swallowing the cause of the registration failure:{}",
 						t);
 			}
 		}

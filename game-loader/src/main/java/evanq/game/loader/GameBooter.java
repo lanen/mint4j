@@ -5,6 +5,7 @@ import evanq.game.env.impl.SimpleEnvironment;
 import evanq.game.env.impl.SystemPropertyOptions;
 import evanq.game.module.rpg.IWorldFacade;
 import evanq.game.rpg.impl.WorldInstance;
+import evanq.game.utils.Attribute;
 
 /**
  * 
@@ -26,7 +27,7 @@ public class GameBooter {
 		
 		//step 2. 准备游戏世界
 		SimpleEnvironment env = new SimpleEnvironment();
-	
+			
 		env.accept(sysprop);
 		env.accept(option);
 		
