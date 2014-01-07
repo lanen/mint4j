@@ -18,7 +18,7 @@ public class Trace {
      *
      * @param level the new level
      */
-    public void setLevel(int level) {
+    void setLevel(int level) {
         this.traceLevel = level;
     }
 

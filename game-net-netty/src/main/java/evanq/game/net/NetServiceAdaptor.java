@@ -17,7 +17,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
-import evanq.game.trace.TraceConstant;
 
 //TODO 增加断线重连特性
 //TODO 增加关闭通知所有客户端特性
@@ -33,8 +32,7 @@ import evanq.game.trace.TraceConstant;
  */
 public class NetServiceAdaptor implements Runnable {
 
-	private Trace logger;
-	private LogSystem logSystem;
+	private Trace logger = LogSystem.getDefaultTrace(NetServiceAdaptor.class);
 	
 	
 	/**
@@ -115,9 +113,6 @@ public class NetServiceAdaptor implements Runnable {
 			}
 		}
 		
-		logSystem = new LogSystem(TraceConstant.CONNECTION);
-		
-		
 		if (null == netManager) {
 			netManager = newINetManager();
 		}
@@ -150,9 +145,6 @@ public class NetServiceAdaptor implements Runnable {
 		synchronized (stateLock) {
 			state = NET_SERVICE_STATE_OPENED;
 		}
-
-		//TODO 绑定数据包
-		PacketAllocator.getInstance().doRegister();
 
 		switch (type) {
 		case CLIENT:
@@ -201,7 +193,8 @@ public class NetServiceAdaptor implements Runnable {
 				@Override
 				public void operationComplete(Future<? super Void> future)
 						throws Exception {
-					
+					logger.info("{} listen at {}:{}",type,host,port);
+
 					for (INetStartListener l : startListeners) {
 						l.onStart(NetServiceAdaptor.this.channel);
 					}
@@ -214,7 +207,10 @@ public class NetServiceAdaptor implements Runnable {
 				@Override
 				public void operationComplete(
 						Future<? super Void> future) throws Exception {
+					
+					logger.info("{} for {}:{} closing!",type,host,port);
 					for (INetCloseListener l : closeListeners) {
+						
 						l.onClose(NetServiceAdaptor.this.channel); 
 					}
 				}
@@ -248,7 +244,7 @@ public class NetServiceAdaptor implements Runnable {
 				@Override
 				public void operationComplete(Future<? super Void> future)
 						throws Exception {
-					
+					logger.info("{} listen connect to {}:{}",type,host,port);
 					for (INetStartListener l : startListeners) {
 						l.onStart(NetServiceAdaptor.this.channel);
 					}
@@ -262,6 +258,9 @@ public class NetServiceAdaptor implements Runnable {
 					@Override
 					public void operationComplete(
 							Future<? super Void> future) throws Exception {
+						
+						
+						logger.info("{} to {}:{} closing!",type,host,port);
 						for (INetCloseListener l : closeListeners) {
 							l.onClose(NetServiceAdaptor.this.channel); 
 						}

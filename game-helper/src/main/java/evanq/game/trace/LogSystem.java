@@ -184,12 +184,31 @@ public class LogSystem implements LogWriter {
     }
 
     private static LogSystem LOGSYSTEM;
+    
+    /**
+     * 如果横向跟踪 Class<?>
+     * @param clazz
+     * @return
+     */
     public static Trace getDefaultTrace(Class<?> clazz){
+    	if(null == LOGSYSTEM){
+    		LOGSYSTEM = new LogSystem(TraceConstant.GAME_SYSTEM,true);
+    		LOGSYSTEM.setLogLevel(LogLevel.INFO);
+    	}
+    	return LOGSYSTEM.getTrace(clazz	);
+    }
+    
+    /**
+     * 如果纵向跟踪对象（connection[1234]）或者类
+     * @param module
+     * @return
+     */
+    public static Trace getDefaultTrace(String module){
     	if(null == LOGSYSTEM){
     		LOGSYSTEM = new LogSystem(TraceConstant.GAME_SYSTEM);
     		LOGSYSTEM.setLogLevel(LogLevel.INFO);
     	}
-    	return LOGSYSTEM.getTrace(clazz	);
+    	return LOGSYSTEM.getTrace(module);
     }
     
     @Override

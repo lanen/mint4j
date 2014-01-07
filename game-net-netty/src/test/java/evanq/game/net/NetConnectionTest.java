@@ -16,7 +16,7 @@ import evanq.game.trace.TraceConstant;
 @RunWith(JUnit4.class)
 public class NetConnectionTest {
 	
-
+	private Trace logger = LogSystem.getDefaultTrace(NetConnectionTest.class);
 	
 	NetServiceAdaptor server ;
 	NetServiceAdaptor client ;
@@ -28,7 +28,8 @@ public class NetConnectionTest {
 			
 			@Override
 			public void onStart(Channel channel) {
-				System.out.println("服务器启动完毕");
+				
+				PacketAllocator.getInstance().doRegister();
 			}
 			
 		});
@@ -63,9 +64,7 @@ public class NetConnectionTest {
 					@Override
 					public void onStart(Channel channel_) {				
 						
-						Trace trace = LogSystem.getDefaultTrace(NettyConnection.class);
-						trace.info("客户端连接完毕 {}",channel_);
-						
+						logger.info(" on start client ,the channer is {}",channel_);
 						flag = CLIENT_STARTED;
 						
 						channel = channel_;

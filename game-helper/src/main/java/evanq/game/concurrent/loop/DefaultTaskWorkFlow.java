@@ -21,34 +21,34 @@ public class DefaultTaskWorkFlow implements ITaskWorkFlow {
 
 	@Override
 	public void fireRegistered() {
-		System.out.println("DefaultTaskWorkFlow.fireRegistered()");
+//		System.out.println("DefaultTaskWorkFlow.fireRegistered()");
 	}
 
 	@Override
 	public void fireActived() {
-		System.out.println("DefaultTaskWorkFlow.fireActived()");
+//		System.out.println("DefaultTaskWorkFlow.fireActived()");
 	}
 
 	@Override
 	public void fireDeActived() {
-		System.out.println("DefaultTaskWorkFlow.fireDeActived()");
+//		System.out.println("DefaultTaskWorkFlow.fireDeActived()");
 	
 	}
 
 	@Override
 	public void fireDeRegistered() {
 
-		System.out.println("DefaultTaskWorkFlow.fireDeRegistered()");
+//		System.out.println("DefaultTaskWorkFlow.fireDeRegistered()");
 	}
 
 	@Override
 	public void fireMovement() {
-		System.out.println("DefaultTaskWorkFlow.fireMovement()");
+//		System.out.println("DefaultTaskWorkFlow.fireMovement()");
 	}
 
 	@Override
 	public void fireException(Throwable cause) {
-		System.out.println("DefaultTaskWorkFlow.fireException()");
+//		System.out.println("DefaultTaskWorkFlow.fireException()");
 	}
 
 }
