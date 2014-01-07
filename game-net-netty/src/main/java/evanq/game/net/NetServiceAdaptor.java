@@ -35,6 +35,8 @@ public class NetServiceAdaptor implements Runnable {
 
 	private Trace logger;
 	private LogSystem logSystem;
+	
+	
 	/**
 	 * 以下罗列出此对象的服务状态
 	 */

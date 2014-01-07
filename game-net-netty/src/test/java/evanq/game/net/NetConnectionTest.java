@@ -23,7 +23,7 @@ public class NetConnectionTest {
 	
 	@Before
 	public synchronized void setUp(){
-		server = new NetServiceAdaptor(NetServiceType.SERVER,8001,null);
+		server = new NetServiceAdaptor(NetServiceType.SERVER,8081,null);
 		server.addStartListener(new INetStartListener() {
 			
 			@Override
@@ -38,7 +38,7 @@ public class NetConnectionTest {
 		
 		//等待服务端启动完毕	
 		
-		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8001,null);
+		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8081,null);
 
 	}
 	
@@ -63,9 +63,8 @@ public class NetConnectionTest {
 					@Override
 					public void onStart(Channel channel_) {				
 						
-						LogSystem logSystem = new LogSystem(TraceConstant.GAME_SYSTEM);
-						Trace trace = logSystem.getTrace(NettyConnection.class);
-						trace.info("客户端连接完毕");
+						Trace trace = LogSystem.getDefaultTrace(NettyConnection.class);
+						trace.info("客户端连接完毕 {}",channel_);
 						
 						flag = CLIENT_STARTED;
 						
