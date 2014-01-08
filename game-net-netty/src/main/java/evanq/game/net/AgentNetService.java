@@ -7,22 +7,22 @@ package evanq.game.net;
  * @author Evan cppmain@gmail.com
  *
  */
-public class AgentServer extends NetServiceAdaptor {
+public class AgentNetService extends NetServiceAdaptor {
 	
-	public AgentServer(NetServiceType type, int port,
+	public AgentNetService(NetServiceType type, int port,
 			INetConnectionManager netManager,
 			AbstractPacketAllocator packetAllocator) {
 		super(type, port, netManager, packetAllocator);
 	}
 
-	public AgentServer(NetServiceType type, String host, int port,
+	public AgentNetService(NetServiceType type, String host, int port,
 			INetConnectionManager netManager,
 			AbstractNettyInitializer nettyInitializer,
 			AbstractPacketAllocator packetAllocator) {
 		super(type, host, port, netManager, nettyInitializer, packetAllocator);
 	}
 
-	public AgentServer(NetServiceType type, String host, int port,
+	public AgentNetService(NetServiceType type, String host, int port,
 			INetConnectionManager netManager,
 			AbstractPacketAllocator packetAllocator) {
 		super(type, host, port, netManager, packetAllocator);

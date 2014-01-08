@@ -197,6 +197,18 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 			}
 		}
 	}
+	
+	@Override
+	public void send(IPacket packet) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void receive(IPacket packet) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public boolean isOpen(){
 		return state == NET_SERVICE_STATE_OPENED;

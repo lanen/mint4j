@@ -22,6 +22,21 @@ public interface INetService {
 	
 	/**
 	 * 
+	 * 要求发送数据
+	 * 
+	 * @param packet
+	 */
+	public void send(IPacket packet);
+	
+	/**
+	 * 要求接受数据
+	 * 这里概念模糊
+	 * @param packet
+	 */
+	public void receive(IPacket packet);
+	
+	/**
+	 * 
 	 * @return
 	 */
 	public NetServiceType serviceTye();

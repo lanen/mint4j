@@ -1,19 +1,16 @@
 package evanq.game.net;
 
+/**
+ * 
+ * 代理服务的连接管理
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class AgentNetConnectionManager extends AbstractNetConnectionManager {
-
-	/**
-	 * 
-	 * 保持所有来自服务器节点的连接
-	 * 
-	 */
-	private AbstractNetConnectionHolder holdingServerNodeConnections;
 
 	protected AgentNetConnectionManager(NetServiceType serviceType) {
 		super(serviceType);
-		// TODO Auto-generated constructor stub
 	}
-
-
 
 }

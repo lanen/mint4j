@@ -1,5 +1,12 @@
 package evanq.game.net;
 
+/**
+ * 连接管理器
+ * 
+ * C OR S
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public interface INetConnectionManager {
 
 	//map<INetConnectionGroup,INetConnectionHolder>

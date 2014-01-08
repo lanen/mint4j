@@ -86,7 +86,7 @@ class NettyNetConnectionManagerAdaptor {
 	}
 	
 	//TODO 断开连接
-	class ChannelDeActiveCommand implements ICommand{
+	class ChannelDeActiveCommand implements ICommand {
 		Channel channel;
 		@Override
 		public void execute() {
