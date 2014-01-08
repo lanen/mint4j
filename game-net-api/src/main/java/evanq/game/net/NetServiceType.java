@@ -9,5 +9,11 @@ package evanq.game.net;
  */
 public enum NetServiceType {
 
-	CLIENT,SERVER
+	CLIENT,
+	
+	/** 提供中专服务 */
+	AGENT_CLIENT,
+	AGENT_SERVER,
+	/***/
+	SERVER
 }

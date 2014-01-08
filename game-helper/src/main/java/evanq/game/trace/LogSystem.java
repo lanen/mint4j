@@ -235,11 +235,27 @@ public class LogSystem implements LogWriter {
         updateLogLevel();
     }
 
-    private synchronized String format(String module, String s) {
-        if (dateFormat == null) {
-            dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss ");
+    private synchronized String format(int level,String module, String s) {
+        if (dateFormat == null) {//15:08:32.205
+            dateFormat = new SimpleDateFormat("HH:mm:ss.S ");
         }
-        return dateFormat.format(new Date()) + module + " - " + s;
+        String i = "";
+        switch(level){
+        case LogLevel.DEBUG:
+        	i="DEBUG";break;
+        case LogLevel.ERROR:
+        	i="ERROR";break;
+        case LogLevel.INFO:
+        	i="INFO";break;
+        case LogLevel.WARN:
+        	i="WARN";break;
+        }
+        
+        StringBuffer sb = new StringBuffer();
+        sb.append(dateFormat.format(new Date()) );
+        sb.append(" ").append(i).append("  " ).append(module).append(" - ").append(" ").append(s);
+        
+        return sb.toString();
     }
 
     @Override
@@ -247,11 +263,11 @@ public class LogSystem implements LogWriter {
         if (level <= levelSystemOut || level > this.levelMax) {
             // level <= levelSystemOut: the system out level is set higher
             // level > this.level: the level for this module is set higher
-            sysOut.println(format(module, s));            
+            sysOut.println(format(level,module, s));            
         }
         if (fileName != null) {
             if (level <= logLevel) {            	
-            	writeFile(format(module, s));
+            	writeFile(format(level,module, s));
             }
         }
     }
@@ -262,13 +278,13 @@ public class LogSystem implements LogWriter {
               // level <= levelSystemOut: the system out level is set higher
               // level > this.level: the level for this module is set higher
     		  FormattingTuple format2 = MessageFormatter.arrayFormat(format, objects);
-    		  sysOut.println(format(module, format2.getMessage()));
+    		  sysOut.println(format(level,module, format2.getMessage()));
           }
     	  
           if (fileName != null) {
               if (level <= logLevel) {            	
         		FormattingTuple format2 = MessageFormatter.arrayFormat(format, objects);
-              	writeFile(format(module, format2.getMessage()));
+              	writeFile(format(level,module, format2.getMessage()));
               }
           }
 	}
@@ -281,6 +297,8 @@ public class LogSystem implements LogWriter {
      */
     private synchronized void writeFile(String s) {
         try {
+        	
+        	//TODO 记录日志的条数
             if (checkSize++ >= CHECK_SIZE_EACH_WRITES) {
                 checkSize = 0;
                 closeWriter();

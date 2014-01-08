@@ -10,7 +10,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
  * @author Evan cppmain@gmail.com
  *
  */
-class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
+public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
 	private NettyNetConnectionManagerAdaptor netConnectionManager;
 	

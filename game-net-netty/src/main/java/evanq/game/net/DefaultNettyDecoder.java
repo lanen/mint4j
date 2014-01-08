@@ -8,10 +8,17 @@ import io.netty.handler.codec.CodecException;
 
 import java.util.List;
 
-import evanq.game.net.io.InputSerializer;
+import evanq.game.net.io.DefaultDataReader;
 
 public class DefaultNettyDecoder extends ByteToMessageDecoder {
+	
+	private AbstractPacketAllocator packetAllocator;
 
+	public DefaultNettyDecoder(AbstractPacketAllocator packetAllocator) {
+		
+		this.packetAllocator = packetAllocator;
+	}
+	
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
@@ -31,17 +38,18 @@ public class DefaultNettyDecoder extends ByteToMessageDecoder {
 		
 		int commandKey = in.readChar();
 
-		AbstractPacket newPacket = PacketAllocator.getInstance().newPacket(commandKey);
+		AbstractPacket newPacket = this.packetAllocator.newPacket(commandKey);
 
 		if (null == newPacket) {
 			throw new CodecException("commandKey " + commandKey
 					+ " do not request");
 		}
-		
+	
 		ByteBufInputStream os = new ByteBufInputStream(in);
-		InputSerializer serializer = new InputSerializer(os);
+
+		DefaultDataReader reader = new DefaultDataReader(os);	
 		
-		newPacket.readObject(serializer);
+		newPacket.readObject(reader);
 		
 		out.add(newPacket);
 

@@ -9,7 +9,7 @@
     </encoder>
   </appender>
   
-  <logger name="io.netty" level="OFF" />  
+  <logger name="io.netty" level="warn" />  
 
   <root level="debug">
     <appender-ref ref="STDOUT" />

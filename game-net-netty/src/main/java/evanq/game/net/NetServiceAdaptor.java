@@ -30,7 +30,7 @@ import evanq.game.trace.Trace;
  * @author Evan cppmain@gmail.com
  * 
  */
-public class NetServiceAdaptor implements Runnable {
+public class NetServiceAdaptor  implements INetService, Runnable {
 
 	private Trace logger = LogSystem.getDefaultTrace(NetServiceAdaptor.class);
 	
@@ -38,16 +38,16 @@ public class NetServiceAdaptor implements Runnable {
 	/**
 	 * 以下罗列出此对象的服务状态
 	 */
-	private static final byte NET_SERVICE_STATE_IDLE = 1;
+	private static final byte NET_SERVICE_STATE_IDLE    = 1;
 	private static final byte NET_SERVICE_STATE_OPENING = 2;
-	private static final byte NET_SERVICE_STATE_OPENED = 3;
+	private static final byte NET_SERVICE_STATE_OPENED  = 3;
 	private static final byte NET_SERVICE_STATE_CLOSEED = 4;
 
-	private NetServiceType type;
+	protected NetServiceType type;
 
-	private String host;
+	protected String host;
 
-	private int port;
+	protected int port;
 
 	/**
 	 * the channel of net service
@@ -62,17 +62,22 @@ public class NetServiceAdaptor implements Runnable {
 	private Object stateLock = new Object();
 
 	//close listener
-	private List<INetCloseListener> closeListeners = new LinkedList<INetCloseListener>();
+	protected List<IChannelDisposeListener> closeListeners = new LinkedList<IChannelDisposeListener>();
 	
 	//start listener
-	private List<INetStartListener> startListeners = new LinkedList<INetStartListener>();
+	protected List<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
 	
 	
 	/**
-	 * 
+	 * 连接管理器
 	 * @see INetConnectionManager
 	 */
-	private INetConnectionManager netManager;
+	protected INetConnectionManager netManager;
+	
+	/**
+	 * 数据包分配器
+	 */
+	protected AbstractPacketAllocator packetAllocator;
 	
 	/**
 	 * 
@@ -80,15 +85,30 @@ public class NetServiceAdaptor implements Runnable {
 	 * 
 	 * @see DefaultNettyInitializer
 	 */
-	private DefaultNettyInitializer nettyInitializer;
+	protected AbstractNettyInitializer nettyInitializer;
 	
-	public NetServiceAdaptor(NetServiceType type, int port,INetConnectionManager netManager) {
-		this(type,null,port,netManager,null);
+	/**
+	 * 
+	 * @param type
+	 * @param port
+	 * @param netManager
+	 * @param packetAllocator
+	 */
+	public NetServiceAdaptor(NetServiceType type, int port,INetConnectionManager netManager,AbstractPacketAllocator packetAllocator) {
+		this(type,null,port,netManager,null,packetAllocator);
 	}
 
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager) {
+	/**
+	 * 
+	 * @param type
+	 * @param host
+	 * @param port
+	 * @param netManager
+	 * @param packetAllocator
+	 */
+	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,AbstractPacketAllocator packetAllocator) {
 
-		this(type, host, port,netManager,null);
+		this(type, host, port,netManager,null,packetAllocator);
 	}
 
 	/**
@@ -99,7 +119,7 @@ public class NetServiceAdaptor implements Runnable {
 	 * @param netManager
 	 * @param nettyInitializer
 	 */
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,DefaultNettyInitializer nettyInitializer) {
+	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,AbstractNettyInitializer nettyInitializer,AbstractPacketAllocator packetAllocator) {
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -113,10 +133,15 @@ public class NetServiceAdaptor implements Runnable {
 			}
 		}
 		
+		if(null == packetAllocator){
+			throw new NullPointerException("packetAllocator");
+		}
+		
 		if (null == netManager) {
-			netManager = newINetManager();
+			netManager = newNetManager();
 		}
 		this.netManager = netManager;
+		this.packetAllocator = packetAllocator;
 		
 		if (null == nettyInitializer) {
 			nettyInitializer = newNettyInitializer();
@@ -131,12 +156,12 @@ public class NetServiceAdaptor implements Runnable {
 		
 	}
 	
-	protected INetConnectionManager newINetManager(){
-		return AbstractNetConnectionManager.getInstance();
+	protected INetConnectionManager newNetManager(){
+		return null;//AbstractNetConnectionManager.getInstance();
 	}
 	
-	protected DefaultNettyInitializer newNettyInitializer(){
-		return new DefaultNettyInitializer(this.netManager);
+	protected AbstractNettyInitializer newNettyInitializer(){
+		return new DefaultNettyInitializer(this.netManager,this.packetAllocator);
 	}
 
 	@Override
@@ -151,6 +176,8 @@ public class NetServiceAdaptor implements Runnable {
 			openClientConnect0();
 			break;
 		case SERVER:
+		case AGENT_SERVER:
+		case AGENT_CLIENT:
 			openServer0();
 			break;
 		}
@@ -195,8 +222,8 @@ public class NetServiceAdaptor implements Runnable {
 						throws Exception {
 					logger.info("{} listen at {}:{}",type,host,port);
 
-					for (INetStartListener l : startListeners) {
-						l.onStart(NetServiceAdaptor.this.channel);
+					for (IChannelCreateListener l : startListeners) {
+						l.onCreate(NetServiceAdaptor.this.channel);
 					}
 				}
 			});
@@ -209,9 +236,9 @@ public class NetServiceAdaptor implements Runnable {
 						Future<? super Void> future) throws Exception {
 					
 					logger.info("{} for {}:{} closing!",type,host,port);
-					for (INetCloseListener l : closeListeners) {
+					for (IChannelDisposeListener l : closeListeners) {
 						
-						l.onClose(NetServiceAdaptor.this.channel); 
+						l.onDispose(NetServiceAdaptor.this.channel); 
 					}
 				}
 			}).sync();
@@ -245,8 +272,8 @@ public class NetServiceAdaptor implements Runnable {
 				public void operationComplete(Future<? super Void> future)
 						throws Exception {
 					logger.info("{} listen connect to {}:{}",type,host,port);
-					for (INetStartListener l : startListeners) {
-						l.onStart(NetServiceAdaptor.this.channel);
+					for (IChannelCreateListener l : startListeners) {
+						l.onCreate(NetServiceAdaptor.this.channel);
 					}
 				}
 			});
@@ -257,12 +284,11 @@ public class NetServiceAdaptor implements Runnable {
 
 					@Override
 					public void operationComplete(
-							Future<? super Void> future) throws Exception {
-						
+							Future<? super Void> future) throws Exception {						
 						
 						logger.info("{} to {}:{} closing!",type,host,port);
-						for (INetCloseListener l : closeListeners) {
-							l.onClose(NetServiceAdaptor.this.channel); 
+						for (IChannelDisposeListener l : closeListeners) {
+							l.onDispose(NetServiceAdaptor.this.channel); 
 						}
 					}
 				}).sync();
@@ -290,7 +316,7 @@ public class NetServiceAdaptor implements Runnable {
 		}
 	}
 	
-	public void addStartListener(INetStartListener startListener){
+	public void addChannelCreateListener(IChannelCreateListener startListener){
 	
 		if(NET_SERVICE_STATE_OPENED <= state){
 			throw new IllegalAccessError("必须open() 之前注册startListener");
@@ -301,13 +327,18 @@ public class NetServiceAdaptor implements Runnable {
 		this.startListeners.add(startListener);
 	}
 	
-	public void addCloseListener(INetCloseListener closeListener){
+	public void addChannelDisposeListener(IChannelDisposeListener closeListener){
 		
 		if (null == closeListener) {
 			throw new NullPointerException("closeListener");
 		}
 		
 		this.closeListeners.add(closeListener);;
+	}
+
+	@Override
+	public NetServiceType serviceTye() {
+		return type;
 	}
 	
 }

@@ -1,9 +1,6 @@
 package evanq.game.net;
 
 import io.netty.channel.Channel;
-import evanq.game.trace.LogSystem;
-import evanq.game.trace.Trace;
-import evanq.game.trace.TraceConstant;
 
 class NettyConnection extends AbstractNetConnection {
 
@@ -26,24 +23,10 @@ class NettyConnection extends AbstractNetConnection {
 	//连接号
 	//授权验证号
 	private Channel channel;
-	
-	//the trace for this connection instance : connection[id]
-	protected Trace traceOfConnection;
-	
-	private Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
-	
-//	public static LinkedList<NettyConnection> wait_connect = new LinkedList<NettyConnection>();
-//	public static LinkedList<NettyConnection> wait_close = new LinkedList<NettyConnection>();
-	
+
 	NettyConnection(Channel channel,NetConnectionType type){
 		super(type);
-		this.channel = channel;
-		
-		StringBuffer b= new StringBuffer();
-		b.append(TraceConstant.CONNECTION).append('[').append(channel.hashCode()).append(']');
-		traceOfConnection= LogSystem.getDefaultTrace(b.toString());
-		
-		traceOfConnection.info("Create NetConnection by {}" , channel);
+		this.channel = channel;		
 	}
 
 	@Override

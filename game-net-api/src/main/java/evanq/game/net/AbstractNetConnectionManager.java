@@ -6,6 +6,9 @@ import evanq.game.concurrent.loop.AbstractTask;
 import evanq.game.concurrent.loop.DefaultLoopGroup;
 import evanq.game.concurrent.loop.ICommand;
 import evanq.game.helper.New;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+import evanq.game.trace.TraceConstant;
 
 /**
  * 网络连接管理器
@@ -15,63 +18,69 @@ import evanq.game.helper.New;
  * @author Evan cppmain@gmail.com
  *
  */
-public class AbstractNetConnectionManager implements INetConnectionManager {
-
-	private static class Singleton {
-		public static AbstractNetConnectionManager INSTANCE = new AbstractNetConnectionManager();
-	}
-
-	public static AbstractNetConnectionManager getInstance() {
-		return Singleton.INSTANCE;
-	}
+public abstract class AbstractNetConnectionManager implements INetConnectionManager {
+	
+	private Trace logger ;
+	
+	protected Map<INetConnection,INetConnectionHolder> connections = New.newConcurrentHashMap();
+	
+	private LookAtNetService lookAtNetService;
+	
+	/**
+	 * 用于管理的类型
+	 */
+	protected NetServiceType serviceType;
 	
 	private SingleThreadHolder holder;
 	
 	/**
-	 * 未带验证的连接
+	 * 
+	 * @param serviceType
 	 */
-	private INetConnectionHolder UnAuthGroupHolder;
-	
-	private Map<INetConnection,INetConnectionHolder> connections = New.newConcurrentHashMap();
-	
-	
-	private AbstractNetConnectionManager() {
+	protected AbstractNetConnectionManager(NetServiceType serviceType) {
 		
-		if(null == UnAuthGroupHolder){
-			UnAuthGroupHolder = new AbstractNetConnectionHolder();
-		}
+		//提供一个日志跟踪器
+		StringBuffer s = new StringBuffer()	;
+		s.append(TraceConstant.CONNECTION).append("[").append(serviceType).append("]");
+		logger = LogSystem.getDefaultTrace(s.toString());
+		
+		this.serviceType = serviceType;
 		
 		holder = new SingleThreadHolder();
 		
+		lookAtNetService = new LookAtNetService(this);
 	}
-	
-	/**
-	 * 建立一个验证容器
-	 * @return
-	 */
-	protected INetConnectionHolder newUnAuthGroupHolder(){
-		return null;
-	}
-	
 	
 	@Override
 	public void accpet(INetConnection connection) {
-		AbstractNetConnectionFSM fsm = new AbstractNetConnectionFSM(connection);
-		fsm.update(new CreatingState());
+		
+		//TODO 一旦连接建立，遍给他建立一个状态机。
+		//不同类型的连接，可能需要不同的状态机来管理，这里可以拓展
+		AbstractNetConnectionFSM fsm = new AbstractNetConnectionFSM(this, connection);
 		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
 	}
 
 	@Override
-	public void close(INetConnection connection) {
-		
-		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);
-		
+	public void close(INetConnection connection) {		
+		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);		
 	}
+	
 
 	public SingleThreadHolder singleThread(){
 		return holder;
 	}
 	
+	public INetServiceListener getNetServiceListener(){
+		return lookAtNetService;
+	}
+	
+	/**
+	 * 
+	 * 建立一个线程任务来处理
+	 * 
+	 * @author Evan cppmain@gmail.com
+	 *
+	 */
 	static class SingleThreadHolder extends AbstractTask {
 		
 		private DefaultLoopGroup group = new DefaultLoopGroup(1);
@@ -80,7 +89,6 @@ public class AbstractNetConnectionManager implements INetConnectionManager {
 			super(null);	
 			group.register(this);
 		}
-		
 		
 		@Override
 		protected void doRegister() {
@@ -98,83 +106,41 @@ public class AbstractNetConnectionManager implements INetConnectionManager {
 		
 	}
 	
-	
-	class CreatingState implements INetConnectionState{
+	/**
+	 * 
+	 * 
+	 * @author Evan cppmain@gmail.com
+	 *
+	 */
+	static class LookAtNetService implements INetServiceListener {
 		
-		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			switch(event){
-			case CREATE_OK:
-				//连接创建完毕，放入等待验证的容器中
-				//UnAuthGroupHolder.attach(connection);
-				
-				break;
-			case CREATE_FAILED:
-				//UnAuthGroupHolder.unAttach(connection);
-				connection.fsm().update(new CloseState());
-				break;
-			case AUTH_OK:			
-				//TODO step 2. 进入账号载入流程
-				connection.fsm().update(new OpenState());				
-				break;
-			case AUTH_FAILED:
-				connection.fsm().update(new CloseState());
-				break;
-			default:
-				break;
-			}
-			
+		AbstractNetConnectionManager manager ;
+		
+		public LookAtNetService(AbstractNetConnectionManager manager) {
+			this.manager = manager;
 		}
-		
-	}
-	
-	class OpenState implements INetConnectionState{
-		
 		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO Auto-generated method stub
-			System.out.println("enter open state");
+		public void willStartNetService(INetService netService) {
+			manager.logger.info("AbstractNetConnectionManager.LookAtNetService.willStartNetService()");
 		}
-		
-	}
-	
-	class BrokenState implements INetConnectionState{
-		
-		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO Auto-generated method stub
-			
-		}
-		
-	}
-	
-	//连接挂起状态
-	class HangState implements INetConnectionState{
 
 		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO Auto-generated method stub
+		public void didStartNetService(INetService netService) {
+			manager.logger.info("AbstractNetConnectionManager.LookAtNetService.didStartNetService()");
 			
+		}
+
+		@Override
+		public void willCloseNetService(INetService netService) {
+			manager.logger.info("AbstractNetConnectionManager.LookAtNetService.willCloseNetService()");
+			
+		}
+
+		@Override
+		public void didCloseNetService(INetService netService) {
+			manager.logger.info("AbstractNetConnectionManager.LookAtNetService.didCloseNetService()");			
 		}
 		
 	}
 	
-	class DelayCloseState implements INetConnectionState{
-
-		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			
-		}
-		
-	}
-	class CloseState implements INetConnectionState {
-
-		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO 
-			
-		}
-		
-	}
-		
 }

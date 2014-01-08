@@ -100,7 +100,7 @@ public abstract class AbstractTask implements ITask {
 		if (null == command) {
 			throw new NullPointerException("command");
 		}
-
+		logger.info("accept a command from io");
         if (eventLoop.inEventLoop()) {
         	doAccept(command);
         } else {

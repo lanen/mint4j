@@ -7,18 +7,17 @@ import io.netty.handler.codec.LengthFieldPrepender;
 
 /**
  * 
+ * 这是转发型的服务器
+ * 
  * @author Evan cppmain@gmail.com
  *
  */
-class DefaultNettyInitializer extends AbstractNettyInitializer  {
-	
+public class AgentNettyInitializer extends AbstractNettyInitializer {
+
 	private INetConnectionManager manager;
 	
-	private AbstractPacketAllocator packetAllocator;
-	
-	public DefaultNettyInitializer(INetConnectionManager manager,AbstractPacketAllocator packetAllocator) {
+	public AgentNettyInitializer(INetConnectionManager manager) {
 		this.manager = manager;
-		this.packetAllocator = packetAllocator;
 	}
 	
 	@Override
@@ -32,15 +31,14 @@ class DefaultNettyInitializer extends AbstractNettyInitializer  {
 
 		// 解码器
 		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
-		pipeline.addLast("decoder", new DefaultNettyDecoder(packetAllocator));		
-
 		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
-		pipeline.addLast("encoder", new DefaultNettyEncoder());
+		
+		pipeline.addLast("decoder", new AgentNettyDecoder());		
+		pipeline.addLast("encoder", new AgentNettyEncoder());
 
 		// 处理器
 		pipeline.addLast("handler", new DefaultNettyHandler(new NettyNetConnectionManagerAdaptor((AbstractNetConnectionManager)manager)));
 
 	}
-	
 
 }

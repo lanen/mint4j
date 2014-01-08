@@ -14,7 +14,7 @@ public interface Serializable {
 	 * @param out OutputSerializer to write the object to
 	 * @throws IOException in case of an IO-error
 	 */
-	void writeObject(OutputSerializer out) throws java.io.IOException;
+	void writeObject(DataWriter out) throws java.io.IOException;
 
 	/** 
 	 * Method to build the object from a stream of bytes
@@ -22,5 +22,5 @@ public interface Serializable {
 	 * @param in InputSerializer to read from
 	 * @throws IOException in case of an IO-error
 	 */
-	void readObject(InputSerializer in) throws java.io.IOException;
+	void readObject(DataReader reader) throws java.io.IOException;
 }

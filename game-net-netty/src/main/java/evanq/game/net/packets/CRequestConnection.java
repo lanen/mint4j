@@ -5,8 +5,8 @@ import java.io.IOException;
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.PacketConst;
-import evanq.game.net.io.InputSerializer;
-import evanq.game.net.io.OutputSerializer;
+import evanq.game.net.io.DataReader;
+import evanq.game.net.io.DataWriter;
 
 /**
  * 客户端请求链接
@@ -18,37 +18,33 @@ public class CRequestConnection extends AbstractPacket {
 
 	private byte connectionType;
 	
-	private int accessToken;
+	private long accessToken;
 	
 	public CRequestConnection(){
 		super(PacketConst.PACKET_TYPE_CLIENT);
 	}
 	
 	
-	
 	@Override
 	public void execute() {
-		System.out.println("CRequestConnection.execute() - "+ connection());		
+		
 		//step 1. 从accessToken 中获取账号
 		connection().fsm().fireEvent(NetConnectionEvent.AUTH_OK);
 		//step 2. get connection holder by session key
 		//step 3. notify connection manager
 	}
 
-
 	@Override
-	public void writeObject(OutputSerializer out) throws IOException {
+	public void writeObject(DataWriter out) throws IOException {
 		out.write(connectionType);
-		out.write(accessToken);
+		out.writeLong(accessToken);
 	}
 
 	@Override
-	public void readObject(InputSerializer in) throws IOException {
-		connectionType=in.readByte();
-		accessToken = in.readInt();
+	public void readObject(DataReader reader) throws IOException {
+		connectionType=reader.readByte();
+		accessToken   = reader.readLong();
 	}
-
-
 
 	@Override
 	protected StringBuffer toStringBuffer() {
@@ -68,7 +64,7 @@ public class CRequestConnection extends AbstractPacket {
 		return accessToken;
 	}
 
-	public void setAccessToken(int accessToken) {
+	public void setAccessToken(long accessToken) {
 		this.accessToken = accessToken;
 	}
 

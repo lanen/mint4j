@@ -4,6 +4,9 @@ import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 import io.netty.util.AttributeKey;
 import evanq.game.concurrent.loop.ICommand;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+import evanq.game.trace.TraceConstant;
 
 /**
  * 
@@ -13,13 +16,15 @@ import evanq.game.concurrent.loop.ICommand;
  */
 class NettyNetConnectionManagerAdaptor {
 
+	private Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
+	
 	private AbstractNetConnectionManager netConnectionManager;
 	
 	NettyNetConnectionManagerAdaptor(AbstractNetConnectionManager netConnectionManager){
 		this.netConnectionManager = netConnectionManager;
 	}
 	
-	private static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("net");
+	private static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("NetConnection");
 	
 	//控制是否在单线程中执行业务
 	private static final boolean COMMAND_ON_SINGLE_THREAD = false;
@@ -70,7 +75,8 @@ class NettyNetConnectionManagerAdaptor {
 		@Override
 		public void execute() {
 		
-			NettyConnection nc = new NettyConnection(channel,NetConnectionType.DUMMY);
+			logger.info("A dummy NetConnection Accepted with Channel:{}",channel);
+			NettyConnection nc = new NettyConnection(channel, NetConnectionType.DUMMY);
 			Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
 			attr.set(nc);
 			
@@ -93,6 +99,7 @@ class NettyNetConnectionManagerAdaptor {
 	}
 	
 	class ChannelMessageCommand implements ICommand{
+		
 		Channel channel;
 		IPacket msg;
 		@Override

@@ -13,4 +13,5 @@ public interface INetConnectionManager {
 
 	public void close(INetConnection connection);
 	
+	
 }

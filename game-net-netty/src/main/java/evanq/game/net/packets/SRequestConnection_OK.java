@@ -4,8 +4,8 @@ import java.io.IOException;
 
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.PacketConst;
-import evanq.game.net.io.InputSerializer;
-import evanq.game.net.io.OutputSerializer;
+import evanq.game.net.io.DataReader;
+import evanq.game.net.io.DataWriter;
 
 /**
  * 
@@ -24,16 +24,18 @@ public class SRequestConnection_OK extends AbstractPacket {
 		
 	}
 
+
 	@Override
-	public void writeObject(OutputSerializer out) throws IOException {
+	public void writeObject(DataWriter out) throws IOException {
 		
 	}
 
+
 	@Override
-	public void readObject(InputSerializer in) throws IOException {
-		// TODO Auto-generated method stub
+	public void readObject(DataReader reader) throws IOException {
 		
 	}
+
 
 	@Override
 	protected StringBuffer toStringBuffer() {
