@@ -50,21 +50,6 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 		
 		lookAtNetService = new LookAtNetService(this);
 	}
-	
-	@Override
-	public void accpet(INetConnection connection) {
-		
-		//TODO 一旦连接建立，遍给他建立一个状态机。
-		//不同类型的连接，可能需要不同的状态机来管理，这里可以拓展
-		AbstractNetConnectionFSM fsm = new AbstractNetConnectionFSM(this, connection);
-		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
-	}
-
-	@Override
-	public void close(INetConnection connection) {		
-		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);		
-	}
-	
 
 	public SingleThreadHolder singleThread(){
 		return holder;

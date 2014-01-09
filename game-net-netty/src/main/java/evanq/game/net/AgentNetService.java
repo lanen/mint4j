@@ -30,7 +30,7 @@ public class AgentNetService extends NetServiceAdaptor {
 
 	@Override
 	protected AbstractNettyInitializer newNettyInitializer() {
-		return new AgentNettyInitializer(this.netManager);
+		return new AgentNettyInitializer(this.netManager,this.packetAllocator);
 	}
 	
 }

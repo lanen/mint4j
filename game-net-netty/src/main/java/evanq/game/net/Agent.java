@@ -2,6 +2,9 @@ package evanq.game.net;
 
 public class Agent {
 
+	private int clientAgentPort;
+	private int serverAgentPort;
+	
 	/**
 	 * 来自客户端的，会被在这里
 	 */
@@ -16,8 +19,6 @@ public class Agent {
 	
 	public Agent(){		
 		
-		clientAgent = ServerHelper.createAgent(NetServiceType.AGENT_CLIENT, 50000);		
-		serverAgent = ServerHelper.createAgent(NetServiceType.AGENT_SERVER, 7000);
 	
 		//c come packet
 		//route c to serverAgent connection
@@ -28,11 +29,36 @@ public class Agent {
 		//write packet to connection
 	}
 	
-	public void start(){
-		clientAgent.open();
-		serverAgent.open();
+	/**
+	 * 
+	 * 绑定服务端口号
+	 * 
+	 */
+	public Agent bind(){
+		
+		clientAgent = ServerHelper.createAgent(NetServiceType.AGENT_CLIENT, clientAgentPort);
+		
+		
+		serverAgent = ServerHelper.createAgent(NetServiceType.AGENT_SERVER, serverAgentPort);
+
+		return this;
 	}
 	
+	public Agent start(){
+		
+		if(null == clientAgent){
+			throw new NullPointerException("必须先bind() ");
+		}
+		
+		if(null == serverAgent){
+			throw new NullPointerException("必须先bind() ");
+		}
+		
+		clientAgent.open();
+		serverAgent.open();
+		
+		return this;
+	}
 	
 	public void route(IPacket packet){
 		
@@ -56,4 +82,23 @@ public class Agent {
 		
 		//模拟预订（clientAgent 接受来自 serverAgent 的数据包）
 	}
+
+	public int getClientAgentPort() {
+		return clientAgentPort;
+	}
+
+	public void setClientAgentPort(int clientAgentPort) {
+		this.clientAgentPort = clientAgentPort;
+	}
+
+	public int getServerAgentPort() {
+		return serverAgentPort;
+	}
+
+	public void setServerAgentPort(int serverAgentPort) {
+		this.serverAgentPort = serverAgentPort;
+	}
+	
+	
+	
 }

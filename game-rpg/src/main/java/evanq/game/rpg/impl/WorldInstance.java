@@ -39,10 +39,13 @@ public class WorldInstance implements IWorldFacade, Runnable {
 		
 		SceneManager.getInstance();
 		
+		
 		//统计任务
 		Thread t__ = new Thread(new WorldStats(), WORLD_STAT_THREAD_NAME);
 		t__.start();
 		
+		
+
 		
 	}
 	

@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import evanq.game.net.manager.ClientNetConnectionManager;
+import evanq.game.net.manager.ServerNetConnectionManager;
 import evanq.game.net.packets.CRequestConnection;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
@@ -20,12 +22,16 @@ public class NetConnectionTest {
 	NetServiceAdaptor server ;
 	NetServiceAdaptor client ;
 	
+	static int TEST_PORT = 8081;
+	
 	@Before
 	public synchronized void setUp(){
 		
 		PacketAllocator.getInstance().doRegister();
-
-		server = new NetServiceAdaptor(NetServiceType.SERVER,8081,null,PacketAllocator.getInstance());
+		
+		ServerNetConnectionManager serverNetConnectionManager = new ServerNetConnectionManager();
+		
+		server = new NetServiceAdaptor(NetServiceType.SERVER,TEST_PORT,serverNetConnectionManager,PacketAllocator.getInstance());
 		server.addChannelCreateListener(new IChannelCreateListener() {
 			
 			@Override
@@ -90,9 +96,10 @@ public class NetConnectionTest {
 	private void create(){
 		
 		if(null != client)return;
-		
+		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
+
 		//等待服务端启动完毕			
-		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",8081,null,PacketAllocator.getInstance());
+		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",TEST_PORT,clientNetConnectionManager,PacketAllocator.getInstance());
 		
 		client.addChannelCreateListener(new IChannelCreateListener() {
 			

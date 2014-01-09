@@ -1,5 +1,9 @@
 package evanq.game.net;
 
+import evanq.game.net.manager.AgentClientNetConnectionManager;
+import evanq.game.net.manager.AgentServerNetConnectionManager;
+import evanq.game.net.manager.ClientNetConnectionManager;
+
 /**
  * 
  * 
@@ -15,7 +19,8 @@ public final class ServerHelper {
 			
 			AgentPacketAllocator.getInstance().doRegister();
 			
-			AgentNetConnectionManager instance = new AgentNetConnectionManager(NetServiceType.AGENT_SERVER);
+			AgentServerNetConnectionManager instance = new AgentServerNetConnectionManager();
+
 			AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
 			
 			return server;
@@ -24,12 +29,14 @@ public final class ServerHelper {
 		if(NetServiceType.AGENT_CLIENT == type){
 			
 			AgentPacketAllocator.getInstance().doRegister();
-			
-			AgentNetConnectionManager instance = new AgentNetConnectionManager(NetServiceType.AGENT_CLIENT);	
+			AgentClientNetConnectionManager instance = new AgentClientNetConnectionManager();
+
 			AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
 			return server;
 		}
+		
 		return null;
+		
 	}
 	public static INetService create(NetServiceType type, int port){
 		
@@ -61,7 +68,13 @@ public final class ServerHelper {
 	}
 	
 	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort){
-		return null;
+		
+		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
+		
+		NetServiceAdaptor adaptor = new NetServiceAdaptor(NetServiceType.CLIENT,agentHost,agentPort,clientNetConnectionManager,PacketAllocator.getInstance());
+		
+		
+		return adaptor;
 	}
 	
 }

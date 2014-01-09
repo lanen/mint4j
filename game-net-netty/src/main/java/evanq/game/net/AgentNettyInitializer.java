@@ -15,9 +15,11 @@ import io.netty.handler.codec.LengthFieldPrepender;
 public class AgentNettyInitializer extends AbstractNettyInitializer {
 
 	private INetConnectionManager manager;
+	private AbstractPacketAllocator packetAllocator;
 	
-	public AgentNettyInitializer(INetConnectionManager manager) {
+	public AgentNettyInitializer(INetConnectionManager manager,AbstractPacketAllocator packetAllocator) {
 		this.manager = manager;
+		this.packetAllocator=packetAllocator;
 	}
 	
 	@Override
@@ -33,7 +35,7 @@ public class AgentNettyInitializer extends AbstractNettyInitializer {
 		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
 		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
 		
-		pipeline.addLast("decoder", new AgentNettyDecoder());		
+		pipeline.addLast("decoder", new AgentNettyDecoder(this.packetAllocator));		
 		pipeline.addLast("encoder", new AgentNettyEncoder());
 
 		// 处理器

@@ -126,7 +126,7 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 		}
 		
 		if (null == host) {
-			if (type == NetServiceType.SERVER) {
+			if (type != NetServiceType.CLIENT) {
 				host = "0.0.0.0";
 			} else {
 				throw new NullPointerException("host");
