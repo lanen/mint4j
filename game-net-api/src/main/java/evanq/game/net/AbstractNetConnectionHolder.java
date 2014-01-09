@@ -5,14 +5,20 @@ import java.util.Queue;
 
 import evanq.game.helper.New;
 
+/**
+ * 持有连接的容器，可以是一个连接，也可以是一组连接。
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class AbstractNetConnectionHolder implements INetConnectionHolder{
 
 	private Queue<INetConnection> queue;
 	
-	public AbstractNetConnectionHolder() {
-		
+	public AbstractNetConnectionHolder() {		
 		queue = newQueue();
 	}
+	
 	protected Queue<INetConnection> newQueue(){
 		return New.newLinkedQueue();
 	}

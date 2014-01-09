@@ -170,3 +170,13 @@ http://javaposse.com/
 [基于 OAuth 安全协议的 Java 应用编程](http://www.ibm.com/developerworks/cn/java/j-lo-oauth/)
 
 OAuth Solution解决账号和连接授权问题，在开发阶段，客户端直接请求agent服务器，服务器等待握手请求，否则在连接timeout.握手请求包含access_token（编码了账号id,过期时间）
+
+
+
+---
+
+连接的是功能的代表，拿一件容易看到的实物来类比，就是键盘了。键盘最直接的观感：它是分区域的，字符区，小键盘。字符区和小键盘可以分开设计（苹果mac键盘，mac数字键盘），也可以组合在一起（如PC键盘）。按键有独立的keyCode，操作系统监听keyCode的按下，释放事件，通知绑定监听keyCode的keyBinding，从而应用程序响应事件（从栈顶到栈顶，反之也然）
+
+这是一个很通用的设计，带连接通讯的（Input/Output），要尝试学习并设计键盘的设计思路。
+
+
