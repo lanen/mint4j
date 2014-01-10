@@ -1,5 +1,7 @@
 package evanq.game.net.manager;
 
+import java.util.ArrayList;
+
 import evanq.game.net.AbstractNetConnectionHolder;
 import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
@@ -47,6 +49,25 @@ public final class ClientNetConnectionManager extends AbstractNetConnectionManag
 		INetConnection nc3;
 		INetConnection nc4;
 		INetConnection nc5;
+		
+	}
+	
+	class SingleConnectionHolder extends AbstractNetConnectionHolder {
+		
+		SingleConnectionHolder(INetConnection connection) {
+		}
+		
 	}
 
+	class MultiConnectionHolder extends AbstractNetConnectionHolder {
+	
+		ArrayList<SingleConnectionHolder> connection;
+		
+		MultiConnectionHolder() {
+		}
+		
+		SingleConnectionHolder wrap(INetConnection connection) {
+			return new SingleConnectionHolder(connection);
+		}
+	}
 }

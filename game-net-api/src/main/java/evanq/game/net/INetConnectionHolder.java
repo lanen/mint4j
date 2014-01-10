@@ -7,7 +7,7 @@ import java.util.Iterator;
  * @author Evan cppmain@gmail.com
  *
  */
-public interface INetConnectionHolder extends Iterable<INetConnection> {
+public interface INetConnectionHolder  {
 	
 	public INetConnection connection(int typeId);
 	
@@ -15,13 +15,9 @@ public interface INetConnectionHolder extends Iterable<INetConnection> {
 	
 	public void close(int typeId);
 	
-	public void close(INetConnection netConnection);
+	public void close(INetConnection netConnection);	
+
+	public void attach(INetConnection netConnection);	
 	
-	public void unAttach(int typeId);
 	
-	public void unAttach(INetConnection netConnection);
-	
-	public void attach(INetConnection netConnection);
-	
-	public Iterator<INetConnection> iterator();	
 }
