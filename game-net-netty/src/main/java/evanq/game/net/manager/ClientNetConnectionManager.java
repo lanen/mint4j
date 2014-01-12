@@ -38,7 +38,7 @@ public final class ClientNetConnectionManager extends AbstractNetConnectionManag
 
 	}
 	
-	//key bind 是如何设计的?键盘事件，与相应事件。
+	//key bind 是如何设计的?键盘事件，与响应事件。
 	//holder 可能的职责，持有连接；提供网络服务给单个玩家
 	//manager 提供广播，定时检查连接的功能。
 	class ClientConnectionHolder extends AbstractNetConnectionHolder {
@@ -50,6 +50,7 @@ public final class ClientNetConnectionManager extends AbstractNetConnectionManag
 		INetConnection nc4;
 		INetConnection nc5;
 		
+		//
 	}
 	
 	class SingleConnectionHolder extends AbstractNetConnectionHolder {
@@ -70,4 +71,6 @@ public final class ClientNetConnectionManager extends AbstractNetConnectionManag
 			return new SingleConnectionHolder(connection);
 		}
 	}
+	
+	
 }

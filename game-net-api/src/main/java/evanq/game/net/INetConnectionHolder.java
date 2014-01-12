@@ -1,8 +1,9 @@
 package evanq.game.net;
 
-import java.util.Iterator;
 
 /**
+ * 
+ * to hold connection.
  * 
  * @author Evan cppmain@gmail.com
  *
@@ -11,13 +12,9 @@ public interface INetConnectionHolder  {
 	
 	public INetConnection connection(int typeId);
 	
-	public void close();
+	public void add(INetConnection netConnection);
 	
-	public void close(int typeId);
-	
-	public void close(INetConnection netConnection);	
+	public void remove(INetConnection netConnection);
 
-	public void attach(INetConnection netConnection);	
-	
-	
+	public void removeAll();
 }

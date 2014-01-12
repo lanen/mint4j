@@ -8,30 +8,28 @@ package evanq.game.net;
  *
  */
 public class AbstractNetConnectionHolder implements INetConnectionHolder {
-	
+
 	@Override
 	public INetConnection connection(int typeId) {
+		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void close() {
-		
-	}
-
-	@Override
-	public void close(int typeId) {
-		
-	}
-
-	@Override
-	public void close(INetConnection netConnection) {
+	public void add(INetConnection netConnection) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void attach(INetConnection netConnection) {
+	public void remove(INetConnection netConnection) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeAll() {
+		// TODO Auto-generated method stub
 		
 	}
 
