@@ -21,4 +21,8 @@ public interface INetConnection  {
 	
 	public void recv(IPacket packet);
 	
+	INetService netService();
+	
+	INetService netService(INetService netService);
+	
 }

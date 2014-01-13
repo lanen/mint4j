@@ -15,6 +15,13 @@ public interface INetService {
 	public void open();
 	
 	/**
+	 * 以指定的连接类型打开服务
+	 * 
+	 * @param type
+	 */
+	public void open(NetConnectionType type);
+	
+	/**
 	 * 关闭服务
 	 */
 	public void close();
@@ -36,10 +43,17 @@ public interface INetService {
 	public void receive(IPacket packet);
 	
 	/**
-	 * 
+	 * 网络设别的服务类型
 	 * @return
 	 */
 	public NetServiceType serviceTye();
+	
+	/**
+	 * 连接的类型
+	 * 
+	 * @return
+	 */
+	public NetConnectionType connectionType();
 	
 	
 	//public void route(IPacket packet);

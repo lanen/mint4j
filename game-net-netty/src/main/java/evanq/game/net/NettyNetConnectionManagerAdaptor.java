@@ -24,7 +24,8 @@ class NettyNetConnectionManagerAdaptor {
 		this.netConnectionManager = netConnectionManager;
 	}
 	
-	private static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("NetConnection");
+	static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("NetConnection");
+	static final AttributeKey<NetConnectionType> NETCONNECTION_TYPE_ATTR = AttributeKey.valueOf("NetConnectionType");
 	
 	//控制是否在单线程中执行业务
 	private static final boolean COMMAND_ON_SINGLE_THREAD = false;
@@ -34,10 +35,16 @@ class NettyNetConnectionManagerAdaptor {
 		return attr.get();
 	}
 	
+	public NetConnectionType getChannelType(Channel channel){
+		Attribute<NetConnectionType> attr = channel.attr(NETCONNECTION_TYPE_ATTR);
+		return attr.get();
+	}
+	
 	public void accpet(Channel channel){
 		
 		NewChannelAcceptCommand command = new NewChannelAcceptCommand();
 		command.channel = channel;
+	
 		if (COMMAND_ON_SINGLE_THREAD) {
 			netConnectionManager.singleThread().accept(command);
 		}else{
@@ -72,11 +79,15 @@ class NettyNetConnectionManagerAdaptor {
 	//TODO 是否使用单线程来管理连接
 	class NewChannelAcceptCommand implements ICommand{
 		Channel channel;
+		
 		@Override
 		public void execute() {
+			
+			NetConnectionType type = getChannelType(channel);
 		
-			logger.info("A dummy NetConnection Accepted with Channel:{}",channel);
-			NettyConnection nc = new NettyConnection(channel, NetConnectionType.DUMMY);
+			logger.info("A dummy NetConnection Accepted with Channel:{},type:{}",channel,type);
+			
+			NettyConnection nc = new NettyConnection(channel, type);
 			Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
 			attr.set(nc);
 			

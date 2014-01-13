@@ -67,14 +67,28 @@ public final class ServerHelper {
 		return true;
 	}
 	
-	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort){
-		
+	/**
+	 * 
+	 * 
+	 * @param agentHost
+	 * 
+	 * @param agentPort
+	 * @param type
+	 * @return
+	 */
+	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort,NetConnectionType type){
 		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
 		
 		NetServiceAdaptor adaptor = new NetServiceAdaptor(NetServiceType.CLIENT,agentHost,agentPort,clientNetConnectionManager,PacketAllocator.getInstance());
 		
-		
 		return adaptor;
+	}
+	
+	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort){
+		
+		INetService establishNetServiceToAgentService = establishNetServiceToAgentService(agentHost,agentPort, NetConnectionType.DUMMY);
+		
+		return establishNetServiceToAgentService;
 	}
 	
 }

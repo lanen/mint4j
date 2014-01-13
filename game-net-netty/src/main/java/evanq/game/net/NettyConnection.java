@@ -39,4 +39,14 @@ class NettyConnection extends AbstractNetConnection {
 		throw new UnsupportedOperationException();
 	}
 
+	@Override
+	public INetService netService() {
+		return null;
+	}
+
+	@Override
+	public INetService netService(INetService netService) {
+		return null;
+	}
+
 }

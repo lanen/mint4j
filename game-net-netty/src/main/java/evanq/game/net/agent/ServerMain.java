@@ -1,6 +1,7 @@
 package evanq.game.net.agent;
 
 import evanq.game.net.INetService;
+import evanq.game.net.NetConnectionType;
 import evanq.game.net.ServerHelper;
 
 public class ServerMain {
@@ -8,7 +9,7 @@ public class ServerMain {
 	public static void main(String[] args) {
 		
 		//服务器节点，去连接网关
-		INetService establishNetServiceToAgentService = ServerHelper.establishNetServiceToAgentService("127.0.0.1", AgentMain.SERVER_AGENT_PORT);
+		INetService establishNetServiceToAgentService = ServerHelper.establishNetServiceToAgentService("127.0.0.1", AgentMain.SERVER_AGENT_PORT,NetConnectionType.NODE_IN_AGENT_SCENE);
 		establishNetServiceToAgentService.open();
 		
 		

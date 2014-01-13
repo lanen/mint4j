@@ -1,10 +1,10 @@
 package evanq.game.net.manager;
 
-import java.util.ArrayList;
-
-import evanq.game.net.AbstractNetConnectionHolder;
 import evanq.game.net.AbstractNetConnectionManager;
+import evanq.game.net.AbstractPacket;
 import evanq.game.net.INetConnection;
+import evanq.game.net.INetConnectionFSM;
+import evanq.game.net.MappingNetConnectionHolder;
 import evanq.game.net.NetServiceType;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
@@ -18,59 +18,32 @@ import evanq.game.trace.Trace;
  */
 public final class ClientNetConnectionManager extends AbstractNetConnectionManager {
 
-	
 	private Trace logger = LogSystem.getDefaultTrace(ClientNetConnectionManager.class);
-	
 	
 	public ClientNetConnectionManager() {
 		super(NetServiceType.CLIENT);
 	}
-	
-	@Override
-	public void accpet(INetConnection connection) {
-		logger.info("完成连接创建");
 		
-	}
-
 	@Override
-	public void close(INetConnection connection) {
-		logger.info("关闭连接");
-
+	protected INetConnectionFSM createNetConnectionFSM(INetConnection connection) {
+		ClientNetConnectionFSM fsm = new ClientNetConnectionFSM(this,connection);
+		return fsm;
 	}
-	
+
 	//key bind 是如何设计的?键盘事件，与响应事件。
 	//holder 可能的职责，持有连接；提供网络服务给单个玩家
 	//manager 提供广播，定时检查连接的功能。
-	class ClientConnectionHolder extends AbstractNetConnectionHolder {
-		//客户端与多个服务端口交互
-		//设计一个合理且通用的方式来管理连接
-		INetConnection nc1;
-		INetConnection nc2;
-		INetConnection nc3;
-		INetConnection nc4;
-		INetConnection nc5;
+	class ClientConnectionHolder extends MappingNetConnectionHolder {
 		
-		//
-	}
-	
-	class SingleConnectionHolder extends AbstractNetConnectionHolder {
+		//接受连接
+		private int indexer = 0 ;
 		
-		SingleConnectionHolder(INetConnection connection) {
+		@Override
+		public void send(AbstractPacket packet) {
+			//TODO 发送数据包，讲数据包路由
+			
 		}
 		
 	}
-
-	class MultiConnectionHolder extends AbstractNetConnectionHolder {
-	
-		ArrayList<SingleConnectionHolder> connection;
 		
-		MultiConnectionHolder() {
-		}
-		
-		SingleConnectionHolder wrap(INetConnection connection) {
-			return new SingleConnectionHolder(connection);
-		}
-	}
-	
-	
 }

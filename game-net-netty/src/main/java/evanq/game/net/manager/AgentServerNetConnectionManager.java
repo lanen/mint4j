@@ -3,6 +3,7 @@ package evanq.game.net.manager;
 import evanq.game.net.AbstractNetConnectionFSM;
 import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
+import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.NetServiceType;
 
@@ -18,6 +19,15 @@ public final class AgentServerNetConnectionManager extends
 		super(NetServiceType.AGENT_SERVER);
 	}
 	
+	@Override
+	protected INetConnectionFSM createNetConnectionFSM(INetConnection connection) {
+		ServerNetConnectionFSM fsm = new ServerNetConnectionFSM(this, connection);
+
+		return fsm;
+	}
+
+	/*
+
 	@Override
 	public void accpet(INetConnection connection) {
 		
@@ -39,13 +49,8 @@ public final class AgentServerNetConnectionManager extends
 			break;
 		}
 		
-		AbstractNetConnectionFSM fsm = new AbstractNetConnectionFSM(this, connection);
-		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
-	}
-
-	@Override
-	public void close(INetConnection connection) {		
-		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);		
 	}
 	
+	*/
+
 }

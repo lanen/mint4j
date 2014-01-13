@@ -8,6 +8,7 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.util.Attribute;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
@@ -30,7 +31,7 @@ import evanq.game.trace.Trace;
  * @author Evan cppmain@gmail.com
  * 
  */
-public class NetServiceAdaptor  implements INetService, Runnable {
+public class NetServiceAdaptor implements INetService, Runnable {
 
 	private Trace logger = LogSystem.getDefaultTrace(NetServiceAdaptor.class);
 	
@@ -43,8 +44,17 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 	private static final byte NET_SERVICE_STATE_OPENED  = 3;
 	private static final byte NET_SERVICE_STATE_CLOSEED = 4;
 
+	/**
+	 * 网络IO 服务的类型（客户端，服务器，agent）
+	 */
 	protected NetServiceType type;
 
+	/**
+	 * 
+	 * 连接的类型（用于连接管理器识别）
+	 */
+	protected NetConnectionType connectionType;
+	
 	protected String host;
 
 	protected int port;
@@ -62,10 +72,10 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 	private Object stateLock = new Object();
 
 	//close listener
-	protected List<IChannelDisposeListener> closeListeners = new LinkedList<IChannelDisposeListener>();
+	protected LinkedList<IChannelDisposeListener> closeListeners = new LinkedList<IChannelDisposeListener>();
 	
 	//start listener
-	protected List<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
+	protected LinkedList<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
 	
 	
 	/**
@@ -199,6 +209,21 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 	}
 	
 	@Override
+	public void open(NetConnectionType type) {
+		connectionType(type);
+		addChannelCreateListener0(new IChannelCreateListener() {
+			
+			@Override
+			public void onCreate(Channel channel) {
+				Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
+				attr.set(connectionType);
+			}
+		});
+		open();
+	}
+	
+
+	@Override
 	public void send(IPacket packet) {
 		// TODO Auto-generated method stub
 		
@@ -270,7 +295,6 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 	 * 
 	 */
 	private void openClientConnect0() {
-
 		EventLoopGroup group = new NioEventLoopGroup();
 		try {
 			Bootstrap b = new Bootstrap();
@@ -289,8 +313,11 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 					}
 				}
 			});
+			
 			try {
+
 				channel = connectFutrue.sync().channel();
+			
 				//发生关闭，阻塞到关闭完成
 				channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
 
@@ -328,6 +355,15 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 		}
 	}
 	
+	/**
+	 * 在对头增加
+	 * 
+	 * @param startListener
+	 */
+	private void addChannelCreateListener0(IChannelCreateListener startListener){
+		this.startListeners.addFirst(startListener);
+	}
+	
 	public void addChannelCreateListener(IChannelCreateListener startListener){
 	
 		if(NET_SERVICE_STATE_OPENED <= state){
@@ -336,6 +372,7 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 		if (null == startListener) {
 			throw new NullPointerException("startListener");
 		}
+		
 		this.startListeners.add(startListener);
 	}
 	
@@ -351,6 +388,17 @@ public class NetServiceAdaptor  implements INetService, Runnable {
 	@Override
 	public NetServiceType serviceTye() {
 		return type;
+	}
+
+	@Override
+	public NetConnectionType connectionType() {
+		return connectionType;
+	}
+	
+	
+	public NetConnectionType connectionType(NetConnectionType connectionType) {
+		this.connectionType = connectionType;
+		return connectionType;
 	}
 	
 }

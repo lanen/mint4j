@@ -50,7 +50,22 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 		
 		lookAtNetService = new LookAtNetService(this);
 	}
+	
+	
+	@Override
+	public void accpet(INetConnection connection) {
+		INetConnectionFSM fsm = createNetConnectionFSM(connection);
+		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
+	}
 
+
+	@Override
+	public void close(INetConnection connection) {
+		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);
+	}
+
+	protected abstract INetConnectionFSM createNetConnectionFSM(INetConnection connection);
+	
 	public SingleThreadHolder singleThread(){
 		return holder;
 	}

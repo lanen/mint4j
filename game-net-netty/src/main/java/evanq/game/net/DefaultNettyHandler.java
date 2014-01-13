@@ -31,7 +31,7 @@ public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {		
 		netConnectionManager.accpet(ctx.channel());	
 	}
 
