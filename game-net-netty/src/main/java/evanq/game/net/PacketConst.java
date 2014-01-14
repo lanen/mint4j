@@ -16,6 +16,7 @@ public final class PacketConst {
 	//参考链接管理的流程图
 	public static final char C_CONNECT_REQUEST    = 1;
 	public static final char S_CONNECT_REQUEST_OK = 2;
+	public static final char C_HEART_BEAT = 3;
 	
 	
 	

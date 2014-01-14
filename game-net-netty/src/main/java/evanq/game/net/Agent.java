@@ -1,5 +1,7 @@
 package evanq.game.net;
 
+import evanq.game.net.agent.AgentClientRouteConfig;
+
 public class Agent {
 
 	private int clientAgentPort;
@@ -36,6 +38,9 @@ public class Agent {
 	 */
 	public Agent bind(){
 		
+		
+		
+		
 		clientAgent = ServerHelper.createAgent(NetServiceType.AGENT_CLIENT, clientAgentPort);
 		
 		
@@ -59,17 +64,7 @@ public class Agent {
 		
 		return this;
 	}
-	
-	public void route(IPacket packet){
-		
-	}
-	
-	
-	interface RouteRule {
-		//数据包拥有packet id
-		//packet id 会分布在server type 下
-		//route 会轮训分发
-	}
+
 	
 	public static void main(String[] args) {
 	
@@ -99,6 +94,21 @@ public class Agent {
 		this.serverAgentPort = serverAgentPort;
 	}
 	
+	class CFG {
+		
+		int agentPort;
+		int[] types;
+		
+	}
 	
+	public void readAgentConfig(){
+		//从agent.config 读取连接类型配置
+		AgentClientRouteConfig config = new AgentClientRouteConfig();
+	}
+	
+	public void readRouteConfig(){
+		//读取数据包转发配置
+		
+	}
 	
 }

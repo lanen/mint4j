@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -20,14 +21,24 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class New {
 	
-	  /**
-     * Create a new ArrayList.
+	/**
+	 * Create a new ArrayList.
+	 *
+	 * @param <T> the type
+	 * @return the object
+	 */
+	public static <T> ArrayList<T> arrayList() {
+		return new ArrayList<T>();
+	}
+	  
+	/**
+     * Create a new LinkedList.
      *
      * @param <T> the type
      * @return the object
      */
-    public static <T> ArrayList<T> arrayList() {
-        return new ArrayList<T>(4);
+    public static <T> LinkedList<T> linkedList() {
+        return new LinkedList<T>();
     }
 
     /**

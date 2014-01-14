@@ -4,6 +4,7 @@ import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.INetConnectionState;
+import evanq.game.net.INetHeart;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.NetConnectionType;
 import evanq.game.net.PacketConst;
@@ -23,23 +24,25 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 	
 	private static Trace logger = LogSystem.getDefaultTrace(ClientNetConnectionFSM.class);
 
-	//当前连接
+	//持有当前状态机的连接
 	private INetConnection connection;
 	
-	//当前连接状态
+	//连接状态
 	private INetConnectionState currentState;
 	
 	//保持连接管理器	
 	private AbstractNetConnectionManager connectionManager;
-
 	
-	public ClientNetConnectionFSM(AbstractNetConnectionManager connectionManager,INetConnection connection) {
+	//连接的心跳
+	private INetHeart heart;
+	
+	public ClientNetConnectionFSM(AbstractNetConnectionManager connectionManager, INetConnection connection) {
 		
 		this.connectionManager = connectionManager;
 		
 		this.connection = connection;
 		this.connection.fsm(this);
-		
+				
 		update(new ClientCreatingState());
 		
 	}
@@ -50,8 +53,23 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 	}
 
 	@Override
-	public void fireEvent(NetConnectionEvent event) {
+	public void fireEvent(NetConnectionEvent event) {		
 		this.currentState.update(connection,event);
+	}
+	
+	private void initHeart(){
+		
+		if(connection.type() == NetConnectionType.CLIENT_MASTER){
+			this.heart = new ClientNetHeart(this.connection);
+			connectionManager.registerHeart(heart);
+		}
+		
+	}
+	
+	private void destoryHeart(){
+		if(null != heart){
+			connectionManager.deRegisterHeart(heart);
+		}
 	}
 	
 	/**
@@ -69,13 +87,16 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 			case CREATE_OK:
 				logger.info("客户端建立连接");
 				
+				initHeart();
+
+				
 				logger.info("上传送验证信息");
 				//step 1. 客户端与服务端建立了连接
 				CRequestConnection requestConnection = new CRequestConnection();
 				requestConnection.setPacketId(PacketConst.C_CONNECT_REQUEST);
 				requestConnection.setAccessToken(999);
 				requestConnection.setConnectionType(connection.type().value());
- 
+				System.out.println(requestConnection);
 				connection.send(requestConnection);
 				//step 2. 在建立状态进行验证交互
 
@@ -122,7 +143,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			
+			destoryHeart();
 		}
 		
 	}
@@ -132,9 +153,9 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
 			// TODO 
-			
+		
 		}
 		
 	}
-
+	
 }

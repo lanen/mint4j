@@ -40,13 +40,8 @@ class NettyConnection extends AbstractNetConnection {
 	}
 
 	@Override
-	public INetService netService() {
-		return null;
+	public NetConnectionType type(NetConnectionType newtype) {
+		return this.type = newtype;
 	}
-
-	@Override
-	public INetService netService(INetService netService) {
-		return null;
-	}
-
+	
 }

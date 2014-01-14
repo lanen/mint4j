@@ -7,6 +7,7 @@ package evanq.game.net;
  * @author Evan cppmain@gmail.com
  *
  */
+@Deprecated
 public class AbstractNetConnectionFSM implements INetConnectionFSM {
 
 	private INetConnection connection;
@@ -41,8 +42,10 @@ public class AbstractNetConnectionFSM implements INetConnectionFSM {
 		public void update(INetConnection connection, NetConnectionEvent event) {
 			switch(event){
 			case CREATE_OK:
+				
+				//注册连接到心跳机制中
 				//连接创建完毕，放入等待验证的容器中
-				//UnAuthGroupHolder.attach(connection);
+			
 				break;
 			case CREATE_FAILED:
 				//UnAuthGroupHolder.unAttach(connection);

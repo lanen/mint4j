@@ -27,6 +27,9 @@ public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
+		System.out.println("exceptionCaught");
+		//TODO 客户端强制断开连接，服务端是不知道的
+		
 		super.exceptionCaught(ctx, cause);
 	}
 
@@ -36,7 +39,7 @@ public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	}
 
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+	public void channelInactive(ChannelHandlerContext ctx) throws Exception {		
 		netConnectionManager.close(ctx.channel());
 	}
 

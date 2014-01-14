@@ -307,7 +307,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				@Override
 				public void operationComplete(Future<? super Void> future)
 						throws Exception {
-					logger.info("{} listen connect to {}:{}",type,host,port);
+					logger.info("{} connect to {}:{}",type,host,port);
 					for (IChannelCreateListener l : startListeners) {
 						l.onCreate(NetServiceAdaptor.this.channel);
 					}

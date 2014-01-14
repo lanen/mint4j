@@ -8,7 +8,8 @@ public enum NetConnectionEvent {
 	AUTH_FAILED,
 	READ,
 	WRITE,
-	
+	/** 心跳 */
+	PING,
 	HANG,
 	CLOSE,
 	DELAYED_CLOSE

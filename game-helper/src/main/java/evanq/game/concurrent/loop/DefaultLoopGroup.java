@@ -12,6 +12,10 @@ public class DefaultLoopGroup extends MultithreadLoopGroup {
 		super(nThreads,null);
 	}
 	
+	public DefaultLoopGroup(int nThreads,ThreadFactory threadFactory){
+		super(nThreads,threadFactory);
+	}
+	
 	protected DefaultLoopGroup(int nThreads, ThreadFactory threadFactory,
 			Object[] args) {
 		super(nThreads, threadFactory, args);
@@ -24,4 +28,6 @@ public class DefaultLoopGroup extends MultithreadLoopGroup {
 		return new DefaultLoop(this,threadFactory);
 	}
 
+	
+	
 }

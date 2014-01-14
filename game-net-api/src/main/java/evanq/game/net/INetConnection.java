@@ -13,6 +13,8 @@ public interface INetConnection  {
 	
 	NetConnectionType type();
 	
+	NetConnectionType type(NetConnectionType newtype);
+	
 	INetConnectionFSM fsm();
 	
 	INetConnectionFSM fsm(INetConnectionFSM fsm);
@@ -20,9 +22,5 @@ public interface INetConnection  {
 	public void send(IPacket packet);
 	
 	public void recv(IPacket packet);
-	
-	INetService netService();
-	
-	INetService netService(INetService netService);
 	
 }

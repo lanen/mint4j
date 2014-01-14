@@ -1,7 +1,11 @@
 package evanq.game.net;
 
+import java.util.Collection;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
+import evanq.game.concurrent.DefaultThreadFactory;
+import evanq.game.concurrent.ScheduledFuture;
 import evanq.game.concurrent.loop.AbstractTask;
 import evanq.game.concurrent.loop.DefaultLoopGroup;
 import evanq.game.concurrent.loop.ICommand;
@@ -32,6 +36,12 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 	protected NetServiceType serviceType;
 	
 	private SingleThreadHolder holder;
+
+	/**
+	 * 
+	 * 心跳管理
+	 */
+	protected INetHeartGroup heartGroup;
 	
 	/**
 	 * 
@@ -46,7 +56,10 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 		
 		this.serviceType = serviceType;
 		
-		holder = new SingleThreadHolder();
+		heartGroup = new HeartBeatGroup();
+
+		holder = new SingleThreadHolder();		
+		holder.registerHeartBeatTask(new NetHeartBeatTask(heartGroup));
 		
 		lookAtNetService = new LookAtNetService(this);
 	}
@@ -63,7 +76,21 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 	public void close(INetConnection connection) {
 		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);
 	}
-
+	
+	public void registerHeart(INetHeart heart){
+		heartGroup.add(heart);
+	}
+	
+	public void deRegisterHeart(INetHeart heart){
+		heartGroup.remove(heart);
+	}
+	
+	//TODO 一旦连接建立，遍给他建立一个状态机。
+	/**
+	 * 不同类型的连接，可能需要不同的状态机来管理，这里可以拓展
+	 * @param connection
+	 * @return
+	 */
 	protected abstract INetConnectionFSM createNetConnectionFSM(INetConnection connection);
 	
 	public SingleThreadHolder singleThread(){
@@ -83,11 +110,21 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 	 */
 	static class SingleThreadHolder extends AbstractTask {
 		
-		private DefaultLoopGroup group = new DefaultLoopGroup(1);
+		private DefaultLoopGroup group ;
+		
+		/**
+		 * 心跳包的定时任务
+		 */
+		ScheduledFuture<?> heartBeatScheduledFuture;
 		
 		public SingleThreadHolder() {
-			super(null);	
+			super(null);
+			
+			//管理连接的线程
+			DefaultThreadFactory threadFactory = new DefaultThreadFactory("connection-manager", Thread.MAX_PRIORITY);
+			group = new DefaultLoopGroup(1,threadFactory);
 			group.register(this);
+			
 		}
 		
 		@Override
@@ -101,6 +138,34 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 				command.execute();
 			}catch(Exception e){
 				e.printStackTrace();
+			}
+		}
+		
+		public void registerHeartBeatTask(Runnable runnable){
+			heartBeatScheduledFuture = group.scheduleWithFixedDelay(runnable, 0, INetHeartGroup.HEART_BEAT_DELAY, TimeUnit.MILLISECONDS);
+		}
+		
+	}
+
+	
+	static class HeartBeatGroup implements INetHeartGroup{
+
+		private Collection<INetHeart> hearts = New.linkedList();
+		
+		@Override
+		public void add(INetHeart heart) {
+			hearts.add(heart);
+		}
+
+		@Override
+		public void remove(INetHeart heart) {
+			hearts.remove(heart);
+		}
+
+		@Override
+		public void beat() {
+			for (INetHeart heart : hearts) {
+				heart.beat();
 			}
 		}
 		

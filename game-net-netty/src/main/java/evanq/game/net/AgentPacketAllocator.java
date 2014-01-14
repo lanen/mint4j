@@ -1,5 +1,6 @@
 package evanq.game.net;
 
+import evanq.game.net.packets.CHeartBeat;
 import evanq.game.net.packets.CRequestConnection;
 import evanq.game.net.packets.SRequestConnection_OK;
 
@@ -38,6 +39,8 @@ public class AgentPacketAllocator extends AbstractPacketAllocator {
 		registered = true;
 		R(PacketConst.C_CONNECT_REQUEST, CRequestConnection.class);
 		R(PacketConst.S_CONNECT_REQUEST_OK, SRequestConnection_OK.class);
+		R(PacketConst.C_HEART_BEAT, CHeartBeat.class);
+
 	}
 
 	

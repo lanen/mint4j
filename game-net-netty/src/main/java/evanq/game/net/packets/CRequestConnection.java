@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.NetConnectionEvent;
+import evanq.game.net.NetConnectionType;
 import evanq.game.net.PacketConst;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
@@ -29,7 +30,11 @@ public class CRequestConnection extends AbstractPacket {
 	public void execute() {
 		
 		//step 1. 从accessToken 中获取账号
-		connection().fsm().fireEvent(NetConnectionEvent.AUTH_OK);
+		
+		NetConnectionType type = NetConnectionType.valueOf(connectionType);
+		connection().type(type);
+		connection().fsm().fireEvent(NetConnectionEvent.AUTH_OK);		
+
 		//step 2. get connection holder by session key
 		//step 3. notify connection manager
 	}
@@ -48,7 +53,11 @@ public class CRequestConnection extends AbstractPacket {
 
 	@Override
 	protected StringBuffer toStringBuffer() {
-		return null;
+		StringBuffer b = new StringBuffer();
+		b.append("type[").append(connectionType).append("]");
+		b.append("accessToken[").append(accessToken).append("]");
+		b.append("hashCode[").append(hashCode()).append("]");
+		return b;
 	}
 
 
@@ -67,6 +76,5 @@ public class CRequestConnection extends AbstractPacket {
 	public void setAccessToken(long accessToken) {
 		this.accessToken = accessToken;
 	}
-
 	
 }

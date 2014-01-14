@@ -191,10 +191,18 @@ public class LogSystem implements LogWriter {
      * @return
      */
     public static Trace getDefaultTrace(Class<?> clazz){
-    	if(null == LOGSYSTEM){
+    	boolean useSLF4J = true;
+    	
+    	if(null == LOGSYSTEM ){
+    		LOGSYSTEM = new LogSystem(TraceConstant.GAME_SYSTEM,useSLF4J);
+    		LOGSYSTEM.setLogLevel(LogLevel.INFO);
+    	}
+    	
+    	if(null !=LOGSYSTEM && !LOGSYSTEM.delegateSlf4j){
     		LOGSYSTEM = new LogSystem(TraceConstant.GAME_SYSTEM,true);
     		LOGSYSTEM.setLogLevel(LogLevel.INFO);
     	}
+    	
     	return LOGSYSTEM.getTrace(clazz	);
     }
     

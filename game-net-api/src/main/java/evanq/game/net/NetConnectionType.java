@@ -1,5 +1,6 @@
 package evanq.game.net;
 
+
 /**
  * 
  * 经过验证之后，连接拥有明确的类型
@@ -43,5 +44,18 @@ public enum NetConnectionType {
 	
 	public byte value(){
 		return typeValue;
+	}
+	
+	
+	public static NetConnectionType valueOf(int i)  {
+		
+		for (NetConnectionType theType : NetConnectionType.values()) {
+			if(theType.value() == i){
+				return theType;
+			}
+		}
+		
+		String f = "无法无法获取指定值 %d 的枚举";
+		throw new IllegalArgumentException( String.format(f, i) );
 	}
 }

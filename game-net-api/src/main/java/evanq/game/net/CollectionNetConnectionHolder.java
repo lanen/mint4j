@@ -10,7 +10,7 @@ import evanq.game.helper.New;
  * @author Evan cppmain@gmail.com
  *
  */
-public class ListNetConnectionHolder extends AbstractNetConnectionHolder {
+public class CollectionNetConnectionHolder extends AbstractNetConnectionHolder {
 
 	protected List<INetConnection> connections = New.arrayList();
 	

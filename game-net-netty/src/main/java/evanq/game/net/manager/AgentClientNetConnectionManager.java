@@ -4,8 +4,6 @@ import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.NetServiceType;
-import evanq.game.trace.LogSystem;
-import evanq.game.trace.Trace;
 
 /**
  * 
@@ -16,8 +14,6 @@ import evanq.game.trace.Trace;
  */
 public final class AgentClientNetConnectionManager extends AbstractNetConnectionManager {
 	
-	private Trace logger = LogSystem.getDefaultTrace(AgentClientNetConnectionManager.class);
-
 	public AgentClientNetConnectionManager() {
 		super(NetServiceType.AGENT_CLIENT);
 	}

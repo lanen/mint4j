@@ -24,7 +24,7 @@ public abstract class MultithreadLoopGroup extends
 	private static final Trace logger = LogSystem.getDefaultTrace(MultithreadLoopGroup.class);
 
     private static final int DEFAULT_EVENT_LOOP_THREADS;
-
+    
     static {
     	//线程池默认线程数
         DEFAULT_EVENT_LOOP_THREADS = Math.max(1, SystemPropertyUtil.getInt(
@@ -44,7 +44,8 @@ public abstract class MultithreadLoopGroup extends
 
     @Override
     protected ThreadFactory newDefaultThreadFactory() {
-        return new DefaultThreadFactory(getClass(), Thread.MAX_PRIORITY);
+    	
+    	return new DefaultThreadFactory(getClass(), Thread.MAX_PRIORITY);
     }
 
     @Override

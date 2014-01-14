@@ -28,7 +28,7 @@ class NettyNetConnectionManagerAdaptor {
 	static final AttributeKey<NetConnectionType> NETCONNECTION_TYPE_ATTR = AttributeKey.valueOf("NetConnectionType");
 	
 	//控制是否在单线程中执行业务
-	private static final boolean COMMAND_ON_SINGLE_THREAD = false;
+	private static final boolean COMMAND_ON_SINGLE_THREAD = true;
 	
 	public INetConnection get(Channel channel){
 		Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
