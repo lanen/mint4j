@@ -29,9 +29,9 @@ public class NetConnectionTest {
 		
 		PacketAllocator.getInstance().doRegister();
 		
-		ServerNetConnectionManager serverNetConnectionManager = new ServerNetConnectionManager();
+//		ServerNetConnectionManager serverNetConnectionManager = new ServerNetConnectionManager();
 		
-		server = new NetServiceAdaptor(NetServiceType.SERVER,TEST_PORT,serverNetConnectionManager,PacketAllocator.getInstance());
+		server = new NetServiceAdaptor(NetServiceType.SERVER,TEST_PORT,null);
 		server.addChannelCreateListener(new IChannelCreateListener() {
 			
 			@Override
@@ -96,10 +96,10 @@ public class NetConnectionTest {
 	private void create(){
 		
 		if(null != client)return;
-		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
+//		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
 
 		//等待服务端启动完毕			
-		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",TEST_PORT,clientNetConnectionManager,PacketAllocator.getInstance());
+		client = new NetServiceAdaptor(NetServiceType.CLIENT,"127.0.0.1",TEST_PORT,null);
 		
 		client.addChannelCreateListener(new IChannelCreateListener() {
 			

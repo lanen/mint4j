@@ -12,7 +12,7 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 	/**
 	 * 数据包类型
 	 */
-	protected char packetType;
+	protected NetPacketType packetType;
 	
 	/**
 	 * 数据包id，会更具这个id来决定编解码
@@ -26,15 +26,15 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 	 */
 	private INetConnection connection;
 	
-	protected AbstractPacket(char packetType){
+	protected AbstractPacket(NetPacketType packetType){
 		this.packetType = packetType;
 	}
 
-	public char getPacketType() {
+	public NetPacketType getPacketType() {
 		return packetType;
 	}
 
-	public void setPacketType(char packetType) {
+	public void setPacketType(NetPacketType packetType) {
 		this.packetType = packetType;
 	}
 

@@ -3,7 +3,7 @@ package evanq.game.net.packets;
 import java.io.IOException;
 
 import evanq.game.net.AbstractPacket;
-import evanq.game.net.PacketConst;
+import evanq.game.net.NetPacketType;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
 
@@ -11,7 +11,7 @@ public class CAgentPacket extends AbstractPacket {
 
 	
 	public CAgentPacket() {
-		super(PacketConst.PACKET_TYPE_CLIENT);
+		super(NetPacketType.CLIENT);
 	}
 	
 	@Override

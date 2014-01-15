@@ -3,14 +3,14 @@ package evanq.game.net.packets;
 import java.io.IOException;
 
 import evanq.game.net.AbstractPacket;
-import evanq.game.net.PacketConst;
+import evanq.game.net.NetPacketType;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
 
 public class SAgentPacket extends AbstractPacket {
 
 	public SAgentPacket() {
-		super(PacketConst.PACKET_TYPE_SERVER);
+		super(NetPacketType.SERVER);
 	}
 	
 	@Override

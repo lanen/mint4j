@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.NetConnectionEvent;
+import evanq.game.net.NetPacketType;
 import evanq.game.net.PacketConst;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
@@ -18,7 +19,7 @@ import evanq.game.net.io.DataWriter;
 public class CHeartBeat extends AbstractPacket{
 
 	public CHeartBeat() {
-		super(PacketConst.PACKET_TYPE_CLIENT);
+		super(NetPacketType.CLIENT);
 	}
 	
 	@Override

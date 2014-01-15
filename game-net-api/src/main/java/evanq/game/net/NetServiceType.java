@@ -13,7 +13,9 @@ public enum NetServiceType {
 	
 	/** 提供中专服务 */
 	AGENT_CLIENT,
+	
 	AGENT_SERVER,
+	
 	/***/
 	SERVER
 }

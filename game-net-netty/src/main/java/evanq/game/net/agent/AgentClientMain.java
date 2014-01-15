@@ -2,7 +2,7 @@ package evanq.game.net.agent;
 
 import evanq.game.net.Agent;
 
-public class AgentMain {
+public class AgentClientMain {
 
 	
 	public static final int CLIENT_AGENT_PORT = 10000;

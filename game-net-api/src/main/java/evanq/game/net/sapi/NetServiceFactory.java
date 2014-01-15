@@ -6,7 +6,9 @@ import java.util.Enumeration;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import evanq.game.net.impl.StaticNetInterfaceBinder;
+import evanq.game.net.INetService;
+import evanq.game.net.NetConnectionType;
+import evanq.game.net.impl.StaticNetServiceFactoryBinder;
 
 /**
  * 
@@ -15,16 +17,21 @@ import evanq.game.net.impl.StaticNetInterfaceBinder;
  * @author Evan cppmain@gmail.com
  *
  */
-public final class NetInterfaceFactory {
-
+public final class NetServiceFactory {
 
 	static final String BIND_UNSUCCESS_MSG = "无法绑定 [evanq.game.net.INetInterface] 的实现";
 	
 	
-	static public INetInterface getNetInterface(INetOption optional){
-		INetInterfaceFactory iNetInterfaceFactory = getINetInterfaceFactory();
+	static public INetService getNetService(int port){
+		INetServiceFactory iNetInterfaceFactory = getINetInterfaceFactory();
+		
+		return 	iNetInterfaceFactory.getNetService(port);
+	}
 	
-		return 	iNetInterfaceFactory.getNetInterface(optional);
+	static public INetService getNetService(NetConnectionType connectionType, String host, int port){
+		INetServiceFactory iNetInterfaceFactory = getINetInterfaceFactory();
+	
+		return 	iNetInterfaceFactory.getNetService(connectionType, host, port);
 	}
 	
 	//静态绑定的状态
@@ -37,12 +44,12 @@ public final class NetInterfaceFactory {
 	
 	static int NI_BIND_STATE = BIND_STATE_NIL;
 
-	private NetInterfaceFactory(){
+	private NetServiceFactory(){
 		
 	}
 	
 	
-	private final static INetInterfaceFactory getINetInterfaceFactory(){
+	private final static INetServiceFactory getINetInterfaceFactory(){
 		
 		if (BIND_STATE_NIL == NI_BIND_STATE) {
 			bind();
@@ -50,7 +57,7 @@ public final class NetInterfaceFactory {
 		switch(NI_BIND_STATE){
 			
 		case BIND_STATE_SUCCESSFUL:
-			return StaticNetInterfaceBinder.getInstance().getINetInterfaceFactory();
+			return StaticNetServiceFactoryBinder.getInstance().getINetServiceFactory();
 		}
 		
 		throw new IllegalStateException("Unreachable code");
@@ -74,7 +81,7 @@ public final class NetInterfaceFactory {
 			reportMultipleBindingAmbiguity(staticLoggerBinderPathSet);
 
 			// 实现绑定
-			StaticNetInterfaceBinder.getInstance();
+			StaticNetServiceFactoryBinder.getInstance();
 
 			// 设置绑定状态
 			NI_BIND_STATE = BIND_STATE_SUCCESSFUL;
@@ -98,7 +105,7 @@ public final class NetInterfaceFactory {
 		
 		Set<URL> staticLoggerBinderPathSet = new LinkedHashSet<URL>();
 		try {
-			ClassLoader loggerFactoryClassLoader = NetInterfaceFactory.class.getClassLoader();
+			ClassLoader loggerFactoryClassLoader = NetServiceFactory.class.getClassLoader();
 			Enumeration<URL> paths;
 			if (loggerFactoryClassLoader == null) {
 				paths = ClassLoader.getSystemResources(STATIC_BINDER_PATH);

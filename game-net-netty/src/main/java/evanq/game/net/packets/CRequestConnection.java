@@ -5,6 +5,7 @@ import java.io.IOException;
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.NetConnectionType;
+import evanq.game.net.NetPacketType;
 import evanq.game.net.PacketConst;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
@@ -22,7 +23,7 @@ public class CRequestConnection extends AbstractPacket {
 	private long accessToken;
 	
 	public CRequestConnection(){
-		super(PacketConst.PACKET_TYPE_CLIENT);
+		super(NetPacketType.CLIENT);
 	}
 	
 	

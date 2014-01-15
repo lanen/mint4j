@@ -25,8 +25,8 @@ public class AgentPacketAllocator extends AbstractPacketAllocator {
 	
 	
 	private boolean registered = false;
-	public void R(int packetId, Class<? extends AbstractPacket> clazz){
-		registerPacketSchema(packetId, clazz);
+	public static void R(int packetId, Class<? extends AbstractPacket> clazz){
+		Singleton.INSTANCE.registerPacketSchema(packetId, clazz);
 	}
 	
 	public void doRegister(){

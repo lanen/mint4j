@@ -8,8 +8,8 @@ package evanq.game.net.sapi;
  * @author Evan cppmain@gmail.com
  *
  */
-public interface INetInterfaceFactoryBinder {
+public interface INetServiceFactoryBinder {
 
-	public INetInterfaceFactory getINetInterfaceFactory();
+	public INetServiceFactory getINetServiceFactory();
 	
 }

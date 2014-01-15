@@ -11,14 +11,11 @@ import io.netty.handler.codec.LengthFieldPrepender;
  *
  */
 class DefaultNettyInitializer extends AbstractNettyInitializer  {
+		
+	private INetServiceHandler netServiceHandler;
 	
-	private INetConnectionManager manager;
-	
-	private AbstractPacketAllocator packetAllocator;
-	
-	public DefaultNettyInitializer(INetConnectionManager manager,AbstractPacketAllocator packetAllocator) {
-		this.manager = manager;
-		this.packetAllocator = packetAllocator;
+	public DefaultNettyInitializer(INetServiceHandler netServiceHandler) {
+		this.netServiceHandler = netServiceHandler;
 	}
 	
 	@Override
@@ -32,14 +29,22 @@ class DefaultNettyInitializer extends AbstractNettyInitializer  {
 
 		// 解码器
 		pipeline.addLast("beforDecoder", new LengthFieldBasedFrameDecoder(2048,0, 4));
-		pipeline.addLast("decoder", new DefaultNettyDecoder(packetAllocator));		
+		pipeline.addLast("decoder", new DefaultNettyDecoder(this.netServiceHandler.packetAllocator()));		
 
 		pipeline.addLast("lastEncoder", new LengthFieldPrepender(4));
 		pipeline.addLast("encoder", new DefaultNettyEncoder());
 
 		// 处理器
-		pipeline.addLast("handler", new DefaultNettyHandler(new NettyNetConnectionManagerAdaptor((AbstractNetConnectionManager)manager)));
+		pipeline.addLast("handler", new DefaultNettyHandler(wrapNetConnectionManager()));
 
+	}
+	
+	private NettyNetConnectionManagerAdaptor wrapNetConnectionManager(){
+		
+		AbstractNetConnectionManager ancn = (AbstractNetConnectionManager)this.netServiceHandler.netConnectionManager();
+		
+		return new NettyNetConnectionManagerAdaptor(ancn);
+		
 	}
 	
 

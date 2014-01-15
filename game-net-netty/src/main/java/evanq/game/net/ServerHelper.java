@@ -3,6 +3,7 @@ package evanq.game.net;
 import evanq.game.net.manager.AgentClientNetConnectionManager;
 import evanq.game.net.manager.AgentServerNetConnectionManager;
 import evanq.game.net.manager.ClientNetConnectionManager;
+import evanq.game.net.manager.ServerNetConnectionManager;
 
 /**
  * 
@@ -21,9 +22,9 @@ public final class ServerHelper {
 			
 			AgentServerNetConnectionManager instance = new AgentServerNetConnectionManager();
 
-			AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
+		//	AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
 			
-			return server;
+		//	return server;
 		}
 		
 		if(NetServiceType.AGENT_CLIENT == type){
@@ -31,8 +32,8 @@ public final class ServerHelper {
 			AgentPacketAllocator.getInstance().doRegister();
 			AgentClientNetConnectionManager instance = new AgentClientNetConnectionManager();
 
-			AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
-			return server;
+		//	AgentNetService server = new AgentNetService(type, port, instance, AgentPacketAllocator.getInstance());
+		//	return server;
 		}
 		
 		return null;
@@ -67,6 +68,15 @@ public final class ServerHelper {
 		return true;
 	}
 	
+	public static INetService createServer(int port,INetServiceHandler netServiceHandler){
+		
+		//TODO step 1. 服务器会根据连接的类型分配不同的编解码
+		
+		NetServiceAdaptor adaptor = new NetServiceAdaptor(NetServiceType.SERVER,port,netServiceHandler);
+
+		return adaptor;
+	}
+	
 	/**
 	 * 
 	 * 
@@ -79,9 +89,10 @@ public final class ServerHelper {
 	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort,NetConnectionType type){
 		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
 		
-		NetServiceAdaptor adaptor = new NetServiceAdaptor(NetServiceType.CLIENT,agentHost,agentPort,clientNetConnectionManager,PacketAllocator.getInstance());
+	//	NetServiceAdaptor adaptor = new NetServiceAdaptor(NetServiceType.CLIENT,agentHost,agentPort,clientNetConnectionManager,PacketAllocator.getInstance());
 		
-		return adaptor;
+	//	return adaptor;
+		return null;
 	}
 	
 	public static INetService establishNetServiceToAgentService(String agentHost,int agentPort){

@@ -8,29 +8,30 @@ package evanq.game.net;
  *
  */
 public class AgentNetService extends NetServiceAdaptor {
-	
-	public AgentNetService(NetServiceType type, int port,
-			INetConnectionManager netManager,
-			AbstractPacketAllocator packetAllocator) {
-		super(type, port, netManager, packetAllocator);
+
+	public AgentNetService(NetServiceType serviceType, int port,
+			INetServiceHandler handler) {
+		super(serviceType, port, handler);
+		// TODO Auto-generated constructor stub
 	}
 
-	public AgentNetService(NetServiceType type, String host, int port,
-			INetConnectionManager netManager,
-			AbstractNettyInitializer nettyInitializer,
-			AbstractPacketAllocator packetAllocator) {
-		super(type, host, port, netManager, nettyInitializer, packetAllocator);
+	public AgentNetService(NetServiceType serviceType, String host, int port,
+			INetServiceHandler handler,
+			AbstractNettyInitializer nettyInitializer) {
+		super(serviceType, host, port, handler, nettyInitializer);
+		// TODO Auto-generated constructor stub
 	}
 
-	public AgentNetService(NetServiceType type, String host, int port,
-			INetConnectionManager netManager,
-			AbstractPacketAllocator packetAllocator) {
-		super(type, host, port, netManager, packetAllocator);
+	public AgentNetService(NetServiceType serviceType, String host, int port,
+			INetServiceHandler handler) {
+		super(serviceType, host, port, handler);
+		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	protected AbstractNettyInitializer newNettyInitializer() {
-		return new AgentNettyInitializer(this.netManager,this.packetAllocator);
+		return new AgentNettyInitializer(null, null);
 	}
+	
 	
 }

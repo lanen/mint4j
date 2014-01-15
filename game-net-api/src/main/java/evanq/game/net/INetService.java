@@ -25,23 +25,7 @@ public interface INetService {
 	 * 关闭服务
 	 */
 	public void close();
-		
-	
-	/**
-	 * 
-	 * 要求发送数据
-	 * 
-	 * @param packet
-	 */
-	public void send(IPacket packet);
-	
-	/**
-	 * 要求接受数据
-	 * 这里概念模糊
-	 * @param packet
-	 */
-	public void receive(IPacket packet);
-	
+			
 	/**
 	 * 网络设别的服务类型
 	 * @return
@@ -55,6 +39,5 @@ public interface INetService {
 	 */
 	public NetConnectionType connectionType();
 	
-	
-	//public void route(IPacket packet);
+
 }

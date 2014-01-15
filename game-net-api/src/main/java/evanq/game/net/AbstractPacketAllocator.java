@@ -20,6 +20,7 @@ public abstract class AbstractPacketAllocator implements IPacketAllocator<Class<
 	protected Map<Integer,Class<? extends AbstractPacket>> newPacketSchemaMap(){
 		return new HashMap<Integer,Class<? extends AbstractPacket>>();
 	}
+	
 	@Override
 	public void registerPacketSchema(int packetId, Class<? extends AbstractPacket> clazz) {
 

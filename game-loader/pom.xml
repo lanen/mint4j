@@ -38,11 +38,6 @@
     </dependency>
     <dependency>
     	<groupId>evanq.game</groupId>
-    	<artifactId>game-net-classic</artifactId>
-    	<version>0.0.1-SNAPSHOT</version>
-    </dependency>
-    <dependency>
-    	<groupId>evanq.game</groupId>
     	<artifactId>game-base</artifactId>
     	<version>0.0.1-SNAPSHOT</version>
     </dependency>
@@ -56,6 +51,10 @@
 		<artifactId>logback-classic</artifactId>
 		<version>1.0.13</version>
 	</dependency>
-	            
+
+	<dependency>
+		<groupId>evanq.game</groupId>
+		<artifactId>game-net-netty</artifactId>
+	</dependency>
   </dependencies>
 </project>

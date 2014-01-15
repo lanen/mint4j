@@ -1,12 +1,7 @@
-package evanq.game.net.agent;
+package evanq.game.helper;
 
-import static evanq.game.net.DefaultPacketAllocator.R;
 import evanq.game.net.DefaultPacketAllocator;
 import evanq.game.net.INetService;
-import evanq.game.net.PacketConst;
-import evanq.game.net.packets.CHeartBeat;
-import evanq.game.net.packets.CRequestConnection;
-import evanq.game.net.packets.SRequestConnection_OK;
 import evanq.game.net.sapi.NetServiceFactory;
 /**
  * 
@@ -21,9 +16,9 @@ public class ServerMain {
 		
 		DefaultPacketAllocator.getInstance();
 		
-		R(PacketConst.C_CONNECT_REQUEST, CRequestConnection.class);
-		R(PacketConst.S_CONNECT_REQUEST_OK, SRequestConnection_OK.class);
-		R(PacketConst.C_HEART_BEAT, CHeartBeat.class);
+//		R(PacketConst.C_CONNECT_REQUEST, CRequestConnection.class);
+//		R(PacketConst.S_CONNECT_REQUEST_OK, SRequestConnection_OK.class);
+//		R(PacketConst.C_HEART_BEAT, CHeartBeat.class);
 		
 	}
 	
@@ -32,12 +27,9 @@ public class ServerMain {
 		RegisterPacket();
 		
 		INetService netService = NetServiceFactory.getNetService(9001);
+		
 		netService.open();
 		
-		INetService netService2 = NetServiceFactory.getNetService(9002);
-		netService2.open();
-		
-	
 		Thread t = new Thread(new Runnable() {
 			
 			@Override

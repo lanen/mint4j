@@ -13,7 +13,6 @@ import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import evanq.game.trace.LogSystem;
@@ -77,18 +76,6 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	//start listener
 	protected LinkedList<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
 	
-	
-	/**
-	 * 连接管理器
-	 * @see INetConnectionManager
-	 */
-	protected INetConnectionManager netManager;
-	
-	/**
-	 * 数据包分配器
-	 */
-	protected AbstractPacketAllocator packetAllocator;
-	
 	/**
 	 * 
 	 * 服务初始化工具，能够根据连接的类型，分配不同的编码、解码器
@@ -97,39 +84,36 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 */
 	protected AbstractNettyInitializer nettyInitializer;
 	
+	
+	private INetServiceHandler netServiceHandler;
+	
 	/**
-	 * 
-	 * @param type
+	 * @param serviceType
 	 * @param port
-	 * @param netManager
-	 * @param packetAllocator
+	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType type, int port,INetConnectionManager netManager,AbstractPacketAllocator packetAllocator) {
-		this(type,null,port,netManager,null,packetAllocator);
+	public NetServiceAdaptor(NetServiceType serviceType,int port, INetServiceHandler handler){
+		this(serviceType,null,port,handler,null);
 	}
-
+	
 	/**
 	 * 
-	 * @param type
+	 * @param serviceType
 	 * @param host
 	 * @param port
-	 * @param netManager
-	 * @param packetAllocator
+	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,AbstractPacketAllocator packetAllocator) {
-
-		this(type, host, port,netManager,null,packetAllocator);
+	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler) {
+		this(serviceType,host,port,handler,null);
 	}
-
 	/**
 	 * 
-	 * @param type
+	 * @param serviceType
 	 * @param host
 	 * @param port
-	 * @param netManager
-	 * @param nettyInitializer
+	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType type, String host, int port,INetConnectionManager netManager,AbstractNettyInitializer nettyInitializer,AbstractPacketAllocator packetAllocator) {
+	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyInitializer nettyInitializer){
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -142,36 +126,28 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				throw new NullPointerException("host");
 			}
 		}
-		
-		if(null == packetAllocator){
-			throw new NullPointerException("packetAllocator");
+		connectionType = NetConnectionType.DUMMY;
+
+		if(null == handler){
+			throw new NullPointerException("handler");
 		}
 		
-		if (null == netManager) {
-			netManager = newNetManager();
-		}
-		this.netManager = netManager;
-		this.packetAllocator = packetAllocator;
-		
+		this.netServiceHandler = handler;
+
 		if (null == nettyInitializer) {
 			nettyInitializer = newNettyInitializer();
 		}
-		
 		this.nettyInitializer = nettyInitializer;		
-		this.type = type;
+		this.type = serviceType;
 		this.host = host;
 		this.port = port;
 		
 		thread = new Thread(this,""+type +"-"+threadCounter.getAndIncrement());
+
+	}
 		
-	}
-	
-	protected INetConnectionManager newNetManager(){
-		return null;//AbstractNetConnectionManager.getInstance();
-	}
-	
 	protected AbstractNettyInitializer newNettyInitializer(){
-		return new DefaultNettyInitializer(this.netManager,this.packetAllocator);
+		return new DefaultNettyInitializer(this.netServiceHandler);
 	}
 
 	@Override
@@ -180,24 +156,48 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		synchronized (stateLock) {
 			state = NET_SERVICE_STATE_OPENED;
 		}
-
-		switch (type) {
-		case CLIENT:
-			openClientConnect0();
-			break;
-		case SERVER:
-		case AGENT_SERVER:
-		case AGENT_CLIENT:
-			openServer0();
-			break;
-		}
+		
+		boolean controlRetry= false;
+		
+		do{
+			switch (type) {
+			case CLIENT:
+				openClientConnect0();
+				//TODO 控制客户端断线重连
+				break;
+			case SERVER:
+			case AGENT_SERVER:
+			case AGENT_CLIENT:
+				openServer0();
+				break;
+			}
+			
+		} while (controlRetry);
+		
 		synchronized (stateLock) {
 			state = NET_SERVICE_STATE_IDLE;
 		}
 	}
 
 	public void open() {
-
+		if(state ==NET_SERVICE_STATE_OPENING ){
+			throw new IllegalMonitorStateException("重复开启");
+		}
+		if(type == NetServiceType.CLIENT){
+			
+			addChannelCreateListener0(new IChannelCreateListener() {
+				
+				@Override
+				public void onCreate(Channel channel) {
+					if(null == connectionType){
+						logger.warn("connectionType is null when create connection");
+					}
+					Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
+					attr.set(connectionType);
+				}
+			});
+		}
+		
 		synchronized (stateLock) {
 
 			if (state == NET_SERVICE_STATE_IDLE) {
@@ -211,30 +211,10 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	@Override
 	public void open(NetConnectionType type) {
 		connectionType(type);
-		addChannelCreateListener0(new IChannelCreateListener() {
-			
-			@Override
-			public void onCreate(Channel channel) {
-				Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
-				attr.set(connectionType);
-			}
-		});
+	
 		open();
 	}
 	
-
-	@Override
-	public void send(IPacket packet) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void receive(IPacket packet) {
-		// TODO Auto-generated method stub
-		
-	}
-
 	public boolean isOpen(){
 		return state == NET_SERVICE_STATE_OPENED;
 	}
@@ -398,7 +378,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	
 	public NetConnectionType connectionType(NetConnectionType connectionType) {
 		this.connectionType = connectionType;
-		return connectionType;
+		return this.connectionType;
 	}
 	
 }
