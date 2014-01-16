@@ -4,14 +4,14 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.util.Attribute;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -157,22 +157,16 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			state = NET_SERVICE_STATE_OPENED;
 		}
 		
-		boolean controlRetry= false;
-		
-		do{
-			switch (type) {
-			case CLIENT:
-				openClientConnect0();
-				//TODO 控制客户端断线重连
-				break;
-			case SERVER:
-			case AGENT_SERVER:
-			case AGENT_CLIENT:
-				openServer0();
-				break;
-			}
-			
-		} while (controlRetry);
+		switch (type) {
+		case CLIENT:
+			openClientConnect0();		
+			break;
+		case SERVER:
+		case AGENT_SERVER:
+		case AGENT_CLIENT:
+			openServer0();
+			break;
+		}
 		
 		synchronized (stateLock) {
 			state = NET_SERVICE_STATE_IDLE;
@@ -180,24 +174,10 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	}
 
 	public void open() {
-		if(state ==NET_SERVICE_STATE_OPENING ){
+		if(state == NET_SERVICE_STATE_OPENING ){
 			throw new IllegalMonitorStateException("重复开启");
 		}
-		if(type == NetServiceType.CLIENT){
-			
-			addChannelCreateListener0(new IChannelCreateListener() {
-				
-				@Override
-				public void onCreate(Channel channel) {
-					if(null == connectionType){
-						logger.warn("connectionType is null when create connection");
-					}
-					Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
-					attr.set(connectionType);
-				}
-			});
-		}
-		
+
 		synchronized (stateLock) {
 
 			if (state == NET_SERVICE_STATE_IDLE) {
@@ -223,8 +203,8 @@ public class NetServiceAdaptor implements INetService, Runnable {
 
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workGroup = new NioEventLoopGroup();
-
-		try {
+		try{
+		
 
 			ServerBootstrap boot = new ServerBootstrap();
 			boot.group(bossGroup, workGroup)
@@ -232,35 +212,22 @@ public class NetServiceAdaptor implements INetService, Runnable {
 					.childHandler(nettyInitializer);
 			ChannelFuture bindFuture = boot.bind(this.port	);
 			
-			bindFuture.addListener(new GenericFutureListener<Future<? super Void>>() {
-
-				@Override
-				public void operationComplete(Future<? super Void> future)
-						throws Exception {
-					logger.info("{} listen at {}:{}",type,host,port);
-
-					for (IChannelCreateListener l : startListeners) {
-						l.onCreate(NetServiceAdaptor.this.channel);
-					}
-				}
-			});
+			bindFuture.awaitUninterruptibly();			
+			channel =  bindFuture.channel();
 			
-			channel =  bindFuture.sync().channel();
-			channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
-
-				@Override
-				public void operationComplete(
-						Future<? super Void> future) throws Exception {
-					
-					logger.info("{} for {}:{} closing!",type,host,port);
-					for (IChannelDisposeListener l : closeListeners) {
-						
-						l.onDispose(NetServiceAdaptor.this.channel); 
-					}
-				}
-			}).sync();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.info("{} listen at {}:{}",type,host,port);
+			
+			for (IChannelCreateListener l : startListeners) {
+				l.onCreate(NetServiceAdaptor.this.channel);
+			}
+			channel.closeFuture().awaitUninterruptibly();
+			
+			logger.info("{} for {}:{} closing!",type,host,port);
+			for (IChannelDisposeListener l : closeListeners) {
+				
+				l.onDispose(NetServiceAdaptor.this.channel); 
+			}
+		
 		} finally {
 			
 			bossGroup.shutdownGracefully();
@@ -271,77 +238,155 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		}
 	}
 
-	/**
-	 * 
-	 */
-	private void openClientConnect0() {
+	private  synchronized void openClientConnect0(){
 		EventLoopGroup group = new NioEventLoopGroup();
-		try {
-			Bootstrap b = new Bootstrap();
-			b.group(group).handler(nettyInitializer)
-					.channel(NioSocketChannel.class);
-
-			ChannelFuture connectFutrue = b.connect(host, port);
-			connectFutrue.addListener(new GenericFutureListener<Future<? super Void>>() {
-
-				@Override
-				public void operationComplete(Future<? super Void> future)
-						throws Exception {
-					logger.info("{} connect to {}:{}",type,host,port);
-					for (IChannelCreateListener l : startListeners) {
-						l.onCreate(NetServiceAdaptor.this.channel);
-					}
+		
+		Bootstrap b = new Bootstrap();
+		b.group(group).handler(nettyInitializer)
+				.channel(NioSocketChannel.class);
+		b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
+		//TODO 控制客户端断线重连
+		boolean willRetry= false;
+		int delayRetryTime = 5000;
+		try{
+			
+			do{
+				boolean donotRetry = openClientConnect0(b);
+				if( ! donotRetry ) {				
+					awaitForRetry(delayRetryTime);					
+					willRetry = true;
+					continue;
 				}
-			});
-			
-			try {
-
-				channel = connectFutrue.sync().channel();
-			
-				//发生关闭，阻塞到关闭完成
-				channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
-
-					@Override
-					public void operationComplete(
-							Future<? super Void> future) throws Exception {						
-						
-						logger.info("{} to {}:{} closing!",type,host,port);
-						for (IChannelDisposeListener l : closeListeners) {
-							l.onDispose(NetServiceAdaptor.this.channel); 
-						}
-					}
-				}).sync();
+				synchronized (stateLock) {
+					state = NET_SERVICE_STATE_OPENED;	
+				}
+				//TODO block here
+				//try 防止正常运行，服务器断开，这时候重连
+				try {
+					openClientConnect1();
+				} catch (IOException e) {
+					awaitForRetry(delayRetryTime);
+					willRetry = true;
+					continue;
+				}
 				
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		} finally {
+				willRetry = false;
+				
+			}while(willRetry);
+			
+			
+		}finally{
 			group.shutdownGracefully();
 			startListeners.clear();
 			closeListeners.clear();
 		}
 		
 	}
+	
+	/**
+	 * 绑定客户端连接关闭完成事件
+	 */
+	private void openClientConnect1() throws IOException {
+		
+		if(null == channel)return ;
+		//*
+		channel.closeFuture().awaitUninterruptibly();
+		
+		if(state == NET_SERVICE_STATE_CLOSEED){
+			//属于正常断开
+			logger.info("{} to {}:{} closing!",type,host,port);
+		
+			if(null == connectionType){
+				logger.warn("connectionType is null when create connection");
+			}
 
+			for (IChannelDisposeListener l : closeListeners) {
+				l.onDispose(NetServiceAdaptor.this.channel); 
+			}
+		}else{
+			synchronized (stateLock) {
+				state = NET_SERVICE_STATE_CLOSEED;	
+			}
+			throw new IOException("非正常断开");
+		}
+				
+		/*/
+		  		
+		try {
+			
+			//发生关闭，阻塞到关闭完成
+			channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
+				
+				@Override
+				public void operationComplete(
+						Future<? super Void> future) throws Exception {						
+					//TODO 注意此处不是在 CLIENT 线程中
+					logger.info("{} to {}:{} closing!",type,host,port);
+					for (IChannelDisposeListener l : closeListeners) {
+						l.onDispose(NetServiceAdaptor.this.channel); 
+					}
+				}
+			}).sync();
+			
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		//*/
+	}
+	/**
+	 * 开始连接，成功会时候channel !=null
+	 * return true do not retry.
+	 */
+	private boolean openClientConnect0(Bootstrap b) {
+			
+		ChannelFuture connectFutrue = b.connect(host, port);
+		
+		//阻塞等待连接完成
+		connectFutrue.awaitUninterruptibly();
+		if ( connectFutrue.isCancelled() ) {
+			// Connection attempt cancelled by user
+			return true;
+		} else if (!connectFutrue.isSuccess()) {
+			logger.warn("{} connect to {}:{} Failed",type,host,port);				
+			return false;
+			//connectFutrue.cause().printStackTrace();
+		} else {
+			channel = connectFutrue.channel();
+			
+			Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
+			attr.set(connectionType);
+			
+			logger.info("{} connect to {}:{} Success",type,host,port);						
+			
+			for (IChannelCreateListener l : startListeners) {
+				l.onCreate(NetServiceAdaptor.this.channel);
+			}
+			return true;
+		}
+		
+		
+	}
+	
+	private void awaitForRetry(int delayRetryTime){
+		logger.info("{} delay {}ms,than Retry connect {}:{}",type,delayRetryTime,host,port);
+	
+		try {
+			wait(delayRetryTime);
+		} catch (InterruptedException ie) {
+			ie.printStackTrace();
+		}
+
+	}
 	public void close() {
 
 		synchronized (stateLock) {
-
+			
 			if (null != channel ) {
 				channel.close();				
 			}
-
 			state = NET_SERVICE_STATE_CLOSEED;
+
 		}
-	}
-	
-	/**
-	 * 在对头增加
-	 * 
-	 * @param startListener
-	 */
-	private void addChannelCreateListener0(IChannelCreateListener startListener){
-		this.startListeners.addFirst(startListener);
 	}
 	
 	public void addChannelCreateListener(IChannelCreateListener startListener){

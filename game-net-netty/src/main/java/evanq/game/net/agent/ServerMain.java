@@ -32,7 +32,7 @@ public class ServerMain {
 		RegisterPacket();
 		
 		INetService netService = NetServiceFactory.getNetService(9001);
-		netService.open();
+		netService.open();		
 		
 		INetService netService2 = NetServiceFactory.getNetService(9002);
 		netService2.open();

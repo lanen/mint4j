@@ -49,6 +49,7 @@ public class NettyNetInterfaceFactory implements INetServiceFactory {
 		
 		return adaptor;
 	}
+	
 	private DefaultNetServiceHandler server(){
 		ServerNetConnectionManager serverNetConnectionManager = new ServerNetConnectionManager();
 		

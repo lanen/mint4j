@@ -12,6 +12,7 @@ import io.netty.handler.codec.LengthFieldPrepender;
  * @author Evan cppmain@gmail.com
  *
  */
+@Deprecated
 public class AgentNettyInitializer extends AbstractNettyInitializer {
 
 	private INetConnectionManager manager;

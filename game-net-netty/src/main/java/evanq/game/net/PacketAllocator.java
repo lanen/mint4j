@@ -4,6 +4,7 @@ import evanq.game.net.packets.CHeartBeat;
 import evanq.game.net.packets.CRequestConnection;
 import evanq.game.net.packets.SRequestConnection_OK;
 
+@Deprecated
 public final class PacketAllocator extends AbstractPacketAllocator {
 
 	

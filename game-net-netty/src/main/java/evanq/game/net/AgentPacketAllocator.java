@@ -10,6 +10,7 @@ import evanq.game.net.packets.SRequestConnection_OK;
  * @author Evan cppmain@gmail.com
  *
  */
+@Deprecated
 public class AgentPacketAllocator extends AbstractPacketAllocator {
 
 	private static class Singleton {
