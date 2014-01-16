@@ -19,9 +19,10 @@ class NettyNetConnectionManagerAdaptor {
 	private Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
 	
 	private AbstractNetConnectionManager netConnectionManager;
-	
-	NettyNetConnectionManagerAdaptor(AbstractNetConnectionManager netConnectionManager){
+	private AbstractNettyChannelInitializer channelInitializer;
+	NettyNetConnectionManagerAdaptor(AbstractNetConnectionManager netConnectionManager,AbstractNettyChannelInitializer channelInitializer){
 		this.netConnectionManager = netConnectionManager;
+		this.channelInitializer = channelInitializer;
 	}
 	
 	static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("NetConnection");
@@ -63,6 +64,15 @@ class NettyNetConnectionManagerAdaptor {
  
 	}
 	
+	public void initChannel(NetConnectionType type, Channel channel){
+
+		try {
+			channelInitializer.enableChannel(type, channel);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void message(Channel channel, IPacket msg){
 		
 		ChannelMessageCommand command = new ChannelMessageCommand();
@@ -87,11 +97,12 @@ class NettyNetConnectionManagerAdaptor {
 		
 			logger.info("A dummy NetConnection Accepted with Channel:{},type:{}",channel,type);
 			
-			NettyConnection nc = new NettyConnection(channel, type);
+			NettyConnection nc = new NettyConnection(channel, type,NettyNetConnectionManagerAdaptor.this);
 			Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
 			attr.set(nc);
 			
 			netConnectionManager.accpet(nc);
+			
 		}
 		
 	}

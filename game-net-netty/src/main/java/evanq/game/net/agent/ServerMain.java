@@ -33,9 +33,9 @@ public class ServerMain {
 		
 		INetService netService = NetServiceFactory.getNetService(9001);
 		netService.open();
-		
-		INetService netService2 = NetServiceFactory.getNetService(9002);
-		netService2.open();
+//		
+//		INetService netService2 = NetServiceFactory.getNetService(9002);
+//		netService2.open();
 		
 	
 		Thread t = new Thread(new Runnable() {

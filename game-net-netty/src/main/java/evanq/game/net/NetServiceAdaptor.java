@@ -82,7 +82,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * 
 	 * @see DefaultNettyInitializer
 	 */
-	protected AbstractNettyInitializer nettyInitializer;
+	protected AbstractNettyChannelInitializer nettyInitializer;
 	
 	
 	private INetServiceHandler netServiceHandler;
@@ -113,7 +113,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * @param port
 	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyInitializer nettyInitializer){
+	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyChannelInitializer nettyInitializer){
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -146,7 +146,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 
 	}
 		
-	protected AbstractNettyInitializer newNettyInitializer(){
+	protected AbstractNettyChannelInitializer newNettyInitializer(){
 		return new DefaultNettyInitializer(this.netServiceHandler);
 	}
 
@@ -193,7 +193,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 						logger.warn("connectionType is null when create connection");
 					}
 					Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
-					attr.set(connectionType);
+					attr.set(connectionType);					
 				}
 			});
 		}
@@ -238,7 +238,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				public void operationComplete(Future<? super Void> future)
 						throws Exception {
 					logger.info("{} listen at {}:{}",type,host,port);
-
+				
 					for (IChannelCreateListener l : startListeners) {
 						l.onCreate(NetServiceAdaptor.this.channel);
 					}
@@ -246,6 +246,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			});
 			
 			channel =  bindFuture.sync().channel();
+
 			channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
 
 				@Override

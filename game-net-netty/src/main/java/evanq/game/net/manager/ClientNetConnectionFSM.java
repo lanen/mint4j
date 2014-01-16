@@ -100,6 +100,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 				connection.send(requestConnection);
 				//step 2. 在建立状态进行验证交互
 
+				connection.initConnection();
 				break;
 			case AUTH_OK:
 				logger.info("客户端连接验证完毕。进入工作状态");
