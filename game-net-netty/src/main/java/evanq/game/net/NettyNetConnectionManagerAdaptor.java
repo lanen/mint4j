@@ -1,8 +1,6 @@
 package evanq.game.net;
 
 import io.netty.channel.Channel;
-import io.netty.util.Attribute;
-import io.netty.util.AttributeKey;
 import evanq.game.concurrent.loop.ICommand;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
@@ -29,8 +27,7 @@ class NettyNetConnectionManagerAdaptor {
 
 	private static final boolean COMMAND_ON_SINGLE_THREAD = true;
 	//控制是否在单线程中执行业务
-	
-	
+		
 	public void accpet(Channel channel){
 		
 		NewChannelAcceptCommand command = new NewChannelAcceptCommand();
@@ -44,14 +41,29 @@ class NettyNetConnectionManagerAdaptor {
 	}
 	
 	public void close(Channel channel){
+		delayClose(channel,false);
+		
+	}
+	
+	/**
+	 * 
+	 * @param channel
+	 * @param delayClose true enable delay close
+	 */
+	public void delayClose(Channel channel,boolean delayClose){
 		ChannelDeActiveCommand command = new ChannelDeActiveCommand();
 		command.channel = channel;
+		command.delayClose=delayClose;
 		if (COMMAND_ON_SINGLE_THREAD) {
 			netConnectionManager.singleThread().accept(command);
 		}else{
 			command.execute();
 		}
  
+	}
+	
+	public void broken(Channel channel){
+		delayClose(channel,true);
 	}
 	
 	public void initChannel(NetConnectionType type, Channel channel){
@@ -81,14 +93,12 @@ class NettyNetConnectionManagerAdaptor {
 		Channel channel;
 		
 		@Override
-		public void execute() {
-			
+		public void execute() {		
 		
 			logger.info("A dummy NetConnection Accepted with Channel:{}",channel);			
 			
 			NettyConnection nc = new NettyConnection(channel, NetConnectionType.DUMMY);
 			AbstractNettyChannelInitializer.set(channel,nc);
-
 				
 			nc.addPropertyChangeListener(channelInitializer);
 			
@@ -102,13 +112,19 @@ class NettyNetConnectionManagerAdaptor {
 	class ChannelDeActiveCommand implements ICommand {
 		
 		Channel channel;
-		
+		boolean delayClose=false;
 		@Override
 		public void execute() {
 			
 			NettyConnection iNetConnection = AbstractNettyChannelInitializer.get(channel);
 			if (null != iNetConnection) {
-				netConnectionManager.close(iNetConnection);
+				if(delayClose){
+					iNetConnection.fsm().fireEvent(NetConnectionEvent.DELAYED_CLOSE);
+					//netConnectionManager.close(iNetConnection);
+				}else{
+					iNetConnection.fsm().fireEvent(NetConnectionEvent.CLOSE);
+					
+				}
 			}
 			
 			iNetConnection.removePropertyChangeListener(channelInitializer);

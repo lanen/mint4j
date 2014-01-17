@@ -34,8 +34,8 @@ public class ClientMain {
 //		INetService netService2 = NetServiceFactory.getNetService(NetConnectionType.CLIENT_SCENE,"127.0.0.1",9001);
 //		netService2.open();
 //		
-		INetService netService3 = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_CHAT,"127.0.0.1",9001);
-		netService3.open();
+//		INetService netService3 = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_CHAT,"127.0.0.1",9001);
+//		netService3.open();
 		
 //		ClientNetConnectionManager clientNetConnectionManager = new ClientNetConnectionManager();
 //		DefaultNetServiceHandler netServiceHandler = new DefaultNetServiceHandler(clientNetConnectionManager,DefaultPacketAllocator.getInstance());

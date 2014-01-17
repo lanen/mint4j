@@ -2,89 +2,41 @@ package evanq.game.net.manager;
 
 import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
-import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.INetConnectionState;
 import evanq.game.net.NetConnectionEvent;
-import evanq.game.net.NetConnectionType;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
 
 /**
+ * 
  * 服务器端连接管理状态机
  * 
  * @author Evan cppmain@gmail.com
  *
  */
-public class ServerNetConnectionFSM implements INetConnectionFSM {
+public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 	
 	private static Trace logger = LogSystem.getDefaultTrace(ServerNetConnectionFSM.class);
 
-	//当前连接
-	private INetConnection connection;
-	
-	//当前连接状态
-	private INetConnectionState currentState;
-	
-	//保持连接管理器	
-	private AbstractNetConnectionManager connectionManager;
-	
-	private ServerNetHeart heart;
-
-
 	public ServerNetConnectionFSM(AbstractNetConnectionManager connectionManager,INetConnection connection) {
-		
-		this.connectionManager = connectionManager;
-		
-		this.connection = connection;
-		this.connection.fsm(this);
+		super(connectionManager,connection);
 		
 		update(new ServerCreatingState());
 		
 	}
 	
 	@Override
-	public void update(INetConnectionState state) {
-		this.currentState = state;
+	public void beat() {
+		fireEvent(NetConnectionEvent.PING_CHECK);
 	}
 
-	@Override
-	public void fireEvent(NetConnectionEvent event) {
-		if(NetConnectionEvent.PING == event){
-			
-			if(null!=heart){
-				
-				heart.updateClientBeat();
-			}
-			return;
-		}
-		this.currentState.update(connection,event);
-	}
-	
-	private void initHeart(){
-		
-		if(connection.type() == NetConnectionType.CLIENT_MASTER){
-			this.heart = new ServerNetHeart(this);
-	
-			connectionManager.registerHeart(heart);
-		}
-		
-	}
-	
-	private void destoryHeart(){
-		if(null != heart){
-			connectionManager.deRegisterHeart(heart);
-		}
-	}
-	
-	
-	
 	/**
 	 * 客户端建立连接
 	 * 
 	 * @author Evan cppmain@gmail.com
 	 *
 	 */
-	class ServerCreatingState implements INetConnectionState{
+	class ServerCreatingState implements INetConnectionState {
 		
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
@@ -92,8 +44,6 @@ public class ServerNetConnectionFSM implements INetConnectionFSM {
 			
 			case CREATE_OK:
 				System.out.println("服务端收到一个连接");
-				
-				//连接创建完毕，放入等待验证的容器中
 				
 				break;
 			case AUTH_OK:
@@ -106,18 +56,75 @@ public class ServerNetConnectionFSM implements INetConnectionFSM {
 				initHeart();
 				
 				logger.info("客户端连接验证完毕。进入工作状态" + connection.type());
-				//connection.fsm().update(new ClientOpenState());
+				ServerNetConnectionFSM.this.update(new ServerConnectionOpenState());
+
 				break;
 			case AUTH_FAILED:
 				
 				break;
-			default:
-				
+			default:				
 				
 				break;
 			}			
 		}
 		
 	}
+	
+	
+	/**
+	 * 
+	 * @author Evan cppmain@gmail.com
+	 *
+	 */
+	class ServerConnectionOpenState implements INetConnectionState {
 
+		@Override
+		public void update(INetConnection connection, NetConnectionEvent event) {
+			switch (event) {
+			case PING:
+				if(null != heart){				
+					heart.hearBeat();
+				}
+				break;
+			case PING_CHECK:
+				if(null!=heart && heart.isDead()){	
+					ServerNetConnectionFSM.this.update(new ServerConnectionBrokenState());
+				}
+				break;
+			case DELAYED_CLOSE:	
+				System.out.println("DELAYED_CLOSE");
+				ServerNetConnectionFSM.this.update(new ServerConnectionBrokenState());
+
+				break;
+			case CLOSE:
+				System.out.println("CLOSE");
+				ServerNetConnectionFSM.this.update(new ServerConnectionClosingState());
+				break;
+			default:
+				break;
+			}
+			
+		}
+		
+	}
+	
+	class ServerConnectionBrokenState implements INetConnectionState{
+		
+		@Override
+		public void update(INetConnection connection, NetConnectionEvent event) {
+			
+		}
+		
+	}
+	
+	class ServerConnectionClosingState implements INetConnectionState{
+
+		@Override
+		public void update(INetConnection connection, NetConnectionEvent event) {
+			
+		}
+		
+	}
+	
+	
 }

@@ -71,17 +71,19 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
 	}
 
-
 	@Override
 	public void close(INetConnection connection) {
+		
 		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);
 	}
 	
 	public void registerHeart(INetHeart heart){
+		logger.info("register heart {}",heart);
 		heartGroup.add(heart);
 	}
 	
 	public void deRegisterHeart(INetHeart heart){
+		logger.info("deRegister heart {}",heart);
 		heartGroup.remove(heart);
 	}
 	

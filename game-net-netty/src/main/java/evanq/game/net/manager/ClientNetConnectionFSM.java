@@ -3,12 +3,11 @@ package evanq.game.net.manager;
 import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.AbstractNettyChannelInitializer;
 import evanq.game.net.INetConnection;
-import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.INetConnectionState;
-import evanq.game.net.INetHeart;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.NetConnectionType;
 import evanq.game.net.PacketConst;
+import evanq.game.net.packets.CHeartBeat;
 import evanq.game.net.packets.CRequestConnection;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
@@ -21,59 +20,29 @@ import evanq.game.trace.Trace;
  * @author Evan cppmain@gmail.com
  *
  */
-public class ClientNetConnectionFSM implements INetConnectionFSM {
+public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 	
 	private static Trace logger = LogSystem.getDefaultTrace(ClientNetConnectionFSM.class);
-
-	//持有当前状态机的连接
-	private INetConnection connection;
-	
-	//连接状态
-	private INetConnectionState currentState;
-	
-	//保持连接管理器
-	private AbstractNetConnectionManager connectionManager;
-	
-	//连接的心跳
-	private INetHeart heart;
 	
 	public ClientNetConnectionFSM(AbstractNetConnectionManager connectionManager, INetConnection connection) {
 		
-		this.connectionManager = connectionManager;
-		
-		this.connection = connection;
-		this.connection.fsm(this);
+		super(connectionManager,connection);
 				
 		update(new ClientCreatingState());
 		
 	}
 	
+	
 	@Override
-	public void update(INetConnectionState state) {
-		this.currentState = state;
+	public void beat() {
+		if(null == heart)return;
+		
+		CHeartBeat beatPacket = new CHeartBeat();
+		beatPacket.setPacketId(PacketConst.C_HEART_BEAT);
+		connection.send(beatPacket);
 	}
 
-	@Override
-	public void fireEvent(NetConnectionEvent event) {		
-		this.currentState.update(connection,event);
-	}
-	
-	private void initHeart(){
-		//TODO 只要注册到 AbstractNetConnectionManager 的心跳机制
-		if(connection.type() == NetConnectionType.CLIENT_MASTER){
-			logger.info("注册心跳机制");
-			this.heart = new ClientNetHeart(this.connection);
-			connectionManager.registerHeart(heart);
-		}
-		
-	}
-	
-	private void destoryHeart(){
-		if(null != heart){
-			connectionManager.deRegisterHeart(heart);
-		}
-	}
-	
+
 	/**
 	 * 客户端建立连接
 	 * 
@@ -89,8 +58,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 			case CREATE_OK:
 				logger.info("客户端建立连接");
 				
-				initHeart();
-				
+			
 				logger.info("上传送验证信息");
 				NetConnectionType channelType = AbstractNettyChannelInitializer.getChannelType(connection);
 
@@ -107,6 +75,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 			case AUTH_OK:
 				logger.info("客户端连接验证完毕。进入工作状态");
 				//TODO 经过验证之后，才分配特定的编解码器
+				initHeart();				
 				connection.fsm().update(new ClientOpenState());
 				
 				break;
@@ -127,8 +96,26 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 		
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO Auto-generated method stub
-			
+			switch (event) {
+			case PING:
+				if(null != heart){				
+					heart.hearBeat();
+				}
+				break;
+			case PING_CHECK:
+				if(null!=heart && heart.isDead()){	
+					ClientNetConnectionFSM.this.update(new ClientBrokenState());
+				}
+				break;
+			case DELAYED_CLOSE:	
+				
+				break;
+			case CLOSE:
+				break;
+			default:
+				break;
+			}
+
 		}
 		
 	}
@@ -137,7 +124,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 		
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO Auto-generated method stub
+			
 			
 		}
 		
@@ -149,6 +136,9 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
 			destoryHeart();
+			
+			System.out.println("开始断开连接的业务");
+			
 		}
 		
 	}
@@ -162,5 +152,5 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 		}
 		
 	}
-	
+
 }
