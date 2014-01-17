@@ -23,10 +23,13 @@ class NettyConnection extends AbstractNetConnection {
 	//连接号
 	//授权验证号
 	private Channel channel;
-
-	NettyConnection(Channel channel,NetConnectionType type){
+	
+	private NettyNetConnectionManagerAdaptor adaptor;
+	
+	NettyConnection(Channel channel,NetConnectionType type,NettyNetConnectionManagerAdaptor adaptor){
 		super(type);
 		this.channel = channel;		
+		this.adaptor = adaptor;
 	}
 
 	@Override
@@ -42,6 +45,11 @@ class NettyConnection extends AbstractNetConnection {
 	@Override
 	public NetConnectionType type(NetConnectionType newtype) {
 		return this.type = newtype;
+	}
+
+	@Override
+	public void initConnection() {
+		this.adaptor.initChannel(type, channel);
 	}
 	
 }

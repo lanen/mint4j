@@ -105,7 +105,7 @@ public class ServerNetConnectionFSM implements INetConnectionFSM {
 				}
 				//注册连接到心跳机制中
 				initHeart();
-				
+				connection.initConnection();
 				logger.info("客户端连接验证完毕。进入工作状态" + connection.type());
 				//connection.fsm().update(new ClientOpenState());
 				break;

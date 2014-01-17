@@ -12,10 +12,10 @@ import evanq.game.net.io.DefaultDataReader;
 
 public class AgentNettyDecoder extends ByteToMessageDecoder {
 
-	private AbstractPacketAllocator packetAllocator;
+	INetServiceHandler netServiceHandler;
 	
-	public AgentNettyDecoder(AbstractPacketAllocator packetAllocator) {
-		this.packetAllocator=packetAllocator;
+	public AgentNettyDecoder(INetServiceHandler netServiceHandler) {
+		this.netServiceHandler=netServiceHandler;
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class AgentNettyDecoder extends ByteToMessageDecoder {
 		
 		int commandKey = in.readChar();
 
-		AbstractPacket newPacket = this.packetAllocator.newPacket(commandKey);
+		AbstractPacket newPacket = this.netServiceHandler.packetAllocator().newPacket(commandKey);
 
 		if (null == newPacket) {
 			throw new CodecException("commandKey " + commandKey

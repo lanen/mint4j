@@ -82,7 +82,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * 
 	 * @see DefaultNettyInitializer
 	 */
-	protected AbstractNettyInitializer nettyInitializer;
+	protected AbstractNettyChannelInitializer nettyInitializer;
 	
 	
 	private INetServiceHandler netServiceHandler;
@@ -113,7 +113,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * @param port
 	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyInitializer nettyInitializer){
+	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyChannelInitializer nettyInitializer){
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -146,7 +146,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 
 	}
 		
-	protected AbstractNettyInitializer newNettyInitializer(){
+	protected AbstractNettyChannelInitializer newNettyInitializer(){
 		return new DefaultNettyInitializer(this.netServiceHandler);
 	}
 
@@ -177,7 +177,6 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		if(state == NET_SERVICE_STATE_OPENING ){
 			throw new IllegalMonitorStateException("重复开启");
 		}
-
 		synchronized (stateLock) {
 
 			if (state == NET_SERVICE_STATE_IDLE) {
@@ -212,6 +211,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 					.childHandler(nettyInitializer);
 			ChannelFuture bindFuture = boot.bind(this.port	);
 			
+
 			bindFuture.awaitUninterruptibly();			
 			channel =  bindFuture.channel();
 			

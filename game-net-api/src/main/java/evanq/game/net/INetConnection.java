@@ -19,6 +19,8 @@ public interface INetConnection  {
 	
 	INetConnectionFSM fsm(INetConnectionFSM fsm);
 	
+	public void initConnection();
+	
 	public void send(IPacket packet);
 	
 	public void recv(IPacket packet);
