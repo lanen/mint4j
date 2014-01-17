@@ -42,11 +42,11 @@ public class AgentClientMain {
 		INetService toScene = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_SCENE,"127.0.0.1",9001);
 		toScene.open();
 		
-		INetService toChat = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_CHAT,"127.0.0.1",9001);
-		toChat.open();
-		
-		INetService toWorld = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_LOGINSERVER,"127.0.0.1",9001);
-		toWorld.open();
+//		INetService toChat = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_CHAT,"127.0.0.1",9001);
+//		toChat.open();
+//		
+//		INetService toWorld = NetServiceFactory.getNetService(NetConnectionType.NODE_IN_AGENT_LOGINSERVER,"127.0.0.1",9001);
+//		toWorld.open();
 
 		
 		Thread t = new Thread(new Runnable() {

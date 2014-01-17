@@ -1,6 +1,7 @@
 package evanq.game.net.manager;
 
 import evanq.game.net.AbstractNetConnectionManager;
+import evanq.game.net.AbstractNettyChannelInitializer;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.INetConnectionState;
@@ -30,7 +31,7 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 	//连接状态
 	private INetConnectionState currentState;
 	
-	//保持连接管理器	
+	//保持连接管理器
 	private AbstractNetConnectionManager connectionManager;
 	
 	//连接的心跳
@@ -58,8 +59,9 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 	}
 	
 	private void initHeart(){
-		
+		//TODO 只要注册到 AbstractNetConnectionManager 的心跳机制
 		if(connection.type() == NetConnectionType.CLIENT_MASTER){
+			logger.info("注册心跳机制");
 			this.heart = new ClientNetHeart(this.connection);
 			connectionManager.registerHeart(heart);
 		}
@@ -88,23 +90,25 @@ public class ClientNetConnectionFSM implements INetConnectionFSM {
 				logger.info("客户端建立连接");
 				
 				initHeart();
-
 				
 				logger.info("上传送验证信息");
-				//step 1. 客户端与服务端建立了连接
+				NetConnectionType channelType = AbstractNettyChannelInitializer.getChannelType(connection);
+
+				//step 1. 客户端与服务端建立了连接				
 				CRequestConnection requestConnection = new CRequestConnection();
 				requestConnection.setPacketId(PacketConst.C_CONNECT_REQUEST);
 				requestConnection.setAccessToken(999);
-				requestConnection.setConnectionType(connection.type().value());
-				System.out.println(requestConnection);
+				requestConnection.setConnectionType(channelType.value());
 				connection.send(requestConnection);
+				
 				//step 2. 在建立状态进行验证交互
 
-				connection.initConnection();
 				break;
 			case AUTH_OK:
 				logger.info("客户端连接验证完毕。进入工作状态");
+				//TODO 经过验证之后，才分配特定的编解码器
 				connection.fsm().update(new ClientOpenState());
+				
 				break;
 			case AUTH_FAILED:
 				logger.info("客户端连接验证完毕。失败，进入重新验证状态");

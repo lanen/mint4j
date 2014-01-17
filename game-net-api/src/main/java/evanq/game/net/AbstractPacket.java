@@ -9,6 +9,19 @@ import evanq.game.net.io.Serializable;
  */
 public abstract class AbstractPacket implements IPacket , Serializable {
 
+	static class Struct{
+		
+		/**编解码器方式*/
+		public byte codec;
+		
+		/** 是否压缩 */
+		public byte zip;
+		
+		/** 是否加密 */
+		public byte encrypt;
+		
+	}
+	
 	/**
 	 * 数据包类型
 	 */
@@ -34,7 +47,7 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 		return packetType;
 	}
 
-	public void setPacketType(NetPacketType packetType) {
+	protected void setPacketType(NetPacketType packetType) {
 		this.packetType = packetType;
 	}
 

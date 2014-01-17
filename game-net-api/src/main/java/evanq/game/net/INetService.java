@@ -15,13 +15,6 @@ public interface INetService {
 	public void open();
 	
 	/**
-	 * 以指定的连接类型打开服务
-	 * 
-	 * @param type
-	 */
-	public void open(NetConnectionType type);
-	
-	/**
 	 * 关闭服务
 	 */
 	public void close();

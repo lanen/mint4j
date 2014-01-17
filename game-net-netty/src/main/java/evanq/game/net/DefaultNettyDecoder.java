@@ -17,6 +17,7 @@ public class DefaultNettyDecoder extends ByteToMessageDecoder {
 	public DefaultNettyDecoder(AbstractPacketAllocator packetAllocator) {
 		
 		this.packetAllocator = packetAllocator;
+		
 	}
 	
 	@Override

@@ -11,17 +11,17 @@ public class AgentNettyEncoder extends MessageToByteEncoder<AbstractPacket> {
 	@Override
 	protected void encode(ChannelHandlerContext ctx, AbstractPacket msg,
 			ByteBuf out) throws Exception {
-		
-		ByteBufOutputStream os = new ByteBufOutputStream(out);
-		os.writeChar(msg.getPacketId());
-		
-		DefaultDataWriter writer = new DefaultDataWriter(os);
-		
-		msg.writeObject(writer);
-		
-		//TODO 了解Netty的Flush 机制。控制单位时间的flush频率。
-		
-		ctx.writeAndFlush(out);
+		System.out.println("AgentNettyEncoder.encode()");
+//		ByteBufOutputStream os = new ByteBufOutputStream(out);
+//		os.writeChar(msg.getPacketId());
+//		
+//		DefaultDataWriter writer = new DefaultDataWriter(os);
+//		
+//		msg.writeObject(writer);
+//		
+//		//TODO 了解Netty的Flush 机制。控制单位时间的flush频率。
+//		
+//		ctx.writeAndFlush(out);
 	
 	}
 

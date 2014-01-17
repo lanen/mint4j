@@ -21,35 +21,38 @@ public class AgentNettyDecoder extends ByteToMessageDecoder {
 	@Override
 	protected void decode(ChannelHandlerContext ctx, ByteBuf in,
 			List<Object> out) throws Exception {
-		if (in.readableBytes() < 4) {
-			return;
-		}
-
-		in.markReaderIndex();
-		int length = in.readInt();
-
-		if (in.readableBytes() < length) {
-			in.resetReaderIndex();
-			return;
-		}
-		/////////////////////////////////
 		
-		int commandKey = in.readChar();
-
-		AbstractPacket newPacket = this.netServiceHandler.packetAllocator().newPacket(commandKey);
-
-		if (null == newPacket) {
-			throw new CodecException("commandKey " + commandKey
-					+ " do not request");
-		}
-	
-		ByteBufInputStream os = new ByteBufInputStream(in);
-
-		DefaultDataReader reader = new DefaultDataReader(os);	
+		System.out.println("AgentNettyDecoder.decode()");
 		
-		newPacket.readObject(reader);
-		
-		out.add(newPacket);
+//		if (in.readableBytes() < 4) {
+//			return;
+//		}
+//
+//		in.markReaderIndex();
+//		int length = in.readInt();
+//
+//		if (in.readableBytes() < length) {
+//			in.resetReaderIndex();
+//			return;
+//		}
+//		/////////////////////////////////
+//		
+//		int commandKey = in.readChar();
+//
+//		AbstractPacket newPacket = this.netServiceHandler.packetAllocator().newPacket(commandKey);
+//
+//		if (null == newPacket) {
+//			throw new CodecException("commandKey " + commandKey
+//					+ " do not request");
+//		}
+//	
+//		ByteBufInputStream os = new ByteBufInputStream(in);
+//
+//		DefaultDataReader reader = new DefaultDataReader(os);	
+//		
+//		newPacket.readObject(reader);
+//		
+//		out.add(newPacket);
 		
 	}
 

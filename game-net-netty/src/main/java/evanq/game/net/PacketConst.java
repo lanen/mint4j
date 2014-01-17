@@ -18,6 +18,4 @@ public final class PacketConst {
 	public static final char S_CONNECT_REQUEST_OK = 2;
 	public static final char C_HEART_BEAT = 3;
 	
-	
-	
 }

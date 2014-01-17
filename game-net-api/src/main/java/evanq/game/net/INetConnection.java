@@ -19,7 +19,7 @@ public interface INetConnection  {
 	
 	INetConnectionFSM fsm(INetConnectionFSM fsm);
 	
-	public void initConnection();
+	public void connectionTypeChange(NetConnectionType newtype);
 	
 	public void send(IPacket packet);
 	

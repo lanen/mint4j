@@ -3,6 +3,7 @@ package evanq.game.net.manager;
 import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
+import evanq.game.net.NetConnectionType;
 import evanq.game.net.NetServiceType;
 
 /**
@@ -22,6 +23,5 @@ public final class AgentServerNetConnectionManager extends
 		ServerNetConnectionFSM fsm = new ServerNetConnectionFSM(this, connection);
 
 		return fsm;
-	}	
-
+	}
 }

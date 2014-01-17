@@ -9,7 +9,6 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.util.Attribute;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -187,13 +186,6 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		}
 	}
 	
-	@Override
-	public void open(NetConnectionType type) {
-		connectionType(type);
-	
-		open();
-	}
-	
 	public boolean isOpen(){
 		return state == NET_SERVICE_STATE_OPENED;
 	}
@@ -202,8 +194,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 
 		EventLoopGroup bossGroup = new NioEventLoopGroup();
 		EventLoopGroup workGroup = new NioEventLoopGroup();
-		try{
-		
+		try{		
 
 			ServerBootstrap boot = new ServerBootstrap();
 			boot.group(bossGroup, workGroup)
@@ -211,22 +202,33 @@ public class NetServiceAdaptor implements INetService, Runnable {
 					.childHandler(nettyInitializer);
 			ChannelFuture bindFuture = boot.bind(this.port	);
 			
-
-			bindFuture.awaitUninterruptibly();			
-			channel =  bindFuture.channel();
+			bindFuture.awaitUninterruptibly();
 			
-			logger.info("{} listen at {}:{}",type,host,port);
+			if ( bindFuture.isCancelled() ) {
+				// Connection attempt cancelled by user
 			
-			for (IChannelCreateListener l : startListeners) {
-				l.onCreate(NetServiceAdaptor.this.channel);
-			}
-			channel.closeFuture().awaitUninterruptibly();
-			
-			logger.info("{} for {}:{} closing!",type,host,port);
-			for (IChannelDisposeListener l : closeListeners) {
+			} else if (!bindFuture.isSuccess()) {
+				logger.info("{} listen at {}:{} Failed",type,host,port);
+				bindFuture.cause().printStackTrace();
 				
-				l.onDispose(NetServiceAdaptor.this.channel); 
-			}
+			} else {
+				channel = bindFuture.channel();
+				
+				logger.info("{} listen at {}:{}",type,host,port);
+				
+				for (IChannelCreateListener l : startListeners) {
+					l.onCreate(NetServiceAdaptor.this.channel);
+				}
+				
+				channel.closeFuture().awaitUninterruptibly();
+				
+				logger.info("{} for {}:{} closing!",type,host,port);
+				
+				for (IChannelDisposeListener l : closeListeners) {
+					
+					l.onDispose(NetServiceAdaptor.this.channel); 
+				}
+			}		
 		
 		} finally {
 			
@@ -245,7 +247,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		b.group(group).handler(nettyInitializer)
 				.channel(NioSocketChannel.class);
 		b.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000);
-		//TODO 控制客户端断线重连
+		//TODO 控制客户端断线重连，配置信息
 		boolean willRetry= false;
 		int delayRetryTime = 5000;
 		try{
@@ -260,7 +262,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				synchronized (stateLock) {
 					state = NET_SERVICE_STATE_OPENED;	
 				}
-				//TODO block here
+				
 				//try 防止正常运行，服务器断开，这时候重连
 				try {
 					openClientConnect1();
@@ -289,7 +291,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	private void openClientConnect1() throws IOException {
 		
 		if(null == channel)return ;
-		//*
+	
 		channel.closeFuture().awaitUninterruptibly();
 		
 		if(state == NET_SERVICE_STATE_CLOSEED){
@@ -310,28 +312,6 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			throw new IOException("非正常断开");
 		}
 				
-		/*/
-		  		
-		try {
-			
-			//发生关闭，阻塞到关闭完成
-			channel.closeFuture().addListener(new GenericFutureListener<Future<? super Void>>() {
-				
-				@Override
-				public void operationComplete(
-						Future<? super Void> future) throws Exception {						
-					//TODO 注意此处不是在 CLIENT 线程中
-					logger.info("{} to {}:{} closing!",type,host,port);
-					for (IChannelDisposeListener l : closeListeners) {
-						l.onDispose(NetServiceAdaptor.this.channel); 
-					}
-				}
-			}).sync();
-			
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		//*/
 	}
 	/**
 	 * 开始连接，成功会时候channel !=null
@@ -353,8 +333,8 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		} else {
 			channel = connectFutrue.channel();
 			
-			Attribute<NetConnectionType> attr = channel.attr(NettyNetConnectionManagerAdaptor.NETCONNECTION_TYPE_ATTR);
-			attr.set(connectionType);
+			//需要服务器验证之后，才会根据connectionType 设定编解码器
+			AbstractNettyChannelInitializer.setChannelType(channel, connectionType);
 			
 			logger.info("{} connect to {}:{} Success",type,host,port);						
 			
@@ -377,6 +357,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		}
 
 	}
+	
 	public void close() {
 
 		synchronized (stateLock) {

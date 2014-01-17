@@ -19,27 +19,17 @@ class NettyNetConnectionManagerAdaptor {
 	private Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
 	
 	private AbstractNetConnectionManager netConnectionManager;
+	
 	private AbstractNettyChannelInitializer channelInitializer;
+	
 	NettyNetConnectionManagerAdaptor(AbstractNetConnectionManager netConnectionManager,AbstractNettyChannelInitializer channelInitializer){
 		this.netConnectionManager = netConnectionManager;
 		this.channelInitializer = channelInitializer;
 	}
-	
-	static final AttributeKey<INetConnection> NETCONNECTION_ATTR = AttributeKey.valueOf("NetConnection");
-	static final AttributeKey<NetConnectionType> NETCONNECTION_TYPE_ATTR = AttributeKey.valueOf("NetConnectionType");
-	
-	//控制是否在单线程中执行业务
+
 	private static final boolean COMMAND_ON_SINGLE_THREAD = true;
+	//控制是否在单线程中执行业务
 	
-	public INetConnection get(Channel channel){
-		Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
-		return attr.get();
-	}
-	
-	public NetConnectionType getChannelType(Channel channel){
-		Attribute<NetConnectionType> attr = channel.attr(NETCONNECTION_TYPE_ATTR);
-		return attr.get();
-	}
 	
 	public void accpet(Channel channel){
 		
@@ -93,13 +83,14 @@ class NettyNetConnectionManagerAdaptor {
 		@Override
 		public void execute() {
 			
-			NetConnectionType type = getChannelType(channel);
 		
-			logger.info("A dummy NetConnection Accepted with Channel:{},type:{}",channel,type);
+			logger.info("A dummy NetConnection Accepted with Channel:{}",channel);			
 			
-			NettyConnection nc = new NettyConnection(channel, type,NettyNetConnectionManagerAdaptor.this);
-			Attribute<INetConnection> attr = channel.attr(NETCONNECTION_ATTR);
-			attr.set(nc);
+			NettyConnection nc = new NettyConnection(channel, NetConnectionType.DUMMY);
+			AbstractNettyChannelInitializer.set(channel,nc);
+
+				
+			nc.addPropertyChangeListener(channelInitializer);
 			
 			netConnectionManager.accpet(nc);
 			
@@ -109,14 +100,19 @@ class NettyNetConnectionManagerAdaptor {
 	
 	//TODO 断开连接
 	class ChannelDeActiveCommand implements ICommand {
+		
 		Channel channel;
+		
 		@Override
 		public void execute() {
 			
-			INetConnection iNetConnection = get(channel);
+			NettyConnection iNetConnection = AbstractNettyChannelInitializer.get(channel);
 			if (null != iNetConnection) {
 				netConnectionManager.close(iNetConnection);
 			}
+			
+			iNetConnection.removePropertyChangeListener(channelInitializer);
+
 		}		
 	}
 	
@@ -127,7 +123,7 @@ class NettyNetConnectionManagerAdaptor {
 		@Override
 		public void execute() {
 			
-			INetConnection iNetConnection = get(channel);	
+			INetConnection iNetConnection = AbstractNettyChannelInitializer.get(channel);	
 			if(null !=iNetConnection){
 
 				//try 防止异常崩坏线程

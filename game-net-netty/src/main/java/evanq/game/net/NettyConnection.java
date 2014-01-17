@@ -2,6 +2,9 @@ package evanq.game.net;
 
 import io.netty.channel.Channel;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 class NettyConnection extends AbstractNetConnection {
 
 	//如何标示链接
@@ -22,14 +25,13 @@ class NettyConnection extends AbstractNetConnection {
 	
 	//连接号
 	//授权验证号
-	private Channel channel;
+	private Channel channel;	
+
+	private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 	
-	private NettyNetConnectionManagerAdaptor adaptor;
-	
-	NettyConnection(Channel channel,NetConnectionType type,NettyNetConnectionManagerAdaptor adaptor){
+	NettyConnection(Channel channel,NetConnectionType type){
 		super(type);
 		this.channel = channel;		
-		this.adaptor = adaptor;
 	}
 
 	@Override
@@ -41,15 +43,30 @@ class NettyConnection extends AbstractNetConnection {
 	public void recv(IPacket packet) {
 		throw new UnsupportedOperationException();
 	}
+	
+	Channel getChannel() {
+		return channel;
+	}
+	
 
 	@Override
 	public NetConnectionType type(NetConnectionType newtype) {
 		return this.type = newtype;
 	}
-
+	
 	@Override
-	public void initConnection() {
-		this.adaptor.initChannel(type, channel);
+	public void connectionTypeChange(NetConnectionType newtype ) {
+		NetConnectionType old = type();
+		this.type(newtype);
+		pcs.firePropertyChange("type", old, newtype);		
 	}
 	
+	public void addPropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.addPropertyChangeListener(listener);
+    }
+
+    public void removePropertyChangeListener(PropertyChangeListener listener) {
+        this.pcs.removePropertyChangeListener(listener);
+    }
+		
 }

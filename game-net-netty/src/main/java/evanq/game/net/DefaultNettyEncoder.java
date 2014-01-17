@@ -26,6 +26,7 @@ public class DefaultNettyEncoder extends MessageToByteEncoder<AbstractPacket> {
 		//TODO 了解Netty的Flush 机制。控制单位时间的flush频率。
 		
 		ctx.writeAndFlush(out);
+		//ctx.write(out);
 	}
 
 }

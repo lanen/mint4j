@@ -32,12 +32,10 @@ public class ServerMain {
 		RegisterPacket();
 		
 		INetService netService = NetServiceFactory.getNetService(9001);
-
 		netService.open();		
 		
-		INetService netService2 = NetServiceFactory.getNetService(9002);
-		netService2.open();
-
+//		INetService netService2 = NetServiceFactory.getNetService(9002);
+//		netService2.open();
 		
 	
 		Thread t = new Thread(new Runnable() {
@@ -45,6 +43,7 @@ public class ServerMain {
 			@Override
 			public synchronized void run() {
 				while(true){
+					
 					
 					try {
 						wait(1000);

@@ -5,6 +5,7 @@ import evanq.game.net.AbstractPacket;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.MappingNetConnectionHolder;
+import evanq.game.net.NetConnectionType;
 import evanq.game.net.NetServiceType;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
@@ -45,5 +46,7 @@ public final class ClientNetConnectionManager extends AbstractNetConnectionManag
 		}
 		
 	}
+	
+	
 		
 }

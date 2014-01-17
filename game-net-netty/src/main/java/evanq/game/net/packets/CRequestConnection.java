@@ -18,6 +18,7 @@ import evanq.game.net.io.DataWriter;
  */
 public class CRequestConnection extends AbstractPacket {
 
+	/** 客户端的连接类型 */
 	private byte connectionType;
 	
 	private long accessToken;
@@ -26,14 +27,18 @@ public class CRequestConnection extends AbstractPacket {
 		super(NetPacketType.CLIENT);
 	}
 	
-	
 	@Override
 	public void execute() {
 		
-		//step 1. 从accessToken 中获取账号
-		
 		NetConnectionType type = NetConnectionType.valueOf(connectionType);
-		connection().type(type);
+		connection().connectionTypeChange(type);
+		
+		//返回验证成功
+		SRequestConnection_OK ok = new SRequestConnection_OK();
+		ok.setConnectionType(connectionType);
+		ok.setPacketId(PacketConst.S_CONNECT_REQUEST_OK);
+		connection().send(ok);
+				
 		connection().fsm().fireEvent(NetConnectionEvent.AUTH_OK);		
 
 		//step 2. get connection holder by session key

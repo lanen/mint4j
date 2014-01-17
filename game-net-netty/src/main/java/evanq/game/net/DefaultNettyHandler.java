@@ -5,14 +5,16 @@ import io.netty.channel.SimpleChannelInboundHandler;
 
 /**
  * 
- * 来自客户端的数据（读写），连接（开/关）处理器
+ * 将IO 的控制权转给 {@link INetConnectionManager}
+ * 
+ * @see INetConnectionManager
  * 
  * @author Evan cppmain@gmail.com
  *
  */
-public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
+class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 
-	private NettyNetConnectionManagerAdaptor netConnectionManager;
+	NettyNetConnectionManagerAdaptor netConnectionManager;
 	
 	DefaultNettyHandler(NettyNetConnectionManagerAdaptor adptor) {
 		netConnectionManager = adptor;
@@ -27,14 +29,12 @@ public class DefaultNettyHandler extends SimpleChannelInboundHandler<IPacket> {
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
 			throws Exception {
-		System.out.println("exceptionCaught");
-		//TODO 客户端强制断开连接，服务端是不知道的
-		
 		super.exceptionCaught(ctx, cause);
 	}
 
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {		
+	public void channelActive(ChannelHandlerContext ctx) throws Exception {
+		
 		netConnectionManager.accpet(ctx.channel());	
 	}
 
