@@ -34,4 +34,28 @@ public final class DefaultNetServiceHandler implements INetServiceHandler {
 		return netManager;
 	}
 
+	@Override
+	public void fireWillStartNetService() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fireDidStartNetService() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fireWillCloseNetService() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void fireDidCloseNetService() {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

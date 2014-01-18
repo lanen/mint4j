@@ -15,4 +15,25 @@ public interface INetServiceHandler {
 	 * @return
 	 */
 	public INetConnectionManager netConnectionManager();
+	
+	/**
+	 * 
+	 */
+	public void fireWillStartNetService();
+	
+	/**
+	 * 
+	 */
+	public void fireDidStartNetService();
+	
+	/**
+	 * 
+	 */
+	public void fireWillCloseNetService();
+	
+	/**
+	 * 
+	 */
+	public void fireDidCloseNetService();
+
 }

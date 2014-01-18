@@ -245,7 +245,7 @@ public class LogSystem implements LogWriter {
 
     private synchronized String format(int level,String module, String s) {
         if (dateFormat == null) {//15:08:32.205
-            dateFormat = new SimpleDateFormat("HH:mm:ss.S ");
+            dateFormat = new SimpleDateFormat("HH:mm:ss.S");
         }
         String i = "";
         switch(level){
@@ -258,10 +258,11 @@ public class LogSystem implements LogWriter {
         case LogLevel.WARN:
         	i="WARN";break;
         }
-        
+        String nameOfThread = Thread.currentThread().getName();
         StringBuffer sb = new StringBuffer();
         sb.append(dateFormat.format(new Date()) );
-        sb.append(" ").append(i).append("  " ).append(module).append(" - ").append(" ").append(s);
+        sb.append(" [").append(nameOfThread).append("]");
+        sb.append(" ").append(i).append("  " ).append(module).append(" - ").append(s);
         
         return sb.toString();
     }

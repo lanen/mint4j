@@ -24,7 +24,7 @@ import evanq.game.trace.TraceConstant;
  */
 public abstract class AbstractNetConnectionManager implements INetConnectionManager {
 	
-	private Trace logger ;
+	private static Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
 	
 	protected Map<INetConnection,INetConnectionHolder> connections = New.newConcurrentHashMap();
 	
@@ -49,41 +49,35 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 	 */
 	protected AbstractNetConnectionManager(NetServiceType serviceType) {
 		
-		//提供一个日志跟踪器
-		StringBuffer s = new StringBuffer()	;
-		s.append(TraceConstant.CONNECTION).append("[").append(serviceType).append("]");
-		logger = LogSystem.getDefaultTrace(s.toString());
-		
 		this.serviceType = serviceType;
 		
 		heartGroup = new HeartBeatGroup();
 
 		holder = new SingleThreadHolder();		
 		holder.registerHeartBeatTask(new NetHeartBeatTask(heartGroup));
+		holder.registerDelayClosingTask(new DelayClosingTask(this));
+		holder.registerUnAuthPurgeTask(new PurgeTask(this));
 		
 		lookAtNetService = new LookAtNetService(this);
 	}
 	
 	
 	@Override
-	public void accpet(INetConnection connection) {
-		INetConnectionFSM fsm = createNetConnectionFSM(connection);
-		fsm.fireEvent(NetConnectionEvent.CREATE_OK);
+	public void addConnection(INetConnection connection) {
+		//讲连接增加到容易
+		
 	}
 
 	@Override
-	public void close(INetConnection connection) {
+	public void removeConnection(INetConnection connection) {		
 		
-		connection.fsm().fireEvent(NetConnectionEvent.CLOSE);
 	}
 	
 	public void registerHeart(INetHeart heart){
-		logger.info("register heart {}",heart);
 		heartGroup.add(heart);
 	}
 	
 	public void deRegisterHeart(INetHeart heart){
-		logger.info("deRegister heart {}",heart);
 		heartGroup.remove(heart);
 	}
 	
@@ -119,6 +113,16 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 		 */
 		ScheduledFuture<?> heartBeatScheduledFuture;
 		
+		/**
+		 * 延迟关闭任务
+		 */
+		ScheduledFuture<?> delayClosingScheduledFuture;
+
+		/**
+		 * 验证失败，或悬空连接清扫任务
+		 */
+		ScheduledFuture<?> unAuthedPurgeScheduledFuture;
+		
 		public SingleThreadHolder() {
 			super(null);
 			
@@ -143,14 +147,23 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 			}
 		}
 		
-		public void registerHeartBeatTask(Runnable runnable){
+		void registerHeartBeatTask(Runnable runnable){
 			heartBeatScheduledFuture = group.scheduleWithFixedDelay(runnable, 0, INetHeartGroup.HEART_BEAT_DELAY, TimeUnit.MILLISECONDS);
+		}
+		
+		//TODO 暂定关闭任务2s 执行一次
+		void registerDelayClosingTask(Runnable runnable){
+			delayClosingScheduledFuture = group.scheduleWithFixedDelay(runnable, 0, 2000, TimeUnit.MILLISECONDS);
+		}
+		//TODO 暂定清扫任务3s 执行一次
+		void registerUnAuthPurgeTask(Runnable runnable){
+			unAuthedPurgeScheduledFuture = group.scheduleWithFixedDelay(runnable, 0, 3000, TimeUnit.MILLISECONDS);
 		}
 		
 	}
 
 	
-	static class HeartBeatGroup implements INetHeartGroup{
+	static class HeartBeatGroup implements INetHeartGroup {
 
 		private Collection<INetHeart> hearts = New.linkedList();
 		
@@ -169,6 +182,35 @@ public abstract class AbstractNetConnectionManager implements INetConnectionMana
 			for (INetHeart heart : hearts) {
 				heart.beat();
 			}
+		}
+		
+	}
+	
+	static class DelayClosingTask implements Runnable{
+		
+		AbstractNetConnectionManager manager ;
+		
+		DelayClosingTask(AbstractNetConnectionManager manager) {
+			this.manager = manager;
+		}
+		
+		@Override
+		public void run() {
+			
+		}
+		
+	}
+	static class PurgeTask implements Runnable{
+		
+		AbstractNetConnectionManager manager ;
+
+		PurgeTask(AbstractNetConnectionManager manager) {
+			this.manager = manager;
+		}
+		
+		@Override
+		public void run() {
+			
 		}
 		
 	}

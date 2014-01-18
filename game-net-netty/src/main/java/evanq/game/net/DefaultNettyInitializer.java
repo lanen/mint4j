@@ -21,8 +21,7 @@ import evanq.game.trace.Trace;
 class DefaultNettyInitializer extends AbstractNettyChannelInitializer  {
 	
 	private Trace logger = LogSystem.getDefaultTrace(DefaultNettyInitializer.class);
-	
-	
+		
 	/////定义各种编码器的名称
 	static final String ZIP_ENCODER = "zipEnoder";
 	static final String ZIP_DECODER = "zipDecoder";

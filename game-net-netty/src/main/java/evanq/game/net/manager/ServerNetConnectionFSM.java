@@ -4,6 +4,7 @@ import evanq.game.net.AbstractNetConnectionManager;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionState;
 import evanq.game.net.NetConnectionEvent;
+import evanq.game.net.NetConnectionState;
 import evanq.game.trace.LogSystem;
 import evanq.game.trace.Trace;
 
@@ -21,8 +22,7 @@ public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 	public ServerNetConnectionFSM(AbstractNetConnectionManager connectionManager,INetConnection connection) {
 		super(connectionManager,connection);
 		
-		update(new ServerCreatingState());
-		
+		update(new ServerCreatingState());		
 	}
 	
 	@Override
@@ -40,22 +40,18 @@ public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 		
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
+			
+			
 			switch(event){
 			
 			case CREATE_OK:
-				System.out.println("服务端收到一个连接");
 				
 				break;
 			case AUTH_OK:
-				
-				if(null == connection.type()){
-					logger.warn("验证完毕的的连接，没有赋予类型");
-					//TODO 做拒绝访问控制
-				}
 				//注册连接到心跳机制中
 				initHeart();
-				
-				logger.info("客户端连接验证完毕。进入工作状态" + connection.type());
+				//TODO 使用future 模式与其他模块通讯
+				connectionManager.addConnection(connection);				
 				ServerNetConnectionFSM.this.update(new ServerConnectionOpenState());
 
 				break;
@@ -65,7 +61,12 @@ public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 			default:				
 				
 				break;
-			}			
+			}
+		}
+
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.CONNECTING;
 		}
 		
 	}
@@ -92,12 +93,12 @@ public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 				}
 				break;
 			case DELAYED_CLOSE:	
-				System.out.println("DELAYED_CLOSE");
+				
 				ServerNetConnectionFSM.this.update(new ServerConnectionBrokenState());
 
 				break;
 			case CLOSE:
-				System.out.println("CLOSE");
+				
 				ServerNetConnectionFSM.this.update(new ServerConnectionClosingState());
 				break;
 			default:
@@ -105,25 +106,38 @@ public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 			}
 			
 		}
-		
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.OPEN;
+		}
 	}
 	
-	class ServerConnectionBrokenState implements INetConnectionState{
+	class ServerConnectionBrokenState implements INetConnectionState {
 		
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
 			
 		}
 		
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.BROKEN;
+		}
 	}
 	
 	class ServerConnectionClosingState implements INetConnectionState{
 
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			
+			destoryHeart();
+			//TODO 使用future 模式与其他模块通讯
+			connectionManager.removeConnection(connection);
 		}
 		
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.CLOSED;
+		}
 	}
 	
 	

@@ -25,8 +25,8 @@ class NettyNetConnectionManagerAdaptor {
 		this.channelInitializer = channelInitializer;
 	}
 
-	private static final boolean COMMAND_ON_SINGLE_THREAD = true;
 	//控制是否在单线程中执行业务
+	private static final boolean COMMAND_ON_SINGLE_THREAD = true;
 		
 	public void accpet(Channel channel){
 		
@@ -99,10 +99,11 @@ class NettyNetConnectionManagerAdaptor {
 			
 			NettyConnection nc = new NettyConnection(channel, NetConnectionType.DUMMY);
 			AbstractNettyChannelInitializer.set(channel,nc);
-				
+			
 			nc.addPropertyChangeListener(channelInitializer);
 			
-			netConnectionManager.accpet(nc);
+			INetConnectionFSM fsm = netConnectionManager.createNetConnectionFSM(nc);
+			fsm.fireEvent(NetConnectionEvent.CREATE_OK);			
 			
 		}
 		
@@ -119,8 +120,7 @@ class NettyNetConnectionManagerAdaptor {
 			NettyConnection iNetConnection = AbstractNettyChannelInitializer.get(channel);
 			if (null != iNetConnection) {
 				if(delayClose){
-					iNetConnection.fsm().fireEvent(NetConnectionEvent.DELAYED_CLOSE);
-					//netConnectionManager.close(iNetConnection);
+					iNetConnection.fsm().fireEvent(NetConnectionEvent.DELAYED_CLOSE);					
 				}else{
 					iNetConnection.fsm().fireEvent(NetConnectionEvent.CLOSE);
 					
@@ -140,7 +140,7 @@ class NettyNetConnectionManagerAdaptor {
 		public void execute() {
 			
 			INetConnection iNetConnection = AbstractNettyChannelInitializer.get(channel);	
-			if(null !=iNetConnection){
+			if(null != iNetConnection){
 
 				//try 防止异常崩坏线程
 				try{

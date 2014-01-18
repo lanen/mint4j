@@ -8,11 +8,9 @@ package evanq.game.net;
  *
  */
 public enum NetConnectionState {
-
 	
 	CONNECTING,
 	OPEN,
 	BROKEN,
-	CLOSED;
-	
+	CLOSED;	
 }

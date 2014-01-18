@@ -18,10 +18,4 @@ public final class NetHeart extends AbstractNetHeart {
 		//服务端嗅探心跳时间
 		fsm.beat();
 	}
-
-	public String toString(){
-		StringBuffer buf = new StringBuffer();
-		buf.append(fsm);
-		return buf.toString()	;
-	}
 }

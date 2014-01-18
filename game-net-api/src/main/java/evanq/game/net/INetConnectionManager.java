@@ -16,9 +16,9 @@ public interface INetConnectionManager {
 	//final HeartBeatTask
 	//final ServerClosingTask
 	//final 
-	public void accpet(INetConnection connection);
+	public void addConnection(INetConnection connection);
 
-	public void close(INetConnection connection);
+	public void removeConnection(INetConnection connection);
 	
 	
 }

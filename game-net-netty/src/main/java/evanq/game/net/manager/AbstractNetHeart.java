@@ -1,6 +1,7 @@
 package evanq.game.net.manager;
 
 import evanq.game.net.INetHeart;
+import evanq.game.net.INetHeartGroup;
 
 /**
  * 心跳状态记录
@@ -19,6 +20,7 @@ public abstract class AbstractNetHeart implements INetHeart {
 	
 	public AbstractNetHeart(AbstractNetConnectionFSM fsm) {
 		this.fsm = fsm;
+		lastBeatTimeMS=System.currentTimeMillis();
 	}
 		
 	public void hearBeat(){
@@ -27,7 +29,8 @@ public abstract class AbstractNetHeart implements INetHeart {
 	
 	@Override
 	public boolean isDead() {
-		return lastBeatTimeMS < System.currentTimeMillis() + 45000;
+		
+		return lastBeatTimeMS + INetHeartGroup.HEART_BEAT_DELAY + INetHeartGroup.HEART_BEAT_DELAY< System.currentTimeMillis() ;
 	}
 
 }

@@ -5,8 +5,14 @@ import io.netty.channel.Channel;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+import evanq.game.trace.TraceConstant;
+
 class NettyConnection extends AbstractNetConnection {
 
+	private static Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION);
+	
 	//如何标示链接
 	//思路来自linux对socket handle标记方式，每一个链接都作为一个file descriptor
 	//map<connecion,INetConnectionHolder>,建立一个单线程来管理链接，
@@ -68,5 +74,12 @@ class NettyConnection extends AbstractNetConnection {
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         this.pcs.removePropertyChangeListener(listener);
     }
+    
+    public String toString(){
+    	StringBuffer buf = new StringBuffer();
+    	buf.append(channel).append(" ").append(fsm());
+    	return buf.toString();
+    }
 		
+    
 }

@@ -5,6 +5,9 @@ import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionFSM;
 import evanq.game.net.INetConnectionState;
 import evanq.game.net.NetConnectionEvent;
+import evanq.game.trace.LogSystem;
+import evanq.game.trace.Trace;
+import evanq.game.trace.TraceConstant;
 
 /**
  * 
@@ -14,6 +17,8 @@ import evanq.game.net.NetConnectionEvent;
  *
  */
 public abstract class AbstractNetConnectionFSM implements INetConnectionFSM {
+	
+	private Trace logger = LogSystem.getDefaultTrace(TraceConstant.CONNECTION); 
 	
 	//当前连接
 	protected INetConnection connection;
@@ -38,11 +43,13 @@ public abstract class AbstractNetConnectionFSM implements INetConnectionFSM {
 	
 	@Override
 	public void update(INetConnectionState state) {
+		logger.info("{} , update => {}",connection,state.state());
 		this.currentState = state;
 	}
 
 	@Override
 	public void fireEvent(NetConnectionEvent event) {
+		logger.info("{} , event:{}",connection,event);
 		this.currentState.update(connection,event);
 	}
 	
@@ -68,10 +75,7 @@ public abstract class AbstractNetConnectionFSM implements INetConnectionFSM {
 	}
 	
 	public String toString(){
-		
-		StringBuffer buf = new StringBuffer();
-		buf.append("Connection:").append(connection);
-		buf.append(",State:").append(currentState);
-		return buf.toString();
+		if(null == currentState)return "null";
+		return currentState.state()+"";
 	}
 }

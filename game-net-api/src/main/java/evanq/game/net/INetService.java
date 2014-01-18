@@ -14,6 +14,9 @@ public interface INetService {
 	 */
 	public void open();
 	
+	//void await
+	//state create form parent netservice.
+	//the netserver child will in the same thread
 	/**
 	 * 关闭服务
 	 */

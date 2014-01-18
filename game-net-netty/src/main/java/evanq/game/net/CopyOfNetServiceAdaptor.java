@@ -10,6 +10,7 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import evanq.game.trace.LogSystem;
@@ -27,9 +28,9 @@ import evanq.game.trace.Trace;
  * @author Evan cppmain@gmail.com
  * 
  */
-public class NetServiceAdaptor implements INetService, Runnable {
+public class CopyOfNetServiceAdaptor implements INetService, Runnable {
 
-	private Trace logger = LogSystem.getDefaultTrace(NetServiceAdaptor.class);
+	private Trace logger = LogSystem.getDefaultTrace(CopyOfNetServiceAdaptor.class);
 	
 	
 	/**
@@ -68,10 +69,10 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	private Object stateLock = new Object();
 
 	//close listener
-	//protected LinkedList<IChannelDisposeListener> closeListeners = new LinkedList<IChannelDisposeListener>();
+	protected LinkedList<IChannelDisposeListener> closeListeners = new LinkedList<IChannelDisposeListener>();
 	
 	//start listener
-	//protected LinkedList<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
+	protected LinkedList<IChannelCreateListener> startListeners = new LinkedList<IChannelCreateListener>();
 	
 	/**
 	 * 
@@ -89,7 +90,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * @param port
 	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType serviceType,int port, INetServiceHandler handler){
+	public CopyOfNetServiceAdaptor(NetServiceType serviceType,int port, INetServiceHandler handler){
 		this(serviceType,null,port,handler,null);
 	}
 	
@@ -100,10 +101,9 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * @param port
 	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler) {
+	public CopyOfNetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler) {
 		this(serviceType,host,port,handler,null);
 	}
-	
 	/**
 	 * 
 	 * @param serviceType
@@ -111,7 +111,7 @@ public class NetServiceAdaptor implements INetService, Runnable {
 	 * @param port
 	 * @param handler
 	 */
-	public NetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyChannelInitializer nettyInitializer){
+	public CopyOfNetServiceAdaptor(NetServiceType serviceType,String host, int port, INetServiceHandler handler,AbstractNettyChannelInitializer nettyInitializer){
 		
 		if (port < 1024 || port > 63365) {
 			throw new IllegalArgumentException("端口控制在1024-63365之间");
@@ -216,20 +216,20 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				
 				logger.info("{} listen at {}:{}",type,host,port);
 				
-//				for (IChannelCreateListener l : startListeners) {
-//					l.onCreate(NetServiceAdaptor.this.channel);
-//				}
+				for (IChannelCreateListener l : startListeners) {
+					l.onCreate(CopyOfNetServiceAdaptor.this.channel);
+				}
 				
 				netServiceHandler.fireDidStartNetService();
 				
 				channel.closeFuture().awaitUninterruptibly();
-				
 				netServiceHandler.fireWillCloseNetService();
 				logger.info("{} for {}:{} closing!",type,host,port);
 				
-//				for (IChannelDisposeListener l : closeListeners) {					
-//					l.onDispose(NetServiceAdaptor.this.channel); 
-//				}
+				for (IChannelDisposeListener l : closeListeners) {
+					
+					l.onDispose(CopyOfNetServiceAdaptor.this.channel); 
+				}
 			}		
 		
 		} finally {
@@ -237,8 +237,8 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			bossGroup.shutdownGracefully();
 			workGroup.shutdownGracefully();
 			
-//			startListeners.clear();
-//			closeListeners.clear();
+			startListeners.clear();
+			closeListeners.clear();
 		}
 	}
 
@@ -281,8 +281,8 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			
 		}finally{
 			group.shutdownGracefully();
-//			startListeners.clear();
-//			closeListeners.clear();
+			startListeners.clear();
+			closeListeners.clear();
 		}
 		
 	}
@@ -304,9 +304,9 @@ public class NetServiceAdaptor implements INetService, Runnable {
 				logger.warn("connectionType is null when create connection");
 			}
 
-//			for (IChannelDisposeListener l : closeListeners) {
-//				l.onDispose(NetServiceAdaptor.this.channel); 
-//			}
+			for (IChannelDisposeListener l : closeListeners) {
+				l.onDispose(CopyOfNetServiceAdaptor.this.channel); 
+			}
 			netServiceHandler.fireDidCloseNetService();
 		}else{
 			synchronized (stateLock) {
@@ -341,9 +341,9 @@ public class NetServiceAdaptor implements INetService, Runnable {
 			
 			logger.info("{} connect to {}:{} Success",type,host,port);						
 			
-//			for (IChannelCreateListener l : startListeners) {
-//				l.onCreate(NetServiceAdaptor.this.channel);
-//			}
+			for (IChannelCreateListener l : startListeners) {
+				l.onCreate(CopyOfNetServiceAdaptor.this.channel);
+			}
 			return true;
 		}
 		
@@ -373,26 +373,26 @@ public class NetServiceAdaptor implements INetService, Runnable {
 		}
 	}
 	
-//	public void addChannelCreateListener(IChannelCreateListener startListener){
-//	
-//		if(NET_SERVICE_STATE_OPENED <= state){
-//			throw new IllegalAccessError("必须open() 之前注册startListener");
-//		}
-//		if (null == startListener) {
-//			throw new NullPointerException("startListener");
-//		}
-//		
-//		this.startListeners.add(startListener);
-//	}
-//	
-//	public void addChannelDisposeListener(IChannelDisposeListener closeListener){
-//		
-//		if (null == closeListener) {
-//			throw new NullPointerException("closeListener");
-//		}
-//		
-//		this.closeListeners.add(closeListener);;
-//	}
+	public void addChannelCreateListener(IChannelCreateListener startListener){
+	
+		if(NET_SERVICE_STATE_OPENED <= state){
+			throw new IllegalAccessError("必须open() 之前注册startListener");
+		}
+		if (null == startListener) {
+			throw new NullPointerException("startListener");
+		}
+		
+		this.startListeners.add(startListener);
+	}
+	
+	public void addChannelDisposeListener(IChannelDisposeListener closeListener){
+		
+		if (null == closeListener) {
+			throw new NullPointerException("closeListener");
+		}
+		
+		this.closeListeners.add(closeListener);;
+	}
 
 	@Override
 	public NetServiceType serviceTye() {

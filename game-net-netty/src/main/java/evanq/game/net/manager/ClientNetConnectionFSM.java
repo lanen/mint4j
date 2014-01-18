@@ -5,6 +5,7 @@ import evanq.game.net.AbstractNettyChannelInitializer;
 import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionState;
 import evanq.game.net.NetConnectionEvent;
+import evanq.game.net.NetConnectionState;
 import evanq.game.net.NetConnectionType;
 import evanq.game.net.PacketConst;
 import evanq.game.net.packets.CHeartBeat;
@@ -55,11 +56,8 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 		public void update(INetConnection connection, NetConnectionEvent event) {
 			switch(event){
 			
-			case CREATE_OK:
-				logger.info("客户端建立连接");
-				
+			case CREATE_OK:	
 			
-				logger.info("上传送验证信息");
 				NetConnectionType channelType = AbstractNettyChannelInitializer.getChannelType(connection);
 
 				//step 1. 客户端与服务端建立了连接				
@@ -73,14 +71,13 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 
 				break;
 			case AUTH_OK:
-				logger.info("客户端连接验证完毕。进入工作状态");
 				//TODO 经过验证之后，才分配特定的编解码器
-				initHeart();				
+				initHeart();
 				connection.fsm().update(new ClientOpenState());
+				connectionManager.addConnection(connection);
 				
 				break;
 			case AUTH_FAILED:
-				logger.info("客户端连接验证完毕。失败，进入重新验证状态");
 				
 				break;
 			default:
@@ -88,6 +85,11 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 				
 				break;
 			}			
+		}
+
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.CONNECTING;
 		}
 		
 	}
@@ -104,7 +106,7 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 				break;
 			case PING_CHECK:
 				if(null!=heart && heart.isDead()){	
-					ClientNetConnectionFSM.this.update(new ClientBrokenState());
+					ClientNetConnectionFSM.this.update(new ClientDelayCloseState());
 				}
 				break;
 			case DELAYED_CLOSE:	
@@ -117,17 +119,11 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 			}
 
 		}
-		
-	}
-	
-	class ClientBrokenState implements INetConnectionState{
-		
+
 		@Override
-		public void update(INetConnection connection, NetConnectionEvent event) {
-			
-			
+		public NetConnectionState state() {
+			return NetConnectionState.OPEN;
 		}
-		
 	}
 	
 	
@@ -135,22 +131,30 @@ public class ClientNetConnectionFSM extends AbstractNetConnectionFSM {
 
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			destoryHeart();
 			
-			System.out.println("开始断开连接的业务");
+			
+			
 			
 		}
-		
+
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.BROKEN;
+		}
 	}
 	
 	class ClientCloseState implements INetConnectionState {
 
 		@Override
 		public void update(INetConnection connection, NetConnectionEvent event) {
-			// TODO 
-		
+			destoryHeart();
+			connectionManager.removeConnection(connection);
 		}
-		
+
+		@Override
+		public NetConnectionState state() {
+			return NetConnectionState.CLOSED;
+		}
 	}
 
 }

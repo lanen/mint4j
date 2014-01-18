@@ -8,6 +8,12 @@ import io.netty.util.AttributeKey;
 
 import java.beans.PropertyChangeListener;
 
+/**
+ * Channel 的初始化
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public abstract class AbstractNettyChannelInitializer  extends ChannelInitializer<SocketChannel> implements PropertyChangeListener{
 
 
