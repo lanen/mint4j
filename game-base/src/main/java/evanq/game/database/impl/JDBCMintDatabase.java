@@ -4,36 +4,36 @@ import java.util.List;
 
 import evanq.game.database.MintDataBase;
 
-/**
- * 
- * 
- * @author Evan
- *
- */
-public class MybatisMintDatabase extends MintDataBase {
+public class JDBCMintDatabase extends MintDataBase {
 
 	@Override
 	public void execute(String sql) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public <T> List<T> execute(String sql, Class<T> clazz) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public <T> void save(T object) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public <T> void update(T object) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public <T> void delete(T object) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -54,11 +54,4 @@ public class MybatisMintDatabase extends MintDataBase {
 		return null;
 	}
 
-	@Override
-	public <T> List<T> execute(String sql, Class<T> clazz) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 }

@@ -12,38 +12,23 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <name>Game Web service Container</name>
+  <description>提供服务器分区列表</description>
   <url>http://maven.apache.org</url>
+  
+  
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
+            
 	<dependency>
 		<groupId>ch.qos.logback</groupId>
 		<artifactId>logback-classic</artifactId>
 		<version>1.0.13</version>
 	</dependency>
-	                
-	 <dependency>
-		<groupId>org.slf4j</groupId>
-		<artifactId>slf4j-api</artifactId>
-		<version>1.7.5</version>
-	</dependency>
-               
+	                               
     <dependency>
 		<groupId>javax.servlet</groupId>
 		<artifactId>servlet-api</artifactId>
 		<version>2.5</version>	
 	</dependency>
-	
-	<dependency>
-	  <groupId>org.mybatis</groupId>
-	  <artifactId>mybatis</artifactId>
-	  <version>3.2.3</version>
-	</dependency>
-	
 	
 	<dependency>
       <groupId>org.jboss.resteasy</groupId>
@@ -61,21 +46,27 @@
    	<artifactId>game-helper</artifactId>
    	<version>0.0.1-SNAPSHOT</version>
    </dependency>
+   
   </dependencies>
 	<build>
 		<finalName>game-webapp</finalName>
 		<sourceDirectory>src/main/java</sourceDirectory>
 		<plugins>
-			<!-- http://wiki.eclipse.org/Jetty/Feature/Jetty_Maven_Plugin -->
+			<!-- http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
 			<plugin>
-				<groupId>org.mortbay.jetty</groupId>
-				<artifactId>jetty-maven-plugin</artifactId>
-				<version>8.1.9.v20130131</version>
+			  <groupId>org.eclipse.jetty</groupId>
+			  <artifactId>jetty-maven-plugin</artifactId>	
+			  <version>9.1.1.v20140108</version>
+			  <!-- 
+			  <configuration>
+			  	<jettyXml>jetty.xml,jetty-http.xml,jetty-ssl.xml,jetty-https.xml</jettyXml>
+			  </configuration>		 
+			   -->
 			</plugin>
 		</plugins>
 
 	</build>
 
-  <description>提供服务器分区列表</description>
+ 
   
 </project>

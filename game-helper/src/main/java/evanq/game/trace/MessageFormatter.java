@@ -71,7 +71,7 @@ import java.util.Map;
 * @author Ceki G&uuml;lc&uuml;
 * @author Joern Huxhorn
 */
-
+@SuppressWarnings("rawtypes")
 class MessageFormatter {
 	
 	 static final char DELIM_START = '{';
@@ -154,7 +154,8 @@ class MessageFormatter {
 	   *          anchors
 	   * @return The formatted message
 	   */
-	  final public static FormattingTuple arrayFormat(final String messagePattern,
+	
+	final public static FormattingTuple arrayFormat(final String messagePattern,
 	      final Object[] argArray) {
 
 	    Throwable throwableCandidate = getThrowableCandidate(argArray);
@@ -291,7 +292,8 @@ class MessageFormatter {
 
 	  }
 
-	  private static void objectArrayAppend(StringBuffer sbuf, Object[] a,
+	@SuppressWarnings("unchecked")
+	private static void objectArrayAppend(StringBuffer sbuf, Object[] a,
 	      Map seenMap) {
 	    sbuf.append('[');
 	    if (!seenMap.containsKey(a)) {

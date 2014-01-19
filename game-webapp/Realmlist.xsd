@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.example.org/Realmlist" xmlns:tns="http://www.example.org/Realmlist" elementFormDefault="qualified">
+
+    <element name="realmlist" type="tns:realm"></element>
+
+
+    
+    <complexType name="realm">
+    	<sequence>
+    		<element name="name" type="string"></element>
+    		<element name="id" type="int"></element>
+    		<element name="state" type="int"></element>
+    	</sequence>
+    </complexType>
+</schema>

@@ -27,25 +27,15 @@ public class WorldInstance implements IWorldFacade, Runnable {
 	@Override
 	public void start(String name, IEnvironment environment) {
 		
-		//step 1.初始化运行世界必备组件
-		
-		
-		//step 2. IO 组件，Agent.
-		Thread io = new Thread();
+		//step 1.初始化运行世界必备组件	
 	
 		//游戏线程
 		Thread worldThread = new Thread(this,"world");
 		worldThread.start();
-		
-		SceneManager.getInstance();
-		
-		
+				
 		//统计任务
 		Thread t__ = new Thread(new WorldStats(), WORLD_STAT_THREAD_NAME);
 		t__.start();
-		
-		
-
 		
 	}
 	
@@ -58,18 +48,23 @@ public class WorldInstance implements IWorldFacade, Runnable {
 	}
 
 	@Override
-	public void run() {
+	public synchronized void run() {
 		//step 3. 线程发生
-		boolean ff = true;
+//		boolean ff = true;
 		
-		while(ff){
-		
-			//consumer and supply pattern
-			
-			//select event
-			//dipatch event
+//		while(ff){
+//		
+//			//consumer and supply pattern
+//			
+//			//select event
+//			//dipatch event
+//		}
+		try {
+			wait();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
 		stop();
 	}
 

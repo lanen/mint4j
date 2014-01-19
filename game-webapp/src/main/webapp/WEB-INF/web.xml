@@ -4,7 +4,11 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
-  
+   <listener>  
+      <listener-class>  
+         org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap  
+      </listener-class>  
+   </listener>
    <servlet>
         <servlet-name>Resteasy</servlet-name>
         <servlet-class>

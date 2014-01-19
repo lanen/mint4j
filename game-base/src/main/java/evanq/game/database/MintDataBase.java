@@ -9,7 +9,8 @@ import java.util.List;
  */
 public abstract class MintDataBase {
 
-	public abstract void execute(String sql);
+	public abstract void execute(String sql);	
+	public abstract <T> List<T> execute(String sql,Class<T> clazz);	
 	public abstract <T> void save(T object);
 	public abstract <T> void update(T object);
 	public abstract <T> void delete(T object);

@@ -130,4 +130,20 @@ public class HibernateMintDatabase extends MintDataBase {
 
 	}
 
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> List<T> execute(String sql, Class<T> clazz) {
+		
+		//TODO 需要测试
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+
+		Query createQuery = session.createQuery(sql);
+		List<T> list =(List<T>)createQuery.list();
+		session.getTransaction().commit();
+		session.close();
+		return list;	}
+	
+	
+
 }
