@@ -9,56 +9,38 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<groupId>evanq.game</groupId>
-	<artifactId>game-webapp</artifactId>
+	<artifactId>game-oauth-provider</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
-	<name>Game Web service Container</name>
-	<description>提供服务器分区列表</description>
+	<name>game-auth-provider Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-
-
 	<dependencies>
-
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<version>1.0.13</version>
-		</dependency>
-
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>            
+	
+		<dependency>
+			<groupId>net.oauth.core</groupId>
+			<artifactId>oauth</artifactId>
+			<version>20100527</version>
+		</dependency>
+		<dependency>
+			<groupId>net.oauth.core</groupId>
+			<artifactId>oauth-provider</artifactId>
+			<version>20100527</version>
+		</dependency>
 		
-	    <dependency>
-            <groupId>org.jboss.resteasy</groupId>
-            <artifactId>resteasy-servlet-initializer</artifactId>
-            <version>3.0.6.Final</version>
-        </dependency>
-        
-<!-- 		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-jaxrs</artifactId>
-			<version>3.0.6.Final</version>
-		</dependency> 
 		<dependency>
-			<groupId>org.jboss.resteasy</groupId>
-			<artifactId>resteasy-client</artifactId>
-			<version>3.0.6.Final</version>
+			<groupId>commons-codec</groupId>
+			<artifactId>commons-codec</artifactId>
+			<version>1.9</version>
 		</dependency>
-		-->
-
-		<dependency>
-			<groupId>evanq.game</groupId>
-			<artifactId>game-helper</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
-
+	            		
 	</dependencies>
 	<build>
-		<finalName>game-webapp</finalName>
-		<sourceDirectory>src/main/java</sourceDirectory>
+		<finalName>game-auth-provider</finalName>
 		<plugins>
 			<!-- http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
 			<plugin>
@@ -71,7 +53,4 @@
 		</plugins>
 
 	</build>
-
-
-
 </project>

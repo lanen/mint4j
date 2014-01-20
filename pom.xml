@@ -66,5 +66,7 @@
     <module>game-net-classic</module>
     <module>game-base</module>
     <module>game-webapp</module>
+    <module>game-oauth-server</module>
+    <module>game-oauth-provider</module>
   </modules>
 </project>
