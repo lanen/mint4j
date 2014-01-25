@@ -1,0 +1,172 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>evanq.game</groupId>
+		<artifactId>evanq-game-sso-parent</artifactId>
+		<version>1</version>
+	</parent>
+	<groupId>evanq.game</groupId>
+	<artifactId>evanq-game-spring-security</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>evanq-game-spring-security</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<cas.client.version>3.2.1</cas.client.version>
+		<host.name>mint4j.evanq.net</host.name>
+		<keystore.alias>mint4j_game</keystore.alias>
+		<keystore.storepass>jetty9</keystore.storepass>
+		<keystore.keyalg>RSA</keystore.keyalg>
+		<keystore>${basedir}/jetty/etc/keystore</keystore>
+		<crtfile>${basedir}/jetty/etc/crt</crtfile>
+
+		<spring.security.web.version>3.2.0.RELEASE</spring.security.web.version>
+
+	</properties>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring.security.web.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-config</artifactId>
+			<version>${spring.security.web.version}</version>
+		</dependency>
+	</dependencies>
+
+
+	<build>
+		<finalName>${project.artifactId}</finalName>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+					<encoding>UTF-8</encoding>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>keytool-maven-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+
+					<execution>
+						<phase>generate-resources</phase>
+						<id>clean</id>
+						<goals>
+							<goal>clean</goal>
+						</goals>
+						<configuration>
+							<verbose>true</verbose>
+							<keystore>${keystore}</keystore>
+						</configuration>
+					</execution>
+
+
+					<!-- 1 生成键值对 -->
+
+					<execution>
+						<id>generateKeyPair</id>
+						<goals>
+							<goal>generateKeyPair</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<verbose>true</verbose>
+							<skipIfExist>true</skipIfExist>
+							<keystore>${keystore}</keystore>
+							<dname>cn=${host.name}</dname>
+							<keypass>jetty9</keypass>
+							<storepass>${keystore.storepass}</storepass>
+							<alias>${keystore.alias}</alias>
+							<keyalg>${keystore.keyalg}</keyalg>
+						</configuration>
+					</execution>
+
+					<!-- 从新生成的keystroe export crt file -->
+					<execution>
+						<id>exportCertificate</id>
+						<goals>
+							<goal>exportCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<verbose>true</verbose>
+							<skipIfExist>true</skipIfExist>
+							<keystore>${keystore}</keystore>
+							<storepass>${keystore.storepass}</storepass>
+							<alias>${keystore.alias}</alias>
+							<file>${crtfile}</file>
+						</configuration>
+					</execution>
+
+					<!-- 将 crt file 导入 keystroe, 以示信任 -->
+					<execution>
+						<id>importCertificate</id>
+						<goals>
+							<goal>importCertificate</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<verbose>true</verbose>
+							<skipIfExist>true</skipIfExist>
+							<keystore>${keystore}</keystore>
+							<storepass>${keystore.storepass}</storepass>
+							<alias>${keystore.alias}</alias>
+							<file>${crtfile}</file>
+						</configuration>
+					</execution>
+
+					<!-- list -->
+					<execution>
+						<id>list</id>
+						<goals>
+							<goal>list</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<verbose>true</verbose>
+							<skipIfExist>true</skipIfExist>
+							<keystore>${keystore}</keystore>
+							<storepass>${keystore.storepass}</storepass>
+						</configuration>
+					</execution>
+
+
+				</executions>
+			</plugin>
+
+			<!-- http://www.eclipse.org/jetty/documentation/current/jetty-maven-plugin.html -->
+			<!-- E:\tool\jetty9\lib>java -cp jetty-util-9.1.1.v20140108.jar org.eclipse.jetty.util.security.Password 
+				jetty9 jetty9 -->
+			<plugin>
+				<groupId>org.eclipse.jetty</groupId>
+				<artifactId>jetty-maven-plugin</artifactId>
+				<version>9.1.1.v20140108</version>
+				<configuration>
+					<webApp>
+						<contextPath>/security</contextPath>
+					</webApp>
+					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml,jetty/jetty-https.xml</jettyXml>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+
+</project>
