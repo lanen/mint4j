@@ -5,7 +5,7 @@
   <parent>
     <groupId>evanq.game</groupId>
     <artifactId>wrapper</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>1</version>
   </parent>
   <groupId>evanq.game</groupId>
   <artifactId>game-helper</artifactId>

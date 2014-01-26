@@ -13,6 +13,8 @@ public class ReceiveCASTicketController {
 	@RequestMapping(method = RequestMethod.GET)
 	public ModelAndView  receiveTicket(String ticket) {
 		System.out.println(ticket);
+		
+		
 		return new ModelAndView("receive", "message", "Hello Spring Security !");
 	}
 }

@@ -1,0 +1,413 @@
+01-26 17:55:23 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 17:55:48 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE  ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE  `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 17:55:56 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE  ""USERS"" (
+""ID"" INT(11) NOT NULL ,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE  `users` (
+`id` int(11) NOT NULL ,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 17:59:50 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:00:06 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""SSO_USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `sso_users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:00:40 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:00:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS USERS (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS users (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:01:07 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS USERS (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS users (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′
+) [42000-173]
+01-26 18:01:15 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS USERS (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" INT(4) NOT NULL DEFAULT[*] ‘1′
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS users (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` int(4) NOT NULL default ‘1′
+) [42000-173]
+01-26 18:04:24 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL AUTO_INCREMENT,
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL DEFAULT 1,
+PRIMARY KEY(ID)
+） "; SQL statement:
+create table users（
+id int(11) not null auto_increment,
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null default 1,
+primary key(id)
+） [42000-173]
+01-26 18:04:32 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL AUTO_INCREMENT,
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL DEFAULT 1,
+
+） "; SQL statement:
+create table users（
+id int(11) not null auto_increment,
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null default 1,
+
+） [42000-173]
+01-26 18:04:41 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL ,
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL DEFAULT 1,
+
+） "; SQL statement:
+create table users（
+id int(11) not null ,
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null default 1,
+
+） [42000-173]
+01-26 18:04:44 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL 
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL DEFAULT 1,
+
+） "; SQL statement:
+create table users（
+id int(11) not null 
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null default 1,
+
+） [42000-173]
+01-26 18:05:13 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL AUTO_INCREMENT ,
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL 
+
+） "; SQL statement:
+create table users（
+id int(11) not null auto_increment ,
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null 
+
+） [42000-173]
+01-26 18:05:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL AUTO_INCREMENT ,
+
+USERNAME VARCHAR(50) NOT NULL,
+
+PASSWORD VARCHAR(50) NOT NULL,
+
+ENABLED INT (4) NOT NULL 
+
+） "; SQL statement:
+create table users（
+id int(11) not null auto_increment ,
+
+username varchar(50) not null,
+
+password varchar(50) not null,
+
+enabled int (4) not null 
+
+） [42000-173]
+01-26 18:06:24 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE USERS[*]（
+ID INT(11) NOT NULL AUTO_INCREMENT ,
+
+USERNAME VARCHAR(50) NOT NULL
+
+） "; SQL statement:
+create table users（
+id int(11) not null auto_increment ,
+
+username varchar(50) not null
+
+） [42000-173]
+01-26 18:06:58 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:07:41 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:07:51 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" INT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` int(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:07:59 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:08:18 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:08:31 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:09:01 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:09:05 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS1"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+""USERNAME"" VARCHAR(50) NOT NULL,
+""PASSWORD"" VARCHAR(50) NOT NULL,
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users1` (
+`id` int(11) NOT NULL auto_increment,
+`username` varchar(50) NOT NULL,
+`password` varchar(50) NOT NULL,
+`enabled` tinyint(4) NOT NULL default ‘1′,
+PRIMARY KEY  (`id`)
+) [42000-173]
+01-26 18:09:17 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "CREATE TABLE IF NOT EXISTS ""USERS"" (
+""ID"" INT(11) NOT NULL AUTO_INCREMENT,
+
+""USERNAME"" VARCHAR(50) NOT NULL,
+
+""PASSWORD"" VARCHAR(50) NOT NULL,
+
+""ENABLED"" TINYINT(4) NOT NULL DEFAULT[*] ‘1′,
+
+PRIMARY KEY  (""ID"")
+) "; SQL statement:
+CREATE TABLE IF NOT EXISTS `users` (
+`id` int(11) NOT NULL auto_increment,
+
+`username` varchar(50) NOT NULL,
+
+`password` varchar(50) NOT NULL,
+
+`enabled` tinyint(4) NOT NULL default ‘1′,
+
+PRIMARY KEY  (`id`)
+) [42000-173]

@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>evanq.game</groupId>
-		<artifactId>evanq-game-sso-parent</artifactId>
+		<artifactId>wrapper</artifactId>
 		<version>1</version>
 	</parent>
 	<groupId>evanq.game</groupId>
@@ -16,28 +16,29 @@
 
 
 	<properties>
-	 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cas.client.version>3.2.1</cas.client.version>
 		<host.name>mint4j.evanq.net</host.name>
 		<keystore.alias>mint4j_game</keystore.alias>
 		<keystore.storepass>jetty9</keystore.storepass>
 		<keystore.keyalg>RSA</keystore.keyalg>
 		<keystore>${basedir}/jetty/etc/keystore</keystore>
-		<crtfile>${basedir}/jetty/etc/crt</crtfile>
-		
+		<crtfile.keystore.alias>evanq_cas</crtfile.keystore.alias>
+		<crtfile.fromserver>${basedir}/../game-sso-server/jetty/etc/evanq_cas.cer</crtfile.fromserver>
+		<skip>true</skip>
 		<spring.version>3.2.6.RELEASE</spring.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
 
 	</properties>
 
 	<dependencies>
-	
+
 		<dependency>
-		   <groupId>org.jasig.cas.client</groupId>
-		    <artifactId>cas-client-core</artifactId>
+			<groupId>org.jasig.cas.client</groupId>
+			<artifactId>cas-client-core</artifactId>
 			<version>${cas.client.version}</version>
 		</dependency>
-		
+
 		<!-- Spring 3 dependencies -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -56,26 +57,31 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
-		
+
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-config</artifactId>
 			<version>${spring.security.version}</version>
 		</dependency>
-		
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache</artifactId>
+			<version>1.6.2</version>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -107,10 +113,10 @@
 						</goals>
 						<configuration>
 							<verbose>true</verbose>
+							<skip>${skip}</skip>
 							<keystore>${keystore}</keystore>
 						</configuration>
 					</execution>
-
 
 					<!-- 1 生成键值对 -->
 
@@ -122,9 +128,11 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<verbose>true</verbose>
+							<skip>${skip}</skip>
 							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
-							<dname>cn=${host.name}</dname>
+							<dname>cn=${host.name}, OU=NC, O=ShenZhen Evanq Game, L=ZB,
+								ST=ShenZhen, C=CN</dname>
 							<keypass>jetty9</keypass>
 							<storepass>${keystore.storepass}</storepass>
 							<alias>${keystore.alias}</alias>
@@ -133,23 +141,29 @@
 					</execution>
 
 					<!-- 从新生成的keystroe export crt file -->
+					<!-- <execution> <id>exportCertificate</id> <goals> <goal>exportCertificate</goal> 
+						</goals> <phase>generate-resources</phase> <configuration> <verbose>true</verbose> 
+						<skipIfExist>true</skipIfExist> <keystore>${keystore}</keystore> <storepass>${keystore.storepass}</storepass> 
+						<alias>${keystore.alias}</alias> <file>${crtfile}</file> </configuration> 
+						</execution> -->
+
+					<!-- 将 crt file 导入 keystroe, 以示信任 来自server 端的证书 -->
+
 					<execution>
-						<id>exportCertificate</id>
+						<id>deleteAlias-server-crt</id>
 						<goals>
-							<goal>exportCertificate</goal>
+							<goal>deleteAlias</goal>
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
 							<verbose>true</verbose>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
+							<skip>true</skip>
 							<storepass>${keystore.storepass}</storepass>
-							<alias>${keystore.alias}</alias>
-							<file>${crtfile}</file>
+							<alias>${crtfile.keystore.alias}</alias>
+							<noprompt>true</noprompt>
 						</configuration>
 					</execution>
-
-					<!-- 将 crt file 导入 keystroe, 以示信任 -->
 					<execution>
 						<id>importCertificate</id>
 						<goals>
@@ -158,11 +172,14 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<verbose>true</verbose>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
+							<trustcacerts>true</trustcacerts>
+
+							<skip>${skip}</skip>
+							<noprompt>true</noprompt>
 							<storepass>${keystore.storepass}</storepass>
-							<alias>${keystore.alias}</alias>
-							<file>${crtfile}</file>
+							<alias>${crtfile.keystore.alias}</alias>
+							<file>${crtfile.fromserver}</file>
 						</configuration>
 					</execution>
 
@@ -174,6 +191,7 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
+							<skip>${skip}</skip>
 							<verbose>true</verbose>
 							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
@@ -193,7 +211,8 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.1.1.v20140108</version>
 				<configuration>
-					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml</jettyXml>
+					
+					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml</jettyXml>
 				</configuration>
 			</plugin>
 		</plugins>

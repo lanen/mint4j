@@ -4,7 +4,7 @@
 
 	<groupId>evanq.game</groupId>
 	<artifactId>wrapper</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
 	<packaging>pom</packaging>
 
 	<name>wrapper</name>
@@ -68,5 +68,7 @@
     <module>game-webapp</module>
     <module>game-oauth-server</module>
     <module>game-oauth-provider</module>
-  </modules>
+    <module>../evanq-game-sso-parent/game-sso-client</module>
+    <module>../evanq-game-sso-parent/game-sso-server</module>
+	</modules>
 </project>

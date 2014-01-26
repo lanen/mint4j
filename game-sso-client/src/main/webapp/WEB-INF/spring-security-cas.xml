@@ -14,7 +14,7 @@
  	 -->
  	
 	<http auto-config="false" entry-point-ref="casEntryPoint" >
-		<intercept-url pattern="/hello*" access="ROLE_ADMIN" />
+		<intercept-url pattern="/protected/*" access="ROLE_USER" />
 		<intercept-url pattern="/member/*" access="ROLE_USER" />
 		
 		<!-- 登出时候，经过的过滤器 -->

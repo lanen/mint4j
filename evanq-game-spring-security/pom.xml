@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<groupId>evanq.game</groupId>
-		<artifactId>evanq-game-sso-parent</artifactId>
+		<artifactId>wrapper</artifactId>
 		<version>1</version>
 	</parent>
 	<groupId>evanq.game</groupId>
