@@ -185,10 +185,13 @@
     </property>
   </bean>
   
+  <!-- org.jasig.cas.services.JpaServiceRegistryDaoImpl
+  
+    p:entityManagerFactory-ref="entityManagerFactory" -->
   <bean
 		id="serviceRegistryDao"
-        class="org.jasig.cas.services.JpaServiceRegistryDaoImpl"
-        p:entityManagerFactory-ref="entityManagerFactory"
+        class="org.jasig.cas.services.InMemoryServiceRegistryDaoImpl"
+      
         >
         	<!-- 
             <property name="registeredServices">
@@ -226,21 +229,52 @@
   	 | 测试区
    -->      
    
-
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="org.h2.Driver" />
-		<property name="url"
-			value="jdbc:h2:./mint/cache/sso_registry;DB_CLOSE_DELAY=-1;MVCC=TRUE" />
-		<property name="username" value="sa" />
-		<property name="password" value="" />
-	</bean>
-
 	<bean id="MD5PasswordEncoder"
 		class="org.jasig.cas.authentication.handler.DefaultPasswordEncoder">
 		<constructor-arg index="0" value="MD5" />
 	</bean>
 
+
+
+	<!-- 数据源实现 javax.sql.DataSource
+		|
+		| org.springframework.jdbc.datasource.DriverManagerDataSource
+		| 
+	 -->
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"  scope="singleton" destroy-method="close">  
+	    <property name="driverClass" value="com.mysql.jdbc.Driver" />  
+	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test" />  
+	    <property name="user" value="root" />  
+	    <property name="password" value="123456" />  
+	</bean>
+	
+	<bean id="sessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
+		<!-- 
+			| 在deployerConfigContext 文件中 直接去加载hibernate.cfg.xml 文件
+			| 与后续配置二选一 
+    	<property name="configLocation" value="classpath:hibernate-raw.cfg.xml" />
+		 -->
+				
+		<!--
+			| 从数据源配置hibernate 
+		 -->
+    	<property name="dataSource" ref="dataSource" />
+    	<!-- 
+    	<property name="mappingLocations"  value="classpath:evanq/game/orm/hbm/*.hbm.xml" />  
+    	 -->
+    	 <property name="annotatedClasses">
+    	 	<list>
+    	 	<value>org.jasig.cas.services.AbstractRegisteredService</value>
+    	 	</list>
+    	 </property>
+    	<property name="hibernateProperties">  
+        <props>  
+            <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>  
+            <prop key="hibernate.show_sql">true</prop>  
+            <prop key="hibernate.hbm2ddl.auto">create</prop>  
+        </props>  
+    </property> 
+	</bean> 
 
 	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
@@ -250,22 +284,17 @@
 
 	<bean id="jpaVendorAdapter"
 		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-		<property name="showSql" value="true" />
+		
+         <property name="databasePlatform" value="org.hibernate.dialect.H2Dialect" />  
+         <property name="showSql" value="true" />  
+         <property name="generateDdl" value="true" />  
 	</bean>
 	
-	<!-- 被hibernate引用 -->
 	<!-- 
-	<property id="jpaProperties">
-		<props>
-			<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
-			<prop key="hibernate.hbm2ddl.auto">update</prop>
-		</props>
-	</property>
-	 -->
-
-	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
+	 -->
         
        
 </beans>
