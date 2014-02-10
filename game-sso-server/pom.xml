@@ -54,6 +54,12 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.jasig.cas</groupId>
+			<artifactId>cas-server-support-jdbc</artifactId>
+			<version>${cas.version}</version>			
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-cas</artifactId>
 			<version>3.1.1.RELEASE</version>
@@ -84,7 +90,12 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.0.1.Final</version>
 		</dependency>
-
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.13</version>
+			<scope>runtime</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-c3p0</artifactId>
@@ -103,7 +114,19 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 
+
 		<plugins>
+		
+		
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<configuration>
+					<warName>${project.artifactId}</warName>
+				</configuration>
+			</plugin>
+		
+		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -185,7 +208,7 @@
 						<keystore>${keystore}</keystore> <storepass>${keystore.storepass}</storepass> 
 						<alias>${keystore.alias}</alias> <file>${crtfile}</file> <trustcacerts>true</trustcacerts> 
 						</configuration> </execution> -->
-
+					<!-- 
 					<execution>
 						<id>deleteAlias-from-java-home</id>
 						<goals>
@@ -193,7 +216,6 @@
 						</goals>
 						<phase>generate-resources</phase>
 						<configuration>
-
 							<verbose>true</verbose>
 							<keystore>${env.JAVA_HOME}/jre/lib/security/cacerts</keystore>
 							<skip>${skip}</skip>
@@ -202,6 +224,8 @@
 							<noprompt>true</noprompt>
 						</configuration>
 					</execution>
+					 -->
+					
 					<execution>
 						<id>importCertificate-to-java-home</id>
 						<goals>
@@ -212,9 +236,7 @@
 							<verbose>true</verbose>
 
 							<skip>${skip}</skip>
-
-							<keystore>${env.JAVA_HOME}/jre/lib/security/cacerts</keystore>
-							<storepass>${keystore.storepass}</storepass>
+							<keystore>${env.JAVA_HOME}/jre/lib/security/cacerts</keystore>							
 							<alias>${keystore.alias}</alias>
 							<file>${crtfile}</file>
 							<trustcacerts>true</trustcacerts>
@@ -251,6 +273,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.1.1.v20140108</version>
 				<configuration>
+				
 					<webApp>
 						<contextPath>/cas</contextPath>
 					</webApp>

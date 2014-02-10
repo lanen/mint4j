@@ -148,7 +148,7 @@
 						</execution> -->
 
 					<!-- 将 crt file 导入 keystroe, 以示信任 来自server 端的证书 -->
-
+					
 					<execution>
 						<id>deleteAlias-server-crt</id>
 						<goals>
@@ -158,12 +158,14 @@
 						<configuration>
 							<verbose>true</verbose>
 							<keystore>${keystore}</keystore>
+							<skipIfExist>true</skipIfExist>
 							<skip>true</skip>
 							<storepass>${keystore.storepass}</storepass>
 							<alias>${crtfile.keystore.alias}</alias>
 							<noprompt>true</noprompt>
 						</configuration>
 					</execution>
+					 
 					<execution>
 						<id>importCertificate</id>
 						<goals>

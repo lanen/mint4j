@@ -411,3 +411,15 @@ CREATE TABLE IF NOT EXISTS `users` (
 
 PRIMARY KEY  (`id`)
 ) [42000-173]
+01-26 22:18:11 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "REGISTEREDSERVICEIMPL" not found; SQL statement:
+select abstractre0_.id as id0_, abstractre0_.allowedToProxy as allowedT3_0_, abstractre0_.anonymousAccess as anonymou4_0_, abstractre0_.description as descript5_0_, abstractre0_.enabled as enabled0_, abstractre0_.evaluation_order as evaluation7_0_, abstractre0_.ignoreAttributes as ignoreAt8_0_, abstractre0_.name as name0_, abstractre0_.serviceId as serviceId0_, abstractre0_.ssoEnabled as ssoEnabled0_, abstractre0_.theme as theme0_, abstractre0_.username_attr as username13_0_, abstractre0_.expression_type as expression1_0_ from RegisteredServiceImpl abstractre0_ [42102-175]
+01-26 22:25:14 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "REGISTEREDSERVICEIMPL" not found; SQL statement:
+select abstractre0_.id as id0_, abstractre0_.allowedToProxy as allowedT3_0_, abstractre0_.anonymousAccess as anonymou4_0_, abstractre0_.description as descript5_0_, abstractre0_.enabled as enabled0_, abstractre0_.evaluation_order as evaluation7_0_, abstractre0_.ignoreAttributes as ignoreAt8_0_, abstractre0_.name as name0_, abstractre0_.serviceId as serviceId0_, abstractre0_.ssoEnabled as ssoEnabled0_, abstractre0_.theme as theme0_, abstractre0_.username_attr as username13_0_, abstractre0_.expression_type as expression1_0_ from RegisteredServiceImpl abstractre0_ [42102-175]
+01-26 22:28:17 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: Table "REGISTEREDSERVICEIMPL" not found; SQL statement:
+select abstractre0_.id as id0_, abstractre0_.allowedToProxy as allowedT3_0_, abstractre0_.anonymousAccess as anonymou4_0_, abstractre0_.description as descript5_0_, abstractre0_.enabled as enabled0_, abstractre0_.evaluation_order as evaluation7_0_, abstractre0_.ignoreAttributes as ignoreAt8_0_, abstractre0_.name as name0_, abstractre0_.serviceId as serviceId0_, abstractre0_.ssoEnabled as ssoEnabled0_, abstractre0_.theme as theme0_, abstractre0_.username_attr as username13_0_, abstractre0_.expression_type as expression1_0_ from RegisteredServiceImpl abstractre0_ [42102-175]
+01-26 23:29:22 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: Table "REGISTEREDSERVICEIMPL" not found; SQL statement:
+select abstractre0_.id as id0_, abstractre0_.allowedToProxy as allowedT3_0_, abstractre0_.anonymousAccess as anonymou4_0_, abstractre0_.description as descript5_0_, abstractre0_.enabled as enabled0_, abstractre0_.evaluation_order as evaluation7_0_, abstractre0_.ignoreAttributes as ignoreAt8_0_, abstractre0_.name as name0_, abstractre0_.serviceId as serviceId0_, abstractre0_.ssoEnabled as ssoEnabled0_, abstractre0_.theme as theme0_, abstractre0_.username_attr as username13_0_, abstractre0_.expression_type as expression1_0_ from RegisteredServiceImpl abstractre0_ [42102-175]
