@@ -94,6 +94,7 @@
         <prop key="/authorizationFailure.html">passThroughController</prop>
         <prop key="/403.html">passThroughController</prop>
         <prop key="/status">healthCheckController</prop>
+        <prop key="/account/*">accountController</prop>
       </props>
     </property>
     <property
@@ -209,6 +210,11 @@
 
   <bean id="healthCheckController" class="org.jasig.cas.web.HealthCheckController"
         p:healthCheckMonitor-ref="healthCheckMonitor"/>
+        
+  <!-- Account Controller -->
+  <bean id="accountController" class="evanq.game.account.integration.AccountController"
+  	p:loginUrl="${cas.securityContext.casProcessingFilterEntryPoint.loginUrl}"
+  />
 
   <bean id="initialFlowSetupAction" class="org.jasig.cas.web.flow.InitialFlowSetupAction"
         p:argumentExtractors-ref="argumentExtractors"
@@ -283,4 +289,5 @@
 
   <bean id="credentialsValidator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
         p:messageInterpolator-ref="messageInterpolator"/>
+
 </beans>

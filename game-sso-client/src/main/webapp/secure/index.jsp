@@ -1,3 +1,4 @@
+<%@page import="org.jasig.cas.client.authentication.AttributePrincipal" %>
 <html>
 <body>
 <h1>Secure Page</h1>
@@ -8,6 +9,16 @@ or if you've authenticated this session.</p>
     <p>You are a supervisor! You can therefore see the <a href="extreme/index.jsp">extremely secure page</a>.</p>
 <% } %>
 
+<%
+
+String username = request.getUserPrincipal().getName();
+
+%>
+<pre>
+
+<%=username %><br/>
+
+</pre>
 <p><a href="../">Home</a>
 <p><a href="ptSample">Proxy Ticket Sample page</a></p>
 <p><a href="../j_spring_security_logout">Logout</a>

@@ -23,14 +23,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
-  <display-name>Central Authentication System (CAS) 3.5.2</display-name>
+  <display-name>Account Server 1.0 and Central Authentication System (CAS) 3.5.2</display-name>
 
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
       /WEB-INF/spring-configuration/*.xml
+      /WEB-INF/spring-account-configuration/*.xml
       /WEB-INF/deployerConfigContext.xml
-      /WEB-INF/deployerConfigContext-serviceManager.xml
+      /WEB-INF/deployerConfigContext-mysql-serviceManager.xml
     </param-value>
   </context-param>
 
@@ -97,6 +98,8 @@
     -
     - If you'd like these errors to result in all requests for CAS getting a "CAS is Unavailable" response,
     - use org.jasig.cas.web.init.SafeDispatcherServlet
+    
+    - Spring WebMVC auto loading WEB-INF/cas-servlet.xml
   -->
   <servlet>
     <servlet-name>cas</servlet-name>
@@ -184,6 +187,7 @@
     <servlet-name>cas</servlet-name>
     <url-pattern>/openid/*</url-pattern>
   </servlet-mapping>
+  
 
   <servlet-mapping>
     <servlet-name>cas</servlet-name>
@@ -237,5 +241,13 @@
 
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
-  </welcome-file-list>
+  </welcome-file-list> 
+  
+  
+  <servlet-mapping>
+    <servlet-name>cas</servlet-name>
+    <url-pattern>/account/*</url-pattern>
+  </servlet-mapping>
+
+  
 </web-app>

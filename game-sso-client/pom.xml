@@ -28,7 +28,6 @@
 		<skip>true</skip>
 		<spring.version>3.2.6.RELEASE</spring.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
-
 	</properties>
 
 	<dependencies>
@@ -129,7 +128,6 @@
 						<configuration>
 							<verbose>true</verbose>
 							<skip>${skip}</skip>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
 							<dname>cn=${host.name}, OU=NC, O=ShenZhen Evanq Game, L=ZB,
 								ST=ShenZhen, C=CN</dname>
@@ -149,6 +147,21 @@
 
 					<!-- 将 crt file 导入 keystroe, 以示信任 来自server 端的证书 -->
 					
+					<!-- list -->
+					<execution>
+						<id>list1</id>
+						<goals>
+							<goal>list</goal>
+						</goals>
+						<phase>generate-resources</phase>
+						<configuration>
+							<skip>${skip}</skip>
+							<verbose>true</verbose>
+							<keystore>${keystore}</keystore>
+							<storepass>${keystore.storepass}</storepass>
+						</configuration>
+					</execution>
+					<!-- 
 					<execution>
 						<id>deleteAlias-server-crt</id>
 						<goals>
@@ -158,14 +171,15 @@
 						<configuration>
 							<verbose>true</verbose>
 							<keystore>${keystore}</keystore>
-							<skipIfExist>true</skipIfExist>
-							<skip>true</skip>
+							<skip>${skip}</skip>
 							<storepass>${keystore.storepass}</storepass>
 							<alias>${crtfile.keystore.alias}</alias>
 							<noprompt>true</noprompt>
 						</configuration>
 					</execution>
-					 
+					 -->
+					 	
+				
 					<execution>
 						<id>importCertificate</id>
 						<goals>
@@ -187,7 +201,7 @@
 
 					<!-- list -->
 					<execution>
-						<id>list</id>
+						<id>list2</id>
 						<goals>
 							<goal>list</goal>
 						</goals>
@@ -195,7 +209,6 @@
 						<configuration>
 							<skip>${skip}</skip>
 							<verbose>true</verbose>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
 							<storepass>${keystore.storepass}</storepass>
 						</configuration>
@@ -212,9 +225,9 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.1.1.v20140108</version>
-				<configuration>
-					
-					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml</jettyXml>
+				<configuration>					
+					<!-- ? 这里是否可以有多个 jettyXml，配置多个服务器  -->
+					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml</jettyXml>
 				</configuration>
 			</plugin>
 		</plugins>

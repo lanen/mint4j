@@ -171,7 +171,6 @@
 						<configuration>
 							<verbose>true</verbose>
 							<skip>${skip}</skip>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
 							<dname>cn=${host.name}, OU=NC, O=ShenZhen Evanq Game, L=ZB,
 								ST=ShenZhen, C=CN</dname>
@@ -191,7 +190,6 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<verbose>true</verbose>
-							<skipIfExist>true</skipIfExist>
 							<skip>${skip}</skip>
 
 							<keystore>${keystore}</keystore>
@@ -225,7 +223,8 @@
 						</configuration>
 					</execution>
 					 -->
-					
+					 
+					<!-- 这一步很重要，将生产的cer文件导入到java的certs证书库中 -->
 					<execution>
 						<id>importCertificate-to-java-home</id>
 						<goals>
@@ -234,10 +233,10 @@
 						<phase>generate-resources</phase>
 						<configuration>
 							<verbose>true</verbose>
-
 							<skip>${skip}</skip>
 							<keystore>${env.JAVA_HOME}/jre/lib/security/cacerts</keystore>							
 							<alias>${keystore.alias}</alias>
+							<storepass>${keystore.storepass}</storepass>
 							<file>${crtfile}</file>
 							<trustcacerts>true</trustcacerts>
 							<noprompt>true</noprompt>
@@ -255,7 +254,6 @@
 						<configuration>
 							<verbose>true</verbose>
 							<skip>${skip}</skip>
-							<skipIfExist>true</skipIfExist>
 							<keystore>${keystore}</keystore>
 							<storepass>${keystore.storepass}</storepass>
 						</configuration>
@@ -273,7 +271,11 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.1.1.v20140108</version>
 				<configuration>
-				
+					<!-- 
+						- 远程调试
+						- MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1066 
+						-
+					 -->
 					<webApp>
 						<contextPath>/cas</contextPath>
 					</webApp>
