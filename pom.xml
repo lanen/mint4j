@@ -68,7 +68,7 @@
     <module>game-webapp</module>
     <module>game-oauth-server</module>
     <module>game-oauth-provider</module>
-    <module>../evanq-game-sso-parent/game-sso-client</module>
-    <module>../evanq-game-sso-parent/game-sso-server</module>
+    <module>game-sso-client</module>
+    <module>game-sso-server</module>
 	</modules>
 </project>

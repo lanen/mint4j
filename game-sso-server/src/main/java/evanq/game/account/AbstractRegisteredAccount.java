@@ -2,11 +2,29 @@ package evanq.game.account;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+
 /**
  * 
  * @author Evan cppmain@gmail.com
  *
  */
+
+@Entity
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="flag",
+	discriminatorType=DiscriminatorType.INTEGER,	
+	columnDefinition="TINYINT(1) DEFAULT 1")
+@Table(name="accounts")
 public abstract class AbstractRegisteredAccount implements RegisteredAccount,Serializable,Comparable<RegisteredAccount> {
 
 	/**
@@ -14,46 +32,56 @@ public abstract class AbstractRegisteredAccount implements RegisteredAccount,Ser
 	 */
 	private static final long serialVersionUID = 8092003561540854036L;
 	
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+	private long id;
+	@Column
+	private int state;
+	@Column
+	private int flag;
+	@Column
+	private String email;
+	@Column
+	private String account;
+	@Column
+	private String mobile;
+	@Column
+	private String passwd;
+	
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
-		return 0;
+		return id;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return false;
+		return state>1;
 	}
 
 	@Override
 	public int getFlag() {
-		// TODO Auto-generated method stub
-		return 0;
+		return flag;
 	}
 
 	@Override
 	public String getAccount() {
-		// TODO Auto-generated method stub
-		return null;
+		return account;
 	}
 
 	@Override
 	public String getEmail() {
-		// TODO Auto-generated method stub
-		return null;
+		return email;
 	}
 
 	@Override
 	public String getMobile() {
-		// TODO Auto-generated method stub
-		return null;
+		return mobile;
 	}
 
 	@Override
 	public String getPasswd() {
-		// TODO Auto-generated method stub
-		return null;
+		return passwd;
 	}
 
 	@Override

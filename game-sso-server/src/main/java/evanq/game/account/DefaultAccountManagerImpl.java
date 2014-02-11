@@ -1,10 +1,16 @@
 package evanq.game.account;
 
-public class DefaultAccountManagerImpl implements AccountManager {
+import javax.validation.constraints.NotNull;
 
+public class DefaultAccountManagerImpl implements AccountManager {
+	
+	@NotNull
+	private AccountManagerDao accountManagerDao;
+	
 	@Override
 	public RegisteredAccount save(RegisteredAccount registeredAccount) {
-		// TODO Auto-generated method stub
+		
+		
 		return null;
 	}
 
@@ -30,6 +36,14 @@ public class DefaultAccountManagerImpl implements AccountManager {
 	public boolean matchesExistingAccount(Account account) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public AccountManagerDao getAccountManagerDao() {
+		return accountManagerDao;
+	}
+
+	public void setAccountManagerDao(AccountManagerDao accountManagerDao) {
+		this.accountManagerDao = accountManagerDao;
 	}
 
 }

@@ -2,11 +2,19 @@ package evanq.game.account;
 
 import java.util.List;
 
-import org.springframework.orm.jpa.support.JpaDaoSupport;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
-public class JpaAccountManagerDaoImpl extends JpaDaoSupport implements
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class JpaAccountManagerDaoImpl implements
 		AccountManagerDao {
 
+	@PersistenceContext
+	private EntityManager entityManager;
+	
+	
 	@Override
 	public RegisteredAccount save(RegisteredAccount registeredAccount) {
 		// TODO Auto-generated method stub

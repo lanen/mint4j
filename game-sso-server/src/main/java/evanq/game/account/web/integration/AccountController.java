@@ -1,4 +1,4 @@
-package evanq.game.account.integration;
+package evanq.game.account.web.integration;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
