@@ -90,4 +90,32 @@ public abstract class AbstractRegisteredAccount implements RegisteredAccount,Ser
 		return 0;
 	}
 
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public void setState(int state) {
+		this.state = state;
+	}
+
+	public void setFlag(int flag) {
+		this.flag = flag;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public void setAccount(String account) {
+		this.account = account;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public void setPasswd(String passwd) {
+		this.passwd = passwd;
+	}
+
 }

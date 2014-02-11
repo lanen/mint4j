@@ -1,6 +1,8 @@
 package evanq.game.account;
 
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 import javax.sql.DataSource;
 import javax.transaction.Transaction;
 import javax.transaction.TransactionManager;
@@ -22,11 +24,13 @@ public class JpaDaoTestContextConfiguration {
 		return builder.build();
 		
 	}
-	@Bean
-	public EntityManagerFactory entityManagerFactory(){
-		
-		return null;
-	}
+	
+//	@PersistenceUnit(unitName = "itcast") 
+//    protected EntityManagerFactory entityManagerFactory ; 
+//	@Bean
+//	public EntityManagerFactory entityManagerFactory(){
+//		return Persistence.createEntityManagerFactory("itcast");
+//	}
 	
 	@Bean
 	public AccountManagerDao accountManagerDao(){
