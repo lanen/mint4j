@@ -6,36 +6,48 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-@Repository
+@Repository("accountManagerDao")
 public class JpaAccountManagerDaoImpl implements
 		AccountManagerDao {
 	
-	@PersistenceUnit(unitName = "itcast") 
-	protected EntityManagerFactory entityManagerFactory ; 
+	@PersistenceUnit(unitName="accounts")
+	private EntityManagerFactory entityManagerFactory;
 	
 	@PersistenceContext
 	private EntityManager entityManager;
 	
-	
+	@Transactional
 	@Override
 	public RegisteredAccount save(RegisteredAccount registeredAccount) {
-		// TODO Auto-generated method stub
-		return null;
+		entityManager.persist(registeredAccount);
+		return registeredAccount;
 	}
-
+	
+	@Transactional
 	@Override
 	public boolean delete(RegisteredAccount registeredAccount) {
-		// TODO Auto-generated method stub
-		return false;
+		entityManager.remove(entityManager.merge(registeredAccount));
+		return true;
 	}
 
 	@Override
 	public RegisteredAccount findAccountBy(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		RegisteredAccount find = entityManager.find(RegisteredAccountImpl.class, id);
+		return find;
+	}
+	
+	@Transactional
+	@Override
+	public List<RegisteredAccount> findAccountBy(Account account) {
+		TypedQuery<RegisteredAccount> query = entityManager.createQuery("select a from RegisteredAccountImpl a where a.account = ?1",RegisteredAccount.class);
+		query.setParameter(1, account.getAccount());
+		
+		return  query.getResultList();
 	}
 
 	@Override

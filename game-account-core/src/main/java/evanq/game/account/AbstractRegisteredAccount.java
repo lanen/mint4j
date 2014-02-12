@@ -21,11 +21,11 @@ import javax.persistence.Table;
 
 @Entity
 @Inheritance(strategy=InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name="flag",
+/*@DiscriminatorColumn(name="flag",
 	discriminatorType=DiscriminatorType.INTEGER,	
-	columnDefinition="TINYINT(1) DEFAULT 1")
+	columnDefinition="TINYINT(1) DEFAULT 1")*/
 @Table(name="accounts")
-public abstract class AbstractRegisteredAccount implements RegisteredAccount,Serializable,Comparable<RegisteredAccount> {
+public abstract class AbstractRegisteredAccount implements RegisteredAccount,Serializable/*,Comparable<RegisteredAccount>*/ {
 
 	/**
 	 * 
@@ -83,13 +83,13 @@ public abstract class AbstractRegisteredAccount implements RegisteredAccount,Ser
 	public String getPasswd() {
 		return passwd;
 	}
-
+/*
 	@Override
 	public int compareTo(RegisteredAccount o) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+*/
 	public void setId(long id) {
 		this.id = id;
 	}

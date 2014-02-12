@@ -2,6 +2,7 @@ package evanq.game.account;
 
 import java.util.List;
 
+
 public interface AccountManagerDao {
 	
 	public RegisteredAccount save(RegisteredAccount registeredAccount);
@@ -9,6 +10,7 @@ public interface AccountManagerDao {
 	public boolean delete(RegisteredAccount registeredAccount);
 	
 	public RegisteredAccount findAccountBy(long id);
+	public List<RegisteredAccount> findAccountBy(Account account);
 	
 	public List<RegisteredAccount> load();
 	

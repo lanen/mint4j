@@ -70,5 +70,6 @@
     <module>game-oauth-provider</module>
     <module>game-sso-client</module>
     <module>game-sso-server</module>
-	</modules>
+    <module>game-account-core</module>
+  </modules>
 </project>

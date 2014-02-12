@@ -117,6 +117,11 @@
 		</dependency>
 
 
+		<dependency>
+			<groupId>evanq.game</groupId>
+			<artifactId>game-account-core</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
 	</dependencies>
 
 

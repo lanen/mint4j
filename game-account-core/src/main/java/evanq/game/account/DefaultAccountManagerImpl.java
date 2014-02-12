@@ -1,7 +1,13 @@
 package evanq.game.account;
 
+import java.util.List;
+
 import javax.validation.constraints.NotNull;
 
+/**
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class DefaultAccountManagerImpl implements AccountManager {
 	
 	@NotNull
@@ -9,26 +15,36 @@ public class DefaultAccountManagerImpl implements AccountManager {
 	
 	@Override
 	public RegisteredAccount save(RegisteredAccount registeredAccount) {
+		RegisteredAccount save = accountManagerDao.save(registeredAccount);
 		
-		
-		return null;
+		return save;
 	}
 
 	@Override
 	public RegisteredAccount delete(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		RegisteredAccount findAccountBy = accountManagerDao.findAccountBy(id);
+		accountManagerDao.delete(findAccountBy);
+		return findAccountBy;
 	}
 
 	@Override
 	public RegisteredAccount findAccountBy(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		RegisteredAccount findAccountBy = accountManagerDao.findAccountBy(id);
+		return findAccountBy;
 	}
 
 	@Override
 	public RegisteredAccount findAccountBy(Account account) {
-		// TODO Auto-generated method stub
+		long id = account.getId();
+		
+		if(id>0){
+			return accountManagerDao.findAccountBy(id);
+		}
+		
+		List<RegisteredAccount> foundList = accountManagerDao.findAccountBy(account);
+		if(null != foundList &&  ! foundList.isEmpty()){
+			return foundList.get(0);
+		}
 		return null;
 	}
 
