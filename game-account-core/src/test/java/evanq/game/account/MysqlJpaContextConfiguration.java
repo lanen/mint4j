@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 public class MysqlJpaContextConfiguration extends JpaDaoTestContextConfiguration {
 	
 	public MysqlJpaContextConfiguration() {
-		super("h2");
+		super("accounts");
 	}
 
 }

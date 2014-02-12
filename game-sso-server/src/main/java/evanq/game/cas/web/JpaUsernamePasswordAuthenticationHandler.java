@@ -31,17 +31,17 @@ public class JpaUsernamePasswordAuthenticationHandler extends
 		String password = credentials.getPassword();
 		String encryptedPassword = this.getPasswordEncoder().encode(
 		            password);
+		if("admin1".equals(username)){
+			System.out
+			.println("JpaUsernamePasswordAuthenticationHandler.authenticateUsernamePasswordInternal()");
+			System.err.println("让测试账号admin1 通过验证");
+			return true;
+		}
 		//来自账号服务器的验证
 		CasLoginAccount casLoginAccount = new CasLoginAccount(username);
 		RegisteredAccount findAccountBy = accountManager.findAccountBy(casLoginAccount);
 		if(null != findAccountBy){
 			return encryptedPassword.equals(findAccountBy.getPasswd());
-		}
-		if("admin1".equals(username)){
-			System.out
-					.println("JpaUsernamePasswordAuthenticationHandler.authenticateUsernamePasswordInternal()");
-			System.err.println("让测试账号admin1 通过验证");
-			return true;
 		}
 		//Server Manager 账号验证
 		try{
