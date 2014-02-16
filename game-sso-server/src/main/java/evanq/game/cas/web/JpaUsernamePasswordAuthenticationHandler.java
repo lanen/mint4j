@@ -37,6 +37,7 @@ public class JpaUsernamePasswordAuthenticationHandler extends
 			System.err.println("让测试账号admin1 通过验证");
 			return true;
 		}
+		
 		//来自账号服务器的验证
 		CasLoginAccount casLoginAccount = new CasLoginAccount(username);
 		RegisteredAccount findAccountBy = accountManager.findAccountBy(casLoginAccount);

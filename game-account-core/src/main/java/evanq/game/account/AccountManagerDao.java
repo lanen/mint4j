@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface AccountManagerDao {
 	
+	public static final String ACCOUNT_UNIT_NAME = "accounts";
+	
 	public RegisteredAccount save(RegisteredAccount registeredAccount);
 	
 	public boolean delete(RegisteredAccount registeredAccount);

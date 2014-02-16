@@ -3,9 +3,7 @@ package evanq.game.account;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 import javax.persistence.TypedQuery;
 
 import org.springframework.stereotype.Repository;
@@ -15,12 +13,22 @@ import org.springframework.transaction.annotation.Transactional;
 public class JpaAccountManagerDaoImpl implements
 		AccountManagerDao {
 	
-	@PersistenceUnit(unitName="accounts")
-	private EntityManagerFactory entityManagerFactory;
 	
-	@PersistenceContext
+	//@PersistenceUnit(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
+	//private EntityManagerFactory entityManagerFactory;
+	
+	//@PersistenceContext(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
 	private EntityManager entityManager;
 	
+	@PersistenceContext
+	public EntityManager getEntityManager() {
+		return entityManager;
+	}
+
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager = entityManager;
+	}
+
 	@Transactional
 	@Override
 	public RegisteredAccount save(RegisteredAccount registeredAccount) {
@@ -41,7 +49,7 @@ public class JpaAccountManagerDaoImpl implements
 		return find;
 	}
 	
-	@Transactional
+	//@Transactional
 	@Override
 	public List<RegisteredAccount> findAccountBy(Account account) {
 		
@@ -62,5 +70,11 @@ public class JpaAccountManagerDaoImpl implements
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+//
+//
+//	public void setEntityManager(EntityManager entityManager) {
+//		this.entityManager = entityManager;
+//	}
+//
+	
 }
