@@ -1,6 +1,5 @@
 package evanq.game.account;
 
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity

@@ -295,7 +295,7 @@
 				<configuration>
 					<!-- 
 						- 远程调试
-						- MAVEN_OPTS=-Xdebug -Xnoagent -Djetty.reload=automatic  -Dhttl.reloadable=true -Djetty.scanIntervalSeconds=5 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1066 
+						- MAVEN_OPTS=-Xdebug -Xnoagent -Djetty.reload=automatic -Dhttl.reloadable=true -Djetty.scanIntervalSeconds=5 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1066 
 						-
 					 -->
 					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml,jetty/jetty-https.xml</jettyXml>

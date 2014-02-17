@@ -121,6 +121,12 @@
         <appender-ref ref="cas" />
     </logger>
 
+    <logger name="org.springframework.orm">
+        <level value="DEBUG" />
+    </logger>
+    <logger name="org.hibernate">
+        <level value="DEBUG" />
+    </logger>
     <!--
       The root logger sends all log statements EXCEPT those sent to the perf4j
       logger to System.out.
@@ -129,4 +135,5 @@
         <level value="ERROR" />
         <appender-ref ref="console" />
     </root>
+
 </log4j:configuration>

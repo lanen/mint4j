@@ -18,11 +18,21 @@ public class RegisterAccountForm implements Account {
 
 	private long id;
 	
+	//表单状态
+	//input valid
+	//valid code error
+	//input required
+	private String formState;
+	
 	private String account;
 	
 	private String password;
 	
+	@Deprecated
 	private String passwordConfirmed;
+	
+	//服务协议
+	private boolean seviceAgreement;
 	
 	public String getAccount() {
 		return account;
@@ -49,6 +59,15 @@ public class RegisterAccountForm implements Account {
 	public void setId(long id) {
 		this.id = id;
 	}
+	
+	public boolean isSeviceAgreement() {
+		return seviceAgreement;
+	}
+	
+	public void setSeviceAgreement(boolean seviceAgreement) {
+		this.seviceAgreement = seviceAgreement;
+	}
+	
 	@Override
 	public boolean matches(Account account) {
 		// TODO Auto-generated method stub

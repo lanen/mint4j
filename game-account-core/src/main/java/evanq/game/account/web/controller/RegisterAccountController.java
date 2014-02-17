@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import evanq.game.account.Account;
 import evanq.game.account.AccountManager;
 import evanq.game.account.RegisteredAccount;
 import evanq.game.account.RegisteredAccountImpl;
@@ -26,9 +25,9 @@ import evanq.game.account.web.form.RegisterAccountForm;
 @Controller("registerAccountController")
 public class RegisterAccountController   {
 	
-	private static final String REGISTER_VIEW = "default/ui/casAccountRegisterView"; 
-	private static final String REGISTER_VIEW_SUCCESS = "default/ui/casAccountRegisterSuccessView"; 
-	private static final String REGISTER_VIEW_FAILED = "default/ui/casAccountRegisterFailedView"; 
+	private static final String REGISTER_VIEW = "casAccountRegisterView"; 
+	private static final String REGISTER_VIEW_SUCCESS = "casAccountRegisterSuccessView"; 
+	private static final String REGISTER_VIEW_FAILED = "casAccountRegisterFailedView"; 
 	
 	@Autowired
 	private AccountManager accountManager;
@@ -70,8 +69,14 @@ public class RegisterAccountController   {
 		RegisteredAccountImpl acc = new RegisteredAccountImpl();
 		acc.setAccount(account);
 		acc.setPasswd(password);
+		acc.setState(1);
+		acc.setEmail("cppmain@gmail.com");
+		acc.setFlag(1);
+		acc.setMobile("15919710160");
 		
+		//System.out.println("Before Insert...");
 		accountManager.save(acc);
+		//System.out.println("After  Insert...");
 		
 		return new ModelAndView(REGISTER_VIEW_SUCCESS);
 	}
