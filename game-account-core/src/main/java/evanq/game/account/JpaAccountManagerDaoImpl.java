@@ -44,10 +44,11 @@ public class JpaAccountManagerDaoImpl implements
 	@Transactional
 	@Override
 	public List<RegisteredAccount> findAccountBy(Account account) {
+		
 		TypedQuery<RegisteredAccount> query = entityManager.createQuery("select a from RegisteredAccountImpl a where a.account = ?1",RegisteredAccount.class);
 		query.setParameter(1, account.getAccount());
-		
-		return  query.getResultList();
+		List<RegisteredAccount> resultList = query.getResultList();
+		return  resultList;
 	}
 
 	@Override
