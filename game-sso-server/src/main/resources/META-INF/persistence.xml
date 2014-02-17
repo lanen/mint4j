@@ -16,6 +16,7 @@
         <class>org.jasig.cas.ticket.ServiceTicketImpl</class>
         <class>org.jasig.cas.ticket.registry.support.JpaLockingStrategy$Lock</class>
        
+              <class>evanq.game.account.RegisteredAccountImpl</class>
        
        <properties>
         <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect"/>
@@ -31,8 +32,8 @@
          <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.jdbc.fetch_size" value="18"/>
             <property name="hibernate.jdbc.batch_size" value="10"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.format_sql" value="true"/>
+            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.format_sql" value="false"/>
        </properties>
     </persistence-unit>    
        
@@ -55,7 +56,7 @@
          <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="hibernate.jdbc.fetch_size" value="18"/>
             <property name="hibernate.jdbc.batch_size" value="10"/>
-            <property name="hibernate.show_sql" value="false"/>
+            <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
        </properties>
     </persistence-unit>

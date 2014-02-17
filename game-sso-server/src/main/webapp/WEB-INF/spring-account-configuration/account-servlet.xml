@@ -3,16 +3,24 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:webflow="http://www.springframework.org/schema/webflow-config"
+       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:p="http://www.springframework.org/schema/p"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/webflow-config http://www.springframework.org/schema/webflow-config/spring-webflow-config-2.3.xsd">
+	 
+	 
+	 <!-- 
+	  -->
  
+ 	<context:component-scan base-package="evanq.game.account.web.controller" /> 
+ 	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
  <bean
       id="acc_handlerMappingC"
       class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
     <property name="mappings">
       <props>     
-        <prop key="/account/reg.html">registerAccountController</prop>
+        <prop key="/account/*">registerAccountController</prop>
         <!-- 
         <prop key="/account/register">submitRegisterAccountController</prop>
          -->
@@ -24,9 +32,13 @@
   </bean>
         
   <!-- Account Controller -->
-  <bean id="registerAccountController" class="evanq.game.account.web.RegisterAccountController"
+  <!-- 
+  <bean id="registerAccountController" class="evanq.game.account.web.controller.RegisterAccountController"
   	p:loginUrl="${cas.securityContext.casProcessingFilterEntryPoint.loginUrl}"	
+  	p:successView="casAccountRegisterView" 
+  	p:command = "register"
   />
+   -->
   <!-- 
   <bean id="submitRegisterAccountController" class="evanq.game.account.web.RegisterAccountController"
   	p:loginUrl="${cas.securityContext.casProcessingFilterEntryPoint.loginUrl}"
@@ -39,3 +51,7 @@
 
  
 </beans>
+
+
+ 
+ 

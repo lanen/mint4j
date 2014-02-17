@@ -141,10 +141,11 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.4</version>
-				<configuration>
 				
+				<configuration>				
 					<warName>${project.artifactId}</warName>
 				</configuration>
+				 
 			</plugin>
 		
 		
@@ -294,17 +295,19 @@
 				<configuration>
 					<!-- 
 						- 远程调试
-						- MAVEN_OPTS=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1066 
+						- MAVEN_OPTS=-Xdebug -Xnoagent -Djetty.reload=automatic  -Dhttl.reloadable=true -Djetty.scanIntervalSeconds=5 -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1066 
 						-
 					 -->
+					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml,jetty/jetty-https.xml</jettyXml>
 					<webApp>
 						<contextPath>/cas</contextPath>
-						 
+						<defaultsDescriptor>jetty/webdefault.xml</defaultsDescriptor> 
+			 
 					</webApp>
+					                <scanIntervalSeconds>10</scanIntervalSeconds>  
 					
 					<stopPort>9999</stopPort>
-				<stopKey>stop</stopKey>
-					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml,jetty/jetty-https.xml</jettyXml>
+					<stopKey>stop</stopKey>
 				</configuration>
 			</plugin>
 		</plugins>

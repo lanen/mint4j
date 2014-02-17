@@ -14,17 +14,17 @@ public class JpaAccountManagerDaoImpl implements
 		AccountManagerDao {
 	
 	
-	//@PersistenceUnit(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
+//	@PersistenceUnit(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
 	//private EntityManagerFactory entityManagerFactory;
 	
-	//@PersistenceContext(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
+//	@PersistenceContext(unitName = AccountManagerDao.ACCOUNT_UNIT_NAME)
 	private EntityManager entityManager;
 	
-	@PersistenceContext
 	public EntityManager getEntityManager() {
 		return entityManager;
 	}
 
+	@PersistenceContext
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager = entityManager;
 	}

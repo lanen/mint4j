@@ -18,6 +18,8 @@
     specific language governing permissions and limitations
     under the License.
 
+
+有空的话，就开发一款eclipse 插件，可以查找spring 中配置好的bean id 或类
 -->
 <!--
 	| deployerConfigContext.xml centralizes into one file some of the declarative configuration that

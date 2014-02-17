@@ -29,6 +29,7 @@
   <import resource="spring-configuration/propertyFileConfigurer.xml"/>
 
   <!-- Theme Resolver -->
+  <!-- defaultThemeName 配置 ${defaultThemeName}.properties 在classpath中 -->
   <bean id="themeResolver" class="org.jasig.cas.services.web.ServiceThemeResolver"
         p:defaultThemeName="${cas.themeResolver.defaultThemeName}"
         p:argumentExtractors-ref="argumentExtractors"

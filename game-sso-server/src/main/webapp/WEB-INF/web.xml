@@ -29,6 +29,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>
       /WEB-INF/spring-configuration/*.xml
+     /WEB-INF/spring-account-configuration/*.xml
     
       /WEB-INF/deployerConfigContext.xml
       /WEB-INF/deployerConfigContext-mysql-serviceManager.xml
