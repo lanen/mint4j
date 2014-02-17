@@ -18,6 +18,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<cas.version>3.5.2</cas.version>
 		<spring.version>3.1.1.RELEASE</spring.version>
+		<spring.jpa.version>1.3.1.RELEASE</spring.jpa.version>
 		<hibernate.version>4.0.1.Final</hibernate.version>
 		<host.name>cas.evanq.net</host.name>
 		<keystore.alias>evanq_cas</keystore.alias>
@@ -71,6 +72,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.jpa.version}</version>
 		</dependency>
 
 		<dependency>
@@ -128,14 +134,15 @@
 	<build>
 		<finalName>${project.artifactId}</finalName>
 
-
 		<plugins>
 		
 		
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-war-plugin</artifactId>
+				<version>2.4</version>
 				<configuration>
+				
 					<warName>${project.artifactId}</warName>
 				</configuration>
 			</plugin>
@@ -292,7 +299,11 @@
 					 -->
 					<webApp>
 						<contextPath>/cas</contextPath>
+						 
 					</webApp>
+					
+					<stopPort>9999</stopPort>
+				<stopKey>stop</stopKey>
 					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml,jetty/jetty-ssl.xml,jetty/jetty-https.xml</jettyXml>
 				</configuration>
 			</plugin>

@@ -17,7 +17,7 @@
 	    <property name="driverClass" value="com.mysql.jdbc.Driver" />  
 	    <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test" />  
 	    <property name="user" value="root" />  
-	    <property name="password" value="" />  
+	    <property name="password" value="123456" />  
 	</bean>
 	
 	<bean id="sessionFactory"  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
@@ -71,7 +71,15 @@
 		  <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
 	</bean>
 	
+	
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
 	<!-- 
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	    <property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+	<tx:annotation-driven />
 	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="entityManagerFactory" ref="entityManagerFactory" />
 	</bean>
