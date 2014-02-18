@@ -15,21 +15,21 @@
  
  	<context:component-scan base-package="evanq.game.account.web.controller" /> 
  	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+ 	
+ 	<!-- 
  <bean
       id="acc_handlerMappingC"
       class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
     <property name="mappings">
       <props>     
         <prop key="/account/*">registerAccountController</prop>
-        <!-- 
-        <prop key="/account/register">submitRegisterAccountController</prop>
-         -->
       </props>
     </property>
     <property
         name="alwaysUseFullPath" value="true"/>
 
   </bean>
+ 	 -->
         
   <!-- Account Controller -->
   <!-- 

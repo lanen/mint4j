@@ -2,6 +2,12 @@
 
 
 <div class="box fl-panel" id="register">
-success
+ Register success!!!
 </div>
+
+<div class="box fl-panel" id="register">
+	click <a href="/cas/login" >here</a> to login.
+</div>
+
+
 <jsp:directive.include file="includes/bottom.jsp" />

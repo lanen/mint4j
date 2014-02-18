@@ -94,7 +94,10 @@
         <prop key="/openid/*">openIdProviderController</prop>
         <prop key="/authorizationFailure.html">passThroughController</prop>
         <prop key="/403.html">passThroughController</prop>
-        <prop key="/status">healthCheckController</prop>     
+        <prop key="/status">healthCheckController</prop>
+        
+        <!-- 集成账号服务器 -->
+        <prop key="/account/*">registerAccountController</prop>     
       </props>
     </property>
     <property
@@ -148,6 +151,7 @@
 
   <webflow:flow-registry id="flowRegistry" flow-builder-services="builder">
     <webflow:flow-location path="/WEB-INF/login-webflow.xml" id="login"/>
+    <webflow:flow-location path="/WEB-INF/register-webflow.xml" id="register"/>
   </webflow:flow-registry>
 
   <webflow:flow-builder-services id="builder" view-factory-creator="viewFactoryCreator"

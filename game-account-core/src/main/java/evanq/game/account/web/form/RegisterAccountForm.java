@@ -28,8 +28,17 @@ public class RegisterAccountForm implements Account {
 	
 	private String password;
 	
-	@Deprecated
-	private String passwordConfirmed;
+	/**
+	 * 
+	 * 注册成功重定向到地址
+	 */
+	private String customSuccessUrl;
+	
+	/**
+	 * 
+	 * 注册成功，产生一个票据，附带注册步骤，以及账号信息
+	 */
+	private String registerSuccessTicket;
 	
 	//服务协议
 	private boolean seviceAgreement;
@@ -45,12 +54,6 @@ public class RegisterAccountForm implements Account {
 	}
 	public void setPassword(String password) {
 		this.password = password;
-	}
-	public String getPasswordConfirmed() {
-		return passwordConfirmed;
-	}
-	public void setPasswordConfirmed(String passwordConfirmed) {
-		this.passwordConfirmed = passwordConfirmed;
 	}
 	@Override
 	public long getId() {
@@ -68,6 +71,13 @@ public class RegisterAccountForm implements Account {
 		this.seviceAgreement = seviceAgreement;
 	}
 	
+	public String getCustomSuccessUrl() {
+		return customSuccessUrl;
+	}
+	
+	public void setCustomSuccessUrl(String customSuccessUrl) {
+		this.customSuccessUrl = customSuccessUrl;
+	}
 	@Override
 	public boolean matches(Account account) {
 		// TODO Auto-generated method stub

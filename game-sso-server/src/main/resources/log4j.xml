@@ -98,7 +98,7 @@
     </logger>
 
     <logger name="org.springframework.webflow">
-        <level value="WARN" />
+        <level value="debug" />
     </logger>
 
     <logger name="org.jasig" additivity="true">
@@ -125,7 +125,7 @@
         <level value="DEBUG" />
     </logger>
     <logger name="org.hibernate">
-        <level value="DEBUG" />
+        <level value="warn" />
     </logger>
     <!--
       The root logger sends all log statements EXCEPT those sent to the perf4j

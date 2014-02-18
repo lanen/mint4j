@@ -36,8 +36,14 @@ public abstract class AbstractRegisteredAccount implements RegisteredAccount,Ser
 	@Column(name="id")
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private long id;
+	
+	/**
+	 * 
+	 * 当前账号状态
+	 */
 	@Column
 	private int state;
+	
 	@Column
 	private int flag;
 	@Column

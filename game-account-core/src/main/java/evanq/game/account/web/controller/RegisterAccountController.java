@@ -1,5 +1,6 @@
 package evanq.game.account.web.controller;
 
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -25,9 +26,12 @@ import evanq.game.account.web.form.RegisterAccountForm;
 @Controller("registerAccountController")
 public class RegisterAccountController   {
 	
+	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(RegisterAccountController.class);
+	
 	private static final String REGISTER_VIEW = "casAccountRegisterView"; 
 	private static final String REGISTER_VIEW_SUCCESS = "casAccountRegisterSuccessView"; 
 	private static final String REGISTER_VIEW_FAILED = "casAccountRegisterFailedView"; 
+	private static final String SERVICE_AGREEMENT_VIEW = "serviceAgreementView";
 	
 	@Autowired
 	private AccountManager accountManager;
@@ -43,8 +47,10 @@ public class RegisterAccountController   {
 
 		String account = form.getAccount();
 		String password = form.getPassword();
-		String passwordConfirmed = form.getPasswordConfirmed();
 		
+		if(! form.isSeviceAgreement()){
+			logger.debug("<Must Agree the Service Agreement.>");
+		}
 		
 		if ( ! StringUtils.hasText(account)) {
 			
@@ -54,9 +60,6 @@ public class RegisterAccountController   {
 			
 		}
 		
-		if ( ! StringUtils.hasText(passwordConfirmed)) {
-			
-		}
 		
 		//step 1. 账号是否存在
 		RegisteredAccount findAccountBy = accountManager.findAccountBy(form);
@@ -70,14 +73,23 @@ public class RegisterAccountController   {
 		acc.setAccount(account);
 		acc.setPasswd(password);
 		acc.setState(1);
-		acc.setEmail("cppmain@gmail.com");
+		acc.setEmail("");
 		acc.setFlag(1);
-		acc.setMobile("15919710160");
+		acc.setMobile("");
 		
-		//System.out.println("Before Insert...");
 		accountManager.save(acc);
-		//System.out.println("After  Insert...");
 		
 		return new ModelAndView(REGISTER_VIEW_SUCCESS);
+		
+	}
+	
+	/**
+	 * 
+	 * 显示服务条款
+	 * @return
+	 */
+	@RequestMapping("/serviceAgreement.html")
+	public ModelAndView showServiceAgreement(){
+		return new ModelAndView(SERVICE_AGREEMENT_VIEW);
 	}
 }
