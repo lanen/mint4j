@@ -2,7 +2,7 @@ package evanq.game.cardgame.role;
 
 /**
  * 
- * 账号角色列表
+ * 账号的角色列表
  * 
  * @author Evan cppmain@gmail.com
  *
