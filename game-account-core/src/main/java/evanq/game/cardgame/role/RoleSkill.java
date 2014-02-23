@@ -1,5 +1,12 @@
 package evanq.game.cardgame.role;
 
+/**
+ * 
+ * 角色技能列表
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class RoleSkill {
 
 	private int id;

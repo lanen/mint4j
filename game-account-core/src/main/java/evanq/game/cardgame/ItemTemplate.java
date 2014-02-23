@@ -27,12 +27,73 @@ public class ItemTemplate {
 	/**
 	 * 最大堆叠数
 	 */
-	private int maxStack;
+	private int maxOverlay;
+	
+	/**
+	 * 
+	 * 最大持久的
+	 */
+	private int maxDurability;
 	
 	/**
 	 * 物品的等级限制
 	 */
 	private int levelRequired;
+	
+	/**
+	 * 需要技能
+	 */
+	private int requiredSkill;
+	
+	/**
+	 * 需要技能等级
+	 */
+	private int requiredSkillLevel;
+	
+	/**
+	 *  继承触发进入CD
+	 */
+	private int skillTrigger_1;
+	
+	/**
+	 * CD 时间
+	 */
+	private int skillCooldown_1;
+	
+	/**
+	 * 类属CD 时间
+	 */
+	private int skillCatalogCooldown_1;
+	
+	/**
+	 *  继承触发进入CD
+	 */
+	private int skillTrigger_2;
+	
+	/**
+	 * CD 时间
+	 */
+	private int skillCooldown_2;
+	
+	/**
+	 * 类属CD 时间
+	 */
+	private int skillCatalogCooldown_2;
+	
+	/**
+	 *  继承触发进入CD
+	 */
+	private int skillTrigger_3;
+	
+	/**
+	 * CD 时间
+	 */
+	private int skillCooldown_3;
+	
+	/**
+	 * 类属CD 时间
+	 */
+	private int skillCatalogCooldown_3;
 	
 	/**
 	 * 使用类型 1可使用 2不可使用
@@ -193,7 +254,7 @@ public class ItemTemplate {
 	/**
 	 * 附加技能的ID
 	 */
-	private int skill;
+	private int additionSkill;
 
 	public int getId() {
 		return id;
@@ -243,12 +304,13 @@ public class ItemTemplate {
 		this.itemTag = itemTag;
 	}
 
-	public int getMaxStack() {
-		return maxStack;
+
+	public int getMaxOverlay() {
+		return maxOverlay;
 	}
 
-	public void setMaxStack(int maxStack) {
-		this.maxStack = maxStack;
+	public void setMaxOverlay(int maxOverlay) {
+		this.maxOverlay = maxOverlay;
 	}
 
 	public int getLevelRequired() {
@@ -515,12 +577,109 @@ public class ItemTemplate {
 		this.growTemp = growTemp;
 	}
 
-	public int getSkill() {
-		return skill;
+	
+	public int getRequiredSkill() {
+		return requiredSkill;
 	}
 
-	public void setSkill(int skill) {
-		this.skill = skill;
+	public void setRequiredSkill(int requiredSkill) {
+		this.requiredSkill = requiredSkill;
+	}
+
+	public int getRequiredSkillLevel() {
+		return requiredSkillLevel;
+	}
+
+	public void setRequiredSkillLevel(int requiredSkillLevel) {
+		this.requiredSkillLevel = requiredSkillLevel;
+	}
+
+	public int getAdditionSkill() {
+		return additionSkill;
+	}
+
+	public void setAdditionSkill(int additionSkill) {
+		this.additionSkill = additionSkill;
+	}
+
+	public int getMaxDurability() {
+		return maxDurability;
+	}
+
+	public void setMaxDurability(int maxDurability) {
+		this.maxDurability = maxDurability;
+	}
+
+	public int getSkillTrigger_1() {
+		return skillTrigger_1;
+	}
+
+	public void setSkillTrigger_1(int skillTrigger_1) {
+		this.skillTrigger_1 = skillTrigger_1;
+	}
+
+	public int getSkillCooldown_1() {
+		return skillCooldown_1;
+	}
+
+	public void setSkillCooldown_1(int skillCooldown_1) {
+		this.skillCooldown_1 = skillCooldown_1;
+	}
+
+	public int getSkillCatalogCooldown_1() {
+		return skillCatalogCooldown_1;
+	}
+
+	public void setSkillCatalogCooldown_1(int skillCatalogCooldown_1) {
+		this.skillCatalogCooldown_1 = skillCatalogCooldown_1;
+	}
+
+	public int getSkillTrigger_2() {
+		return skillTrigger_2;
+	}
+
+	public void setSkillTrigger_2(int skillTrigger_2) {
+		this.skillTrigger_2 = skillTrigger_2;
+	}
+
+	public int getSkillCooldown_2() {
+		return skillCooldown_2;
+	}
+
+	public void setSkillCooldown_2(int skillCooldown_2) {
+		this.skillCooldown_2 = skillCooldown_2;
+	}
+
+	public int getSkillCatalogCooldown_2() {
+		return skillCatalogCooldown_2;
+	}
+
+	public void setSkillCatalogCooldown_2(int skillCatalogCooldown_2) {
+		this.skillCatalogCooldown_2 = skillCatalogCooldown_2;
+	}
+
+	public int getSkillTrigger_3() {
+		return skillTrigger_3;
+	}
+
+	public void setSkillTrigger_3(int skillTrigger_3) {
+		this.skillTrigger_3 = skillTrigger_3;
+	}
+
+	public int getSkillCooldown_3() {
+		return skillCooldown_3;
+	}
+
+	public void setSkillCooldown_3(int skillCooldown_3) {
+		this.skillCooldown_3 = skillCooldown_3;
+	}
+
+	public int getSkillCatalogCooldown_3() {
+		return skillCatalogCooldown_3;
+	}
+
+	public void setSkillCatalogCooldown_3(int skillCatalogCooldown_3) {
+		this.skillCatalogCooldown_3 = skillCatalogCooldown_3;
 	}	
 	
 }

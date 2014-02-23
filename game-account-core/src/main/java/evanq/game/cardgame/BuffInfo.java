@@ -2,7 +2,7 @@ package evanq.game.cardgame;
 
 /**
  * 
- * buff 信息表
+ * 描述 buff,debuff,hot,dot
  * 
  * @author Evan cppmain@gmail.com
  *
