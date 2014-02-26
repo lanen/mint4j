@@ -75,18 +75,10 @@
         <servlet-name>ptSampleServlet</servlet-name>
         <url-pattern>/secure/ptSample</url-pattern>
     </servlet-mapping>
+	 
+
     <error-page>
         <error-code>403</error-code>
         <location>/403.jsp</location>
     </error-page>
 </web-app>
-<!-- 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>
-			/WEB-INF/spring-mvc-servlet.xml,
-			/WEB-INF/spring-security-cas.xml
-		</param-value>
-	</context-param>
-	
- -->

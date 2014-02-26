@@ -48,7 +48,7 @@ public class RegisterAccountController   {
 		String account = form.getAccount();
 		String password = form.getPassword();
 		
-		if(! form.isSeviceAgreement()){
+		if(! form.getSeviceAgreement()){
 			logger.debug("<Must Agree the Service Agreement.>");
 		}
 		

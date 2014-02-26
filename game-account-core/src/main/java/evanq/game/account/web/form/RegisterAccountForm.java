@@ -63,7 +63,7 @@ public class RegisterAccountForm implements Account {
 		this.id = id;
 	}
 	
-	public boolean isSeviceAgreement() {
+	public boolean getSeviceAgreement() {
 		return seviceAgreement;
 	}
 	

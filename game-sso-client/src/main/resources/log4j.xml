@@ -94,6 +94,13 @@
         apply DEBUG level logging on a an org.springframework.* package level (i.e. org.springframework.dao)
     -->
     <logger name="org.springframework">
+        <level value="INFO" />
+    </logger>
+    <logger name="org.springframework.orm">
+        <level value="DEBUG" />
+    </logger>
+    
+    <logger name="org.hibernate">
         <level value="DEBUG" />
     </logger>
 
@@ -103,7 +110,9 @@
 
     <logger name="org.jasig" additivity="true">
         <level value="DEBUG" />
+        <!-- 
         <appender-ref ref="cas" />
+         -->
     </logger>
 
     <logger name="com.github.inspektr.audit.support.Slf4jLoggingAuditTrailManager">

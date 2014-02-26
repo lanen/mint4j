@@ -251,8 +251,12 @@
 							<noprompt>true</noprompt>
 						</configuration>
 					</execution>
+					
+					
 					 -->
-					 
+					<!-- 
+					"C:\Program Files\Java\jdk1.7.0_51\bin\keytool.exe" -import -alias evanq_cas -noprompt -keyalg RSA -keypass jetty9 -keystore "C:\Program Files\Java\jdk1.7.0_51\jre\lib\security\cacerts" -file "E:\java\mint4j\game\game-sso-server\jetty\etc\evanq_cas.cer"
+					 --> 
 					<!-- 这一步很重要，将生产的cer文件导入到java的certs证书库中 -->
 					<execution>
 						<id>importCertificate-to-java-home</id>

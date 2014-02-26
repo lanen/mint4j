@@ -6,9 +6,12 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns:util="http://www.springframework.org/schema/util"
+   	xmlns:tx="http://www.springframework.org/schema/tx" 
+    
     xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
 	<!-- 从property读取配置信息 -->
@@ -41,21 +44,14 @@
         <authentication-provider ref="casAuthProvider" />
     </authentication-manager>
 
-    <user-service id="userService">
-        <user name="rod" password="rod" authorities="ROLE_SUPERVISOR,ROLE_USER" />
-        <user name="admin" password="admin" authorities="ROLE_SUPERVISOR,ROLE_USER" />
-        <user name="dianne" password="dianne" authorities="ROLE_USER" />
-        <user name="scott" password="scott" authorities="ROLE_USER" />
-    </user-service>
-
     <!-- This filter handles a Single Logout Request from the CAS Server -->
     <b:bean id="singleLogoutFilter" class="org.jasig.cas.client.session.SingleSignOutFilter"/>
     <!-- This filter redirects to the CAS Server to signal Single Logout should be performed -->
     <b:bean id="requestSingleLogoutFilter" class="org.springframework.security.web.authentication.logout.LogoutFilter"
         p:filterProcessesUrl="/j_spring_cas_security_logout">
-        <b:constructor-arg value="${cas.server.hostUrl}/logout"/>
+        <b:constructor-arg value="${cas.server.hostUrl}/cas/logout"/>
         <b:constructor-arg>
-            <b:bean class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
+            <b:bean id="securityContextLogoutHandler" class="org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler"/>
         </b:constructor-arg>
     </b:bean>
 
@@ -64,6 +60,14 @@
         p:service="${cas.service.hostUrl}/j_spring_cas_security_check"
         p:authenticateAllArtifacts="true"/>
         
+     <!-- 游戏分区的用户入口 -->
+    <user-service id="userService">
+        <user name="test" password="test" authorities="ROLE_SUPERVISOR,ROLE_USER" />
+        <user name="dianne" password="dianne" authorities="ROLE_USER" />
+        <user name="scott" password="scott" authorities="ROLE_USER" />
+    </user-service>
+    
+    
     <!-- CAS 入口 -->
     <b:bean id="casEntryPoint"
         class="org.springframework.security.cas.web.CasAuthenticationEntryPoint"
@@ -76,9 +80,11 @@
         p:serviceProperties-ref="serviceProperties"
         p:proxyGrantingTicketStorage-ref="pgtStorage"
         p:proxyReceptorUrl="/j_spring_cas_security_proxyreceptor">
+        <!-- CAS 返回验证成功的Handler，在里面 -->
         <b:property name="authenticationDetailsSource">
-            <b:bean class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
+            <b:bean id="serviceAuthenticationDetailsSource" class="org.springframework.security.cas.web.authentication.ServiceAuthenticationDetailsSource"/>
         </b:property>
+        <!-- 验证失败的Handler -->
         <b:property name="authenticationFailureHandler">
             <b:bean class="org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler"
                 p:defaultFailureUrl="/casfailed.jsp"/>
@@ -102,6 +108,7 @@
             </b:bean>
         </b:property>
         <b:property name="ticketValidator">
+        	<!-- 启用了代理 Cas20ProxyTicketValidator -->
             <b:bean
                 class="org.jasig.cas.client.validation.Cas20ProxyTicketValidator"
                 p:acceptAnyProxy="true"
@@ -136,4 +143,19 @@
         <b:prop key="cas.server.host">localhost:9443</b:prop>
     </util:properties>
      -->
+     
+     <!-- 以下定义游戏分区的数据源，hibernate JPA -->
+     
+    <b:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<b:property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
+	</b:bean>
+	
+	<b:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+	<b:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+	
+	<b:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+	    <b:property name="entityManagerFactory" ref="entityManagerFactory" />
+	</b:bean>
+	<tx:annotation-driven />
+     
 </b:beans>

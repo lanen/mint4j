@@ -28,6 +28,9 @@
 		<skip>true</skip>
 		<spring.version>3.2.6.RELEASE</spring.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
+		<spring.jpa.version>1.3.1.RELEASE</spring.jpa.version>
+		
+		<hibernate.version>4.0.1.Final</hibernate.version>
 	</properties>
 
 	<dependencies>
@@ -37,6 +40,25 @@
 			<artifactId>cas-client-core</artifactId>
 			<version>${cas.client.version}</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.1</version>
+		</dependency>
+
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+
 
 		<!-- Spring 3 dependencies -->
 		<dependency>
@@ -81,6 +103,60 @@
 			<version>1.6.2</version>
 			<scope>runtime</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-orm</artifactId>
+			<version>${spring.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-jpa</artifactId>
+			<version>${spring.jpa.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<version>1.3.175</version>
+		</dependency>
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>5.1.13</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-c3p0</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>javassist</groupId>
+			<artifactId>javassist</artifactId>
+			<version>3.12.1.GA</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -146,7 +222,7 @@
 						</execution> -->
 
 					<!-- 将 crt file 导入 keystroe, 以示信任 来自server 端的证书 -->
-					
+
 					<!-- list -->
 					<execution>
 						<id>list1</id>
@@ -161,25 +237,13 @@
 							<storepass>${keystore.storepass}</storepass>
 						</configuration>
 					</execution>
-					<!-- 
-					<execution>
-						<id>deleteAlias-server-crt</id>
-						<goals>
-							<goal>deleteAlias</goal>
-						</goals>
-						<phase>generate-resources</phase>
-						<configuration>
-							<verbose>true</verbose>
-							<keystore>${keystore}</keystore>
-							<skip>${skip}</skip>
-							<storepass>${keystore.storepass}</storepass>
-							<alias>${crtfile.keystore.alias}</alias>
-							<noprompt>true</noprompt>
-						</configuration>
-					</execution>
-					 -->
-					 	
-				
+					<!-- <execution> <id>deleteAlias-server-crt</id> <goals> <goal>deleteAlias</goal> 
+						</goals> <phase>generate-resources</phase> <configuration> <verbose>true</verbose> 
+						<keystore>${keystore}</keystore> <skip>${skip}</skip> <storepass>${keystore.storepass}</storepass> 
+						<alias>${crtfile.keystore.alias}</alias> <noprompt>true</noprompt> </configuration> 
+						</execution> -->
+
+
 					<execution>
 						<id>importCertificate</id>
 						<goals>
@@ -225,8 +289,8 @@
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>9.1.1.v20140108</version>
-				<configuration>					
-					<!-- ? 这里是否可以有多个 jettyXml，配置多个服务器  -->
+				<configuration>
+					<!-- ? 这里是否可以有多个 jettyXml，配置多个服务器 -->
 					<jettyXml>jetty/jetty.xml,jetty/jetty-http.xml</jettyXml>
 				</configuration>
 			</plugin>
@@ -234,7 +298,8 @@
 
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>
