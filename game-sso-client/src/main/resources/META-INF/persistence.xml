@@ -17,7 +17,7 @@
          <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
          <property name="hibernate.connection.username" value="root"/>
          <property name="hibernate.connection.password" value="123456"/>
-         <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test_reamld"/>
+         <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/test_realm"/>
          <property name="hibernate.max_fetch_depth" value="3"/>
          <!-- 
          	- 默认是自动的，在junit环境下会出错；none关闭

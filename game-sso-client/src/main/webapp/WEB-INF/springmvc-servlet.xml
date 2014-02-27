@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util"
+   	xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc" 
+    xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+	
+     
+     <import resource="propertyFileConfigurer.xml"/>
+    
+  <!-- Theme Resolver -->
+  <!-- defaultThemeName 配置 ${defaultThemeName}.properties 在classpath中 -->
+  <bean id="themeResolver" class="org.springframework.web.servlet.theme.CookieThemeResolver"
+        p:defaultThemeName="${mint.themeResolver.defaultThemeName}"
+      >
+      <!-- 
+    <property name="mobileBrowsers">
+      <map>
+        <entry key=".*iPhone.*" value="iphone"/>
+        <entry key=".*Android.*" value="iphone"/>
+        <entry key=".*Safari.*Pre.*" value="iphone"/>
+        <entry key=".*Nokia.*AppleWebKit.*" value="iphone"/>
+      </map>
+    </property>
+       -->
+  </bean>
+
+	
+  <!-- View Resolver -->
+  <bean id="viewResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver"
+        p:order="0">
+    <property name="basenames">
+      <list>
+        <value>${mint.viewResolver.basename}</value>
+        <value>protocol_views</value>
+      </list>
+    </property>
+  </bean>
+	<!-- 
+  <bean id="xmlViewResolver" class="org.springframework.web.servlet.view.XmlViewResolver" 
+  		p:order="1" 
+  		p:location="/WEB-INF/view/views.xml" 
+  />
+	 -->
+  
+  <!-- Locale Resolver -->
+  <bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver"/>
+
+  <bean id="localeChangeInterceptor" class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor"/>
+
+  <bean id="urlBasedViewResolver" class="org.springframework.web.servlet.view.UrlBasedViewResolver"
+        p:viewClass="org.springframework.web.servlet.view.InternalResourceView"
+        p:prefix="/WEB-INF/view/jsp/"
+        p:suffix=".jsp"
+        p:order="2"/>
+  
+  <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->  
+  <mvc:annotation-driven />  
+     <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@repository、@Component等注解的类成为spring的bean -->  
+  <context:component-scan base-package="evanq.game.realmd.web" />  <!--这个包根据自己的项目来配置，我的是com.mvc.test--> 
+
+</beans>

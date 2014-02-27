@@ -8,8 +8,11 @@
 ADMIN_ROLE
 
 /realmd/{1}/status
+
 /realmd/{1}/uptime
+
 /realmd/{1}/gm/
+
 USER
 
 /realmd/list

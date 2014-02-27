@@ -1,8 +1,9 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
 
-<web-app>
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+         version="2.4">
 	
        <display-name>Spring Security CAS Demo Application</display-name>
 
@@ -14,13 +15,15 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>
             /WEB-INF/applicationContext-security.xml
+            /WEB-INF/springmvc-servlet.xml
         </param-value>
     </context-param>
-
+<!-- 
     <context-param>
         <param-name>webAppRootKey</param-name>
         <param-value>cas.root</param-value>
     </context-param>
+ -->
 
     <!--
         Include the character encoding Filter as per JASIG recommenation when doing Single Sign Out
@@ -76,6 +79,22 @@
         <url-pattern>/secure/ptSample</url-pattern>
     </servlet-mapping>
 	 
+	 
+	<servlet>
+    <servlet-name>springmvc</servlet-name>
+	    <servlet-class>
+	     org.springframework.web.servlet.DispatcherServlet
+	    </servlet-class>
+	    <init-param>
+	      <param-name>publishContext</param-name>
+	      <param-value>false</param-value>
+	    </init-param>
+    	<load-on-startup>1</load-on-startup>
+  	</servlet>
+	<servlet-mapping>
+        <servlet-name>springmvc</servlet-name>
+        <url-pattern>*.jhtml</url-pattern>
+    </servlet-mapping>
 
     <error-page>
         <error-code>403</error-code>
