@@ -5,7 +5,7 @@
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 	
-       <display-name>Spring Security CAS Demo Application</display-name>
+       <display-name>游戏门户页面</display-name>
 
     <!--
       - Location of the XML file that defines the root application context

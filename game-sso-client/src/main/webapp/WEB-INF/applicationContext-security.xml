@@ -16,16 +16,7 @@
         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd 
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd">
 	
-	<!-- 从property读取配置信息 -->
-	<!-- 
-	<b:bean id="propertyConfigurer"  
-          class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">  
-        <b:property name="location" value="classpath:cas_client.properties"/>  
-    </b:bean>
-	 -->
-    
    
-    
     <!--  URL 模式的访问权限 access 表示访问权限 -->
     
     <http entry-point-ref="casEntryPoint" use-expressions="true">
@@ -37,6 +28,8 @@
             access="hasRole('ROLE_SUPERVISOR')" />
         <intercept-url pattern="/secure/**" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
+        
+        
         <custom-filter ref="requestSingleLogoutFilter" before="LOGOUT_FILTER"/>
         <custom-filter ref="singleLogoutFilter" before="CAS_FILTER"/>
         <custom-filter ref="casFilter" position="CAS_FILTER" />

@@ -5,14 +5,7 @@ import java.util.List;
 import evanq.game.realmd.Realm;
 import evanq.game.realmd.RealmRegistry;
 
-/**
- * 
- * 存放在内存中的分区列表
- * 
- * @author Evan cppmain@gmail.com
- *
- */
-public class InMemoryRealmRegistry implements RealmRegistry {
+public class AbstractRealmRegistry implements RealmRegistry {
 
 	@Override
 	public Realm save(Realm realm) {

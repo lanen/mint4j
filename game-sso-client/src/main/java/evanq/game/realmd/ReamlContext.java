@@ -14,8 +14,10 @@ public interface ReamlContext {
 	
 	/**
 	 * 推荐服务器
+	 * 需要一个游戏分区推荐表
 	 * @return
 	 */
+	@Deprecated
 	Realm recommendRealm();
 	
 }
