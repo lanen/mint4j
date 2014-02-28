@@ -67,7 +67,10 @@
   
   <!-- 启动注解驱动的Spring MVC功能，注册请求url和注解POJO类方法的映射-->  
   <mvc:annotation-driven />  
-     <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@Repository、@Component等注解的类成为spring的bean -->  
-  <context:component-scan base-package="evanq.game.realmd" /> 
+     <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@Repository、@Component等注解的类成为spring的bean --> 
+     <!-- 尽量把对spring mvc的依赖控制在这个包里面，这个包下面的依赖，通过xml配置DI -->
+  <context:component-scan base-package="evanq.game.realmd.web" /> 
+  
+  <import resource="realm.xml"/>
 
 </beans>

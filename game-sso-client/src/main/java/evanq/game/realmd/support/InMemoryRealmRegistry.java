@@ -1,6 +1,8 @@
 package evanq.game.realmd.support;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import evanq.game.realmd.Realm;
 import evanq.game.realmd.RealmRegistry;
@@ -14,21 +16,36 @@ import evanq.game.realmd.RealmRegistry;
  */
 public class InMemoryRealmRegistry implements RealmRegistry {
 
+	/** 测试时候通过配置，提供分区 */
+	private Map<String,String> a;
+	
 	@Override
-	public Realm save(Realm realm) {
-		// TODO Auto-generated method stub
+	public Realm save(Realm realm) {			
 		return null;
 	}
 
 	@Override
 	public List<Realm> load() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		ArrayList<Realm> realms = new ArrayList<Realm>();
+		
+		RealmImpl impl =  new RealmImpl(1);
+		impl.setFlag(1);
+		impl.setName("华南 - 01");
+		
+		realms.add(impl);
+		
+		return realms;
 	}
 
 	@Override
 	public Realm findBy(int id) {
-		// TODO Auto-generated method stub
+
+		return null;
+	}
+	
+	
+	protected List<Realm> r(){
 		return null;
 	}
 

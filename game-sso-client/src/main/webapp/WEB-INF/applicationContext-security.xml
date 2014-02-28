@@ -21,11 +21,12 @@
     
     <http entry-point-ref="casEntryPoint" use-expressions="true">
         <intercept-url pattern="/" access="permitAll"/>
+        <!-- 
         <intercept-url pattern="/index.jsp" access="permitAll"/>
         <intercept-url pattern="/cas-logout.jsp" access="permitAll"/>
         <intercept-url pattern="/casfailed.jsp" access="permitAll"/>
-        <intercept-url pattern="/secure/extreme/**"
-            access="hasRole('ROLE_SUPERVISOR')" />
+         -->
+        <intercept-url pattern="/secure/extreme/**" access="hasRole('ROLE_SUPERVISOR')" />
         <intercept-url pattern="/secure/**" access="hasRole('ROLE_USER')" />
         <intercept-url pattern="/**" access="hasRole('ROLE_USER')" />
         
@@ -142,18 +143,7 @@
     </util:properties>
      -->
      
-     <!-- 以下定义游戏分区的数据源，hibernate JPA -->
+
      
-    <b:bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<b:property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
-	</b:bean>
-	
-	<b:bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-	<b:bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
-	
-	<b:bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-	    <b:property name="entityManagerFactory" ref="entityManagerFactory" />
-	</b:bean>
-	<tx:annotation-driven />
      
 </b:beans>

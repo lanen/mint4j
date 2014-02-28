@@ -5,8 +5,10 @@ import java.util.List;
 import evanq.game.realmd.Realm;
 import evanq.game.realmd.RealmRegistry;
 
-public class AbstractRealmRegistry implements RealmRegistry {
+public abstract class AbstractRealmRegistry implements RealmRegistry {
 
+	
+	
 	@Override
 	public Realm save(Realm realm) {
 		// TODO Auto-generated method stub
