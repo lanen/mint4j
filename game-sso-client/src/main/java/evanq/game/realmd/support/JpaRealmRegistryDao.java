@@ -42,7 +42,6 @@ public class JpaRealmRegistryDao implements RealmRegistryDao {
 
 	@Override
 	public List<Realmdlist> getAllRealm() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

@@ -68,4 +68,12 @@ public class RealmController {
 	}
 	
 	
+	@RequestMapping(value="/realm/{id}/status" ,method=RequestMethod.GET)
+	public ModelAndView accessRealmStatus(@PathVariable int id){
+	
+		//
+		
+		return new ModelAndView("RealmView","realm_detail","ss");
+	}
+	
 }

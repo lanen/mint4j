@@ -2,6 +2,8 @@ package evanq.game.realmd.support;
 
 import evanq.game.realmd.Realm;
 import evanq.game.realmd.RealmIndentify;
+import evanq.game.realmd.RealmStatus;
+import evanq.game.realmd.RealmStatus;
 
 /**
  * 
@@ -23,6 +25,8 @@ public abstract class AbstractRealm implements Realm {
 	 * 
 	 */
 	private RealmIndentify id;
+	
+	private RealmStatus status;
 	
 
 	/**
@@ -103,6 +107,13 @@ public abstract class AbstractRealm implements Realm {
 	@Override
 	public int getPopulation() {
 		return population;
+	}
+	
+	
+
+	@Override
+	public RealmStatus getStatus() {
+		return status;
 	}
 
 	@Override

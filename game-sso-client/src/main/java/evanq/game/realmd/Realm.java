@@ -21,6 +21,7 @@ public interface Realm extends Serializable,Cloneable {
 	
 	public int getIcon();
 	
+	public RealmStatus getStatus();
 	
 	public int getPopulation();
 }
