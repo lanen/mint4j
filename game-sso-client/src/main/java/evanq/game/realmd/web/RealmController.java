@@ -54,6 +54,8 @@ public class RealmController {
 	@RequestMapping(value="/realm/{id}" ,method=RequestMethod.GET)
 	public ModelAndView accessRealm(@PathVariable int id){
 
+		// 读取账户
+		
 		//
 		
 		
@@ -72,6 +74,7 @@ public class RealmController {
 	public ModelAndView accessRealmStatus(@PathVariable int id){
 	
 		//
+		
 		
 		return new ModelAndView("RealmView","realm_detail","ss");
 	}

@@ -7,6 +7,16 @@
 <title>Insert title here</title>
 </head>
 <body>
-分区详情页
+
+
+
+<div>
+
+	<div id="playbox">
+		<iframe id="playboxframe" src="/playbox.jhtml"  width="1024px" height="768px" frameborder="0" scrolling="no" ></iframe>
+	</div>
+</div>
+
+
 </body>
 </html>
