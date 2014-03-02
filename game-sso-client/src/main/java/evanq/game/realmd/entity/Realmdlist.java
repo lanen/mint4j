@@ -30,10 +30,15 @@ public class Realmdlist implements Serializable{
     @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	@Column
+	private int gameId;
 	
 	@Column
 	private String name;
-	
+
+	/**
+	 * gateway服务器
+	 */
 	@Column
 	private String address;
 	
@@ -45,6 +50,9 @@ public class Realmdlist implements Serializable{
 	
 	@Column
 	private int realmflags;
+	
+	@Column
+	private int locale;
 	
 	@Column
 	private int timezone;
@@ -118,6 +126,17 @@ public class Realmdlist implements Serializable{
 	public void setRealmbuilds(int realmbuilds) {
 		this.realmbuilds = realmbuilds;
 	}
-	
+	public int getGameId() {
+		return gameId;
+	}
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
+	}
+	public int getLocale() {
+		return locale;
+	}
+	public void setLocale(int locale) {
+		this.locale = locale;
+	}
 	
 }

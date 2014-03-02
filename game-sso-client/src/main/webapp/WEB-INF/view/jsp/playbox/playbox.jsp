@@ -19,7 +19,9 @@ swfobject.embedSWF("/static/test.swf", "myContent", "300", "120", "9.0.0", "/sta
 
 </head>
 <body>
-	${gate_type} ${gate } ${playbox_version }${game_version } 
+	${gate_type} ${gate } ${playbox_version }${game_version } ${account}
+		
+		
 	<div id="myContent">
 		<h1>Alternative content</h1>
 		<p><a href="http://www.adobe.com/go/getflashplayer"><img src="http://www.adobe.com/images/shared/download_buttons/get_flash_player.gif" alt="Get Adobe Flash player" /></a></p>

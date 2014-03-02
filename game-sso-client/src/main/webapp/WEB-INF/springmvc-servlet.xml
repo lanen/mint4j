@@ -69,7 +69,7 @@
   <mvc:annotation-driven />  
      <!-- 启动包扫描功能，以便注册带有@Controller、@Service、@Repository、@Component等注解的类成为spring的bean --> 
      <!-- 尽量把对spring mvc的依赖控制在这个包里面，这个包下面的依赖，通过xml配置DI -->
-  <context:component-scan base-package="evanq.game.realmd.web" /> 
+  <context:component-scan base-package="evanq.game.web" /> 
   
   <import resource="realm.xml"/>
 

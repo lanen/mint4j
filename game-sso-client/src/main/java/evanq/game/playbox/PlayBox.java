@@ -27,11 +27,13 @@ public interface PlayBox {
 	
 	public PlayBox wrap(GameIndentify gameIndentify, Realm realm);
 	
-	public PlayBox wrap(GameIndentify gameIndentify, Realm realm, PlayBoxFrame frame);
+	public PlayBox wrap(GameIndentify gameIndentify, Realm realm, DisplayMode frame);
 	
-	public PlayBox with(PlayBoxFrame frame);
+	public PlayBox with(DisplayMode frame);
 
 	public PlayBox labelFor(GameAccount account);
+	
+	public DisplayMode getDisplayMode();
 	
 	public PlayBoxView view();
 	

@@ -15,6 +15,8 @@ public interface Realm extends Serializable,Cloneable {
 
 	public boolean isEnable();
 	
+	public String getGateUrl();
+	
 	public int getPort();
 	
 	public String getAddress();

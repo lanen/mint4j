@@ -1,4 +1,4 @@
-package evanq.game.realmd.web;
+package evanq.game.web;
 
 import java.util.List;
 
@@ -35,7 +35,7 @@ public class RealmController {
 	private RealmRegistry realmRegistry;
 	
 	@RequestMapping("/realm")
-	public ModelAndView accessRealmList(){
+	public ModelAndView accessRealmList(HttpServletRequest request,HttpServletResponse response){
 	
 		logger.debug("RealmController.accessRealmList()");
 		
@@ -44,7 +44,10 @@ public class RealmController {
 		if(null == realmRegistry){
 			throw new IllegalStateException("realmRegistry is null");
 		}
-		
+	//	AttributePrincipal principal = (AttributePrincipal)request;
+	//	System.out.println(principal.getName());
+				
+		System.out.println(request.getUserPrincipal().getName());
 		List<Realm> load = realmRegistry.load();
 		
 		return new ModelAndView("RealmListView","realms",load);
@@ -52,13 +55,8 @@ public class RealmController {
 	
 		
 	@RequestMapping(value="/realm/{id}" ,method=RequestMethod.GET)
-	public ModelAndView accessRealm(@PathVariable int id){
+	public ModelAndView accessRealm(@PathVariable int id,HttpServletRequest request,HttpServletResponse response){
 
-		// 读取账户
-		
-		//
-		
-		
 		return new ModelAndView("RealmView","realm_detail","ss");
 	}
 	

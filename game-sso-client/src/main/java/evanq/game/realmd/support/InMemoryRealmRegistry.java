@@ -32,7 +32,7 @@ public class InMemoryRealmRegistry implements RealmRegistry {
 		RealmImpl impl =  new RealmImpl(1);
 		impl.setFlag(1);
 		impl.setName("华南 - 01");
-		
+		impl.setGateUrl("http://www.baidu.com");
 		realms.add(impl);
 		
 		return realms;

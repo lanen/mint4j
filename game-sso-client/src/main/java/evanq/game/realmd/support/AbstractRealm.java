@@ -28,6 +28,7 @@ public abstract class AbstractRealm implements Realm {
 	
 	private RealmStatus status;
 	
+	private String gateUrl;
 
 	/**
 	 * The name Of Realm. Maybe use i18n.
@@ -108,8 +109,15 @@ public abstract class AbstractRealm implements Realm {
 	public int getPopulation() {
 		return population;
 	}
-	
-	
+
+	public void setGateUrl(String url){
+		this.gateUrl = url;
+	}
+
+	@Override
+	public String getGateUrl() {
+		return gateUrl;
+	}
 
 	@Override
 	public RealmStatus getStatus() {

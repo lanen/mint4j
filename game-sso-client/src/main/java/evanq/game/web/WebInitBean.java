@@ -1,4 +1,4 @@
-package evanq.game.realmd.web;
+package evanq.game.web;
 
 import javax.servlet.ServletContext;
 
