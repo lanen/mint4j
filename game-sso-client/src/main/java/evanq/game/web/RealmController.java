@@ -47,20 +47,14 @@ public class RealmController {
 	//	AttributePrincipal principal = (AttributePrincipal)request;
 	//	System.out.println(principal.getName());
 				
-		System.out.println(request.getUserPrincipal().getName());
+		
+//		System.out.println(request.getUserPrincipal().getName());
 		List<Realm> load = realmRegistry.load();
 		
 		return new ModelAndView("RealmListView","realms",load);
 	}
 	
-		
-	@RequestMapping(value="/realm/{id}" ,method=RequestMethod.GET)
-	public ModelAndView accessRealm(@PathVariable int id,HttpServletRequest request,HttpServletResponse response){
 
-		return new ModelAndView("RealmView","realm_detail","ss");
-	}
-	
-	
 	//TODO 这种类型的操作，要求在切面上做安全验证。只有管理员才可以做
 	@RequestMapping(value="/realm/{id}" ,method=RequestMethod.PUT)
 	public ModelAndView updateRealm(@PathVariable int id,HttpServletRequest request,HttpServletResponse response){
@@ -76,5 +70,7 @@ public class RealmController {
 		
 		return new ModelAndView("RealmView","realm_detail","ss");
 	}
+	
+	
 	
 }

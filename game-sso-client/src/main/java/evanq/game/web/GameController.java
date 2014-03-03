@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import evanq.game.playbox.PlayBox;
+import evanq.game.realmd.RealmRegistry;
+
 /**
  * 
  * 游戏信息
@@ -31,6 +34,18 @@ public class GameController {
 	
 	private static final String GAMEINFO_VIEW = "GameInfoView";
 	
+	/**
+	 * 游戏分区注册表
+	 */
+	private RealmRegistry realmRegistry;
+	
+	
+	/**
+	 * 游戏盒 
+	 */
+	private PlayBox playBox;
+		
+	
 	@RequestMapping(value="/game/{id}",method=RequestMethod.GET)
 	public ModelAndView gameInfoView(@PathVariable("id")int id){
 		System.out.println("GameController.gameInfoView(id)");
@@ -43,5 +58,7 @@ public class GameController {
 		
 		return new ModelAndView(GAMEINFO_VIEW);
 	}
+	
+	
 	
 }

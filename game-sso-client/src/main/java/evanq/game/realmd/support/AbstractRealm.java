@@ -24,12 +24,10 @@ public abstract class AbstractRealm implements Realm {
 	 * The Global Realm Id
 	 * 
 	 */
-	private RealmIndentify id;
+	private int id;
 	
 	private RealmStatus status;
 	
-	private String gateUrl;
-
 	/**
 	 * The name Of Realm. Maybe use i18n.
 	 */
@@ -52,8 +50,7 @@ public abstract class AbstractRealm implements Realm {
 	public AbstractRealm(int rawId) {
 		
 		//Step 1. create RealmIndentify for realm
-		this.id = realmIndentifyWrap(rawId);
-		
+		this.id = rawId;
 		
 	}
 	
@@ -68,7 +65,7 @@ public abstract class AbstractRealm implements Realm {
 	}
 	
 	@Override
-	public RealmIndentify getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -90,6 +87,30 @@ public abstract class AbstractRealm implements Realm {
 		this.flag = flag;
 	}
 
+	public int getFlag() {
+		return flag;
+	}
+
+	public void setStatus(RealmStatus status) {
+		this.status = status;
+	}
+
+	public void setPort(int port) {
+		this.port = port;
+	}
+
+	public void setPopulation(int population) {
+		this.population = population;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public void setIcon(int icon) {
+		this.icon = icon;
+	}
+
 	@Override
 	public int getPort() {
 		return port;
@@ -108,15 +129,6 @@ public abstract class AbstractRealm implements Realm {
 	@Override
 	public int getPopulation() {
 		return population;
-	}
-
-	public void setGateUrl(String url){
-		this.gateUrl = url;
-	}
-
-	@Override
-	public String getGateUrl() {
-		return gateUrl;
 	}
 
 	@Override

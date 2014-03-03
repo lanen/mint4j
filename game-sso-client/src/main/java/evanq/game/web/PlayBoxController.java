@@ -40,8 +40,8 @@ public class PlayBoxController {
 		return model;
 	}
 	
-	@RequestMapping(value="/playbox/{game}/{realm}" ,method=RequestMethod.GET)
-	public ModelAndView display(@PathVariable("game") int gameId,@PathVariable("realm") int realmId,HttpServletRequest request){
+	@RequestMapping(value="/playbox/{realm}" ,method=RequestMethod.GET)
+	public ModelAndView display(@PathVariable("realm") int realmId,HttpServletRequest request){
 		
 		
 		String name = request.getUserPrincipal().getName();
@@ -55,7 +55,6 @@ public class PlayBoxController {
 		model.addObject("account",name);
 		
 		model.addObject("playbox_version","127.0.0.1:8123");
-		model.addObject("game", gameId);
 		model.addObject("realm", realm);
 		model.addObject("gate_type","socket");
 		model.addObject("copyright","127.0.0.1:8123");

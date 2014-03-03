@@ -12,10 +12,19 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<c:forEach items="${realms}" var="entry">
-		<li>${entry.name} - [${entry.id}] - Enable=${entry.enable}</li>
-    </c:forEach>
+	
+	<div class="main">
+	
+		<h1>Realm List</h1>
+		<ul class="box" >		
+			<c:forEach items="${realms}" var="entry">			
+				
+				<li><a target="_target" href="/playbox/${entry.id}.html" >${entry.name}</a></li>
+		    </c:forEach>
+		</ul>
+		
+	</div>
+	
 
 </body>
 </html>

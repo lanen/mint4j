@@ -9,13 +9,11 @@ import java.io.Serializable;
 public interface Realm extends Serializable,Cloneable {
 
 	
-	public RealmIndentify getId();
+	public int getId();
 
 	public String getName();
 
-	public boolean isEnable();
-	
-	public String getGateUrl();
+	public boolean isEnable();	
 	
 	public int getPort();
 	

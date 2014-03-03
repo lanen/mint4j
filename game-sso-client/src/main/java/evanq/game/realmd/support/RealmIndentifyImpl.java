@@ -17,7 +17,7 @@ public class RealmIndentifyImpl implements RealmIndentify {
 	}
 	
 	public String toString(){
-		return "Id:"+rawId;
+		return ""+rawId;
 	}
 	
 }
