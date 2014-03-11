@@ -71,5 +71,6 @@
     <module>game-sso-client</module>
     <module>game-sso-server</module>
     <module>game-account-core</module>
-  </modules>
+    <module>game-cardgame-core</module>
+	</modules>
 </project>
