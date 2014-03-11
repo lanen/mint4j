@@ -4,7 +4,6 @@ import evanq.game.cardgame.domain.model.world.support.WorldUtils;
 import evanq.game.cardgame.infrastructure.controller.IPlayerController;
 import evanq.game.cardgame.infrastructure.controller.IPlayerEntityController;
 import evanq.game.cardgame.infrastructure.controller.IPostContrust;
-import evanq.game.player.MPlayer;
 
 /**
  * @author Evan cppmain@gmail.com
@@ -15,17 +14,17 @@ public class PlayerControllerImpl implements IPlayerController , IPostContrust{
 	private IPlayerEntityController playerEntityController;
 	
 	@Override
-	public void join(MPlayer player) {
+	public void join( ) {
 		
 	
-		playerEntityController.join(player);
+		playerEntityController.join();
 	}
 
 	@Override
-	public void leave(MPlayer leave) {
+	public void leave( ) {
 		
 		
-		playerEntityController.leave(leave);
+		playerEntityController.leave();
 	}
 
 	@Override
