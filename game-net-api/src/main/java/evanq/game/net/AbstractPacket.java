@@ -65,6 +65,11 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 	
 	
 	@Override
+	public void execute(IPacket P) {
+		
+	}
+
+	@Override
 	public INetConnection connection(INetConnection nc) {
 		this.connection=nc;
 		return connection;

@@ -63,7 +63,6 @@
     	<module>game-net-netty</module>
     <module>game-client</module>
     <module>game-loader</module>
-    <module>game-net-classic</module>
     <module>game-base</module>
     <module>game-webapp</module>
     <module>game-oauth-server</module>

@@ -9,26 +9,16 @@ package evanq.game.net;
  * @author Evan
  *
  */
-public interface INetCommand {
+public interface INetCommand<PACKET> {
 
 	/**
-	 * 
-	 * Return the connection of this command.
-	 * 
-	 * @return {@link INetConnection}
+	 * 内部收到数据
 	 */
-	INetConnection connection();
+	void execute();
 	
 	/**
-	 * 设置当前的连接
-	 * @param nc
-	 * @return
+	 * 供net-api之外扩展
+	 * @param P
 	 */
-	INetConnection connection(INetConnection nc);
-	
-	/**
-	 * 
-	 */
-	public void execute();
-	
+	public void execute(PACKET P);
 }

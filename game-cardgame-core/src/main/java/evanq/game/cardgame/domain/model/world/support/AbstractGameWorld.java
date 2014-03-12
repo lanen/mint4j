@@ -8,7 +8,7 @@ import evanq.game.cardgame.domain.model.world.GameWorldPart;
 
 /**
  * 
- * �����ֳɶ���������ɣ������ԾۺϷ�ʽ����һ������
+ * 程序拆分成多个部件构成，部件以聚合方式组在一起搭建服务
  * 
  * 
  * 

@@ -40,7 +40,6 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>${hibernate.version}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>mysql</groupId>
@@ -83,7 +82,16 @@
 		  	<artifactId>commons-lang3</artifactId>
 		  	<version>3.3</version>
 		</dependency>		
-		
+	
+    <dependency>
+    	<groupId>evanq.game</groupId>
+    	<artifactId>game-net-api</artifactId>
+    </dependency>
+			
+	<dependency>			
+		<groupId>evanq.game</groupId>
+		<artifactId>game-net-netty</artifactId>
+	</dependency>
 	</dependencies>
 
 	<build>
