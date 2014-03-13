@@ -20,32 +20,42 @@ public abstract class AbstractGameWorld implements GameWorld {
 	/**
 	 * 
 	 */
-	private Collection<GameWorldPart> worldBuilders ;
+	private Collection<GameWorldPart> gameWorldParts ;
 	
+	protected boolean initialized;
 
 	public AbstractGameWorld() {
 		
-		worldBuilders = new LinkedList<GameWorldPart>();
+		gameWorldParts = new LinkedList<GameWorldPart>();
 		
 		BasicGameWorldPart basicPart = new BasicGameWorldPart();
-		worldBuilders.add(basicPart);
-		
-		EntitySystemGameWorldPart esPart = new EntitySystemGameWorldPart();
-		worldBuilders.add(esPart);
-		
-		for (GameWorldPart b : worldBuilders) {
-			b.buildPart();
-		}		
-
+		gameWorldParts.add(basicPart);
+//		
+//		EntitySystemGameWorldPart esPart = new EntitySystemGameWorldPart();
+//		gameWorldParts.add(esPart);
+//		
+	
+	}
+	
+	protected void initialze(){
+ 		if(!initialized){
+			
+			for (GameWorldPart b : gameWorldParts) {
+				b.buildPart();
+			}
+			initialized = true;
+		}
 	}
 
 	
-	public Collection<GameWorldPart> getWorldBuilders() {
-		return worldBuilders;
+	public Collection<GameWorldPart> getGameWorldParts() {
+		return gameWorldParts;
 	}
 
-	public void setWorldBuilders(Collection<GameWorldPart> worldBuilders) {
-		this.worldBuilders = worldBuilders;
+	public void setGameWorldParts(Collection<GameWorldPart> gameWorldParts) {
+		if(null != gameWorldParts && !gameWorldParts.isEmpty()){
+			this.gameWorldParts.addAll(gameWorldParts);
+		}
 	}
 
 }

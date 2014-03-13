@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import evanq.game.cardgame.infrastructure.controller.ControllerManager;
+import evanq.game.cardgame.infrastructure.controller.ServiceManager;
 import evanq.game.cardgame.infrastructure.controller.IPostContrust;
 
 /**
@@ -13,11 +13,11 @@ import evanq.game.cardgame.infrastructure.controller.IPostContrust;
  * @author Evan cppmain@gmail.com
  *
  */
-public class ControllerManagerImpl implements ControllerManager {
+public class ServiceManagerImpl implements ServiceManager {
 	
 	private  Map<Class<?>, Object> controllers;
 	private ArrayList<Object> controllersList;
-	public ControllerManagerImpl() {
+	public ServiceManagerImpl() {
 		controllers = new HashMap<Class<?>, Object>();
 		controllersList = new ArrayList<Object>();
 	}

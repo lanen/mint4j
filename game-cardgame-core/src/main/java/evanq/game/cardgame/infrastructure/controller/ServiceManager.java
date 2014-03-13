@@ -6,7 +6,7 @@ package evanq.game.cardgame.infrastructure.controller;
  *
  * @param <E>
  */
-public interface ControllerManager {
+public interface ServiceManager {
 
 	public <E> void add(Class<E> clazz,E instance);
 	public <E> E get(Class<E> clazz);

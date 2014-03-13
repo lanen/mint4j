@@ -58,29 +58,6 @@
 			<version>2013.10-SNAPSHOT</version>
 		</dependency>
 		
-		<dependency>
-			<groupId>org.slick2d</groupId>
-			<artifactId>slick-util</artifactId>
-			<version>1</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/natives/slick-util.jar</systemPath>
-		</dependency>
-		
-		<dependency>
-			  <groupId>de.matthiasmann</groupId>
-    			<artifactId>twl</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/natives/TWL.jar</systemPath>
-		</dependency>
-		
-		<dependency>
-		  <groupId>de.matthiasmann</groupId>
-    			<artifactId>TWLEffects</artifactId>
-			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/natives/TWLEffects.jar</systemPath>
-		</dependency>
 		
 		<dependency>
 			<groupId>xpp3</groupId>

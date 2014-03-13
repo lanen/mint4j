@@ -5,8 +5,6 @@ import evanq.game.net.INetConnection;
 import evanq.game.net.INetConnectionState;
 import evanq.game.net.NetConnectionEvent;
 import evanq.game.net.NetConnectionState;
-import evanq.game.trace.LogSystem;
-import evanq.game.trace.Trace;
 
 /**
  * 
@@ -17,7 +15,6 @@ import evanq.game.trace.Trace;
  */
 public class ServerNetConnectionFSM extends AbstractNetConnectionFSM {
 	
-	private static Trace logger = LogSystem.getDefaultTrace(ServerNetConnectionFSM.class);
 
 	public ServerNetConnectionFSM(AbstractNetConnectionManager connectionManager,INetConnection connection) {
 		super(connectionManager,connection);

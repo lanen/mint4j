@@ -83,15 +83,18 @@
 		  	<version>3.3</version>
 		</dependency>		
 	
-    <dependency>
-    	<groupId>evanq.game</groupId>
-    	<artifactId>game-net-api</artifactId>
-    </dependency>
+	    <dependency>
+	    	<groupId>evanq.game</groupId>
+	    	<artifactId>game-net-api</artifactId>
+	    	<version>0.0.1-SNAPSHOT</version>
+	    </dependency>
 			
-	<dependency>			
-		<groupId>evanq.game</groupId>
-		<artifactId>game-net-netty</artifactId>
-	</dependency>
+		<dependency>
+			<groupId>org.perf4j</groupId>
+			<artifactId>perf4j</artifactId>
+			<version>0.9.16</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

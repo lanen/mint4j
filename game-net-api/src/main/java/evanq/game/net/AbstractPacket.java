@@ -30,7 +30,7 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 	/**
 	 * 数据包id，会更具这个id来决定编解码
 	 */
-	protected char packetId;
+	protected int packetId;
 	
 	/**
 	 * 
@@ -51,11 +51,11 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 		this.packetType = packetType;
 	}
 
-	public char getPacketId() {
+	public int getPacketId() {
 		return packetId;
 	}
 
-	public void setPacketId(char packetId) {
+	public void setPacketId(int packetId) {
 		this.packetId = packetId;
 	}
 	

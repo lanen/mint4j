@@ -4,6 +4,13 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
    
    
-   <bean class="evanq.game.cardgame.domain.model.world.support.GameWorldImpl" />
+   <bean class="evanq.game.cardgame.domain.model.world.support.GameWorldImpl" >
+   	<property name="gameWorldParts">
+   		<list>
+   			<bean class="evanq.game.cardgame.domain.model.world.support.EntitySystemGameWorldPart"></bean>
+   		</list>
+   	</property>
+   
+   </bean>
    
 </beans>
