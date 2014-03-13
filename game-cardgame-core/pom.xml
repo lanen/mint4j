@@ -83,15 +83,13 @@
 		  	<version>3.3</version>
 		</dependency>		
 	
-    <dependency>
-    	<groupId>evanq.game</groupId>
-    	<artifactId>game-net-api</artifactId>
-    </dependency>
+	    <dependency>
+	    	<groupId>evanq.game</groupId>
+	    	<artifactId>game-net-api</artifactId>
+	    	<version>0.0.1-SNAPSHOT</version>
+	    </dependency>
 			
-	<dependency>			
-		<groupId>evanq.game</groupId>
-		<artifactId>game-net-netty</artifactId>
-	</dependency>
+
 	</dependencies>
 
 	<build>

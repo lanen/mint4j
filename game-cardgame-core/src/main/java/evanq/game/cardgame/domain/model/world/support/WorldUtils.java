@@ -1,6 +1,6 @@
 package evanq.game.cardgame.domain.model.world.support;
 
-import evanq.game.cardgame.infrastructure.controller.ControllerManager;
+import evanq.game.cardgame.infrastructure.controller.ServiceManager;
 
 /**
  * 
@@ -9,10 +9,12 @@ import evanq.game.cardgame.infrastructure.controller.ControllerManager;
  */
 public final class WorldUtils {
 
+
 	/**
-	 * ÿ�����������ǵ���
+	 * 
+	 * 领域内部的服务层
 	 */
-	static ControllerManager controllers;
+	static ServiceManager services;
 	
 	/**
 	 * config framework
@@ -24,7 +26,7 @@ public final class WorldUtils {
 	 */
 	public static Object cfg;
 	
-	public static ControllerManager controllers(){
-		return controllers;
+	public static ServiceManager services(){
+		return services;
 	}
 }

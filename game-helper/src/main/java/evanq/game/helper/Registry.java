@@ -28,7 +28,11 @@ public class Registry<K, V> {
 	public V get(K k) {
 		return registryMap.get(k);
 	}
-
+	
+	public boolean has(K k){
+		return registryMap.containsKey(k);
+	}
+	
 	public void clear() {
 		registryMap.clear();
 	}

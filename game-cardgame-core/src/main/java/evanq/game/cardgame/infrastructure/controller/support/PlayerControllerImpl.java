@@ -33,7 +33,7 @@ public class PlayerControllerImpl implements IPlayerController , IPostContrust{
 		if(null == playerEntityController){
 			System.out.println("playerEntityController init");
 			
-			playerEntityController = WorldUtils.controllers().get(IPlayerEntityController.class);
+			playerEntityController = WorldUtils.services().get(IPlayerEntityController.class);
 		}
 	}
 

@@ -24,10 +24,10 @@ public class BasicGameWorldPart implements GameWorldPart {
 	 */
 	private void initControllers(){
 		
-		WorldUtils.controllers = new ControllerManagerImpl();
+		WorldUtils.services = new ServiceManagerImpl();
 		
 		IPlayerController playerController = new PlayerControllerImpl();
-		WorldUtils.controllers.add(IPlayerController.class,playerController);
+		WorldUtils.services.add(IPlayerController.class,playerController);
 		
 //		MovementController movementController = new MovementController();
 //		WorldUtils.controllers.add(MovementController.class,movementController);

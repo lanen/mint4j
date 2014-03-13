@@ -1,0 +1,34 @@
+package evanq.game.tea.java;
+
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import evanq.game.cardgame.domain.model.world.GameWorld;
+import evanq.game.cardgame.infrastructure.mint.CommandExecutorRegistry;
+
+public class MintGame {
+
+	public static void main(String[] args) {
+		
+		
+		String[] cpXMLs = new String[]{
+			"classpath:cardgame-application.xml",
+			"classpath:cardgame-interfaces.xml",
+			"classpath:cardgame-domain.xml",
+			"classpath:cardgame-infrastructure.xml"
+		};
+		
+		final ClassPathXmlApplicationContext ctx = new ClassPathXmlApplicationContext(cpXMLs);
+		
+		//TODO 想办法将这三句话迁移到GameWorldPart中
+		String[] aliases = ctx.getAliases("CommandBasePackage");
+		CommandListenerResolverImpl resolverImpl = new CommandListenerResolverImpl(ctx);
+		CommandExecutorRegistry.getInstance().scanAndRegisterCommandExecutor(aliases,resolverImpl);
+
+		GameWorld beanOfGameWorld = ctx.getBean(GameWorld.class	);
+		beanOfGameWorld.start();
+		
+		//ctx.close();
+	}
+	
+
+}

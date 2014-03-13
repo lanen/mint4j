@@ -1,0 +1,51 @@
+package evanq.game.tea.java;
+
+import org.apache.commons.lang3.Validate;
+import org.springframework.beans.factory.NoSuchBeanDefinitionException;
+import org.springframework.context.ApplicationContext;
+
+import evanq.game.cardgame.infrastructure.mint.CommandExecutorRegistry;
+import evanq.game.cardgame.infrastructure.mint.CommandListener;
+
+/**
+ * 实现该接口，将获取CommandListener 的控制
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
+public class CommandListenerResolverImpl implements CommandExecutorRegistry.CommandListenerResolver {
+	
+	private ApplicationContext context;
+	
+	public CommandListenerResolverImpl(ApplicationContext context) {
+		
+		Validate.notNull(context);
+		
+		this.context = context;
+		
+	}
+	@Override
+	public CommandListener<?> resolver(Class<CommandListener<?>> clazz) {
+		try{
+			CommandListener<?> bean = context.getBean(clazz);
+			return bean;
+		}catch(NoSuchBeanDefinitionException e){
+			System.err.println("Spring中没有定义:"+clazz);
+		}
+		return null;
+		
+	}
+
+	@Override
+	public CommandListener<?> resolver(String name,
+			Class<CommandListener<?>> clazz) {
+		try{
+			CommandListener<?> bean = context.getBean(name,clazz);
+			return bean;
+		}catch(NoSuchBeanDefinitionException e){
+			System.err.println("Spring中没有定义:"+clazz);
+		}
+		return null;
+	}
+
+}

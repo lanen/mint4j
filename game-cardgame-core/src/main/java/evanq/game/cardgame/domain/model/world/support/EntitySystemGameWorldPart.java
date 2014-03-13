@@ -8,10 +8,6 @@ import evanq.game.cardgame.infrastructure.es.systems.PlayerEntityControllerImpl;
 
 /**
  * 
- * ʵ����?��
- * 
- * 
- * EntityController ���� ES ֮�� ������Ϣ��ES��
  * 
  * @author Evan cppmain@gmail.com
  *
@@ -39,6 +35,6 @@ public class EntitySystemGameWorldPart implements GameWorldPart {
 	private void initEntityController(){
 		
 		IPlayerEntityController impl = new PlayerEntityControllerImpl(entityWorld);
-		WorldUtils.controllers.add(IPlayerEntityController.class,impl);
+		WorldUtils.services.add(IPlayerEntityController.class,impl);
 	}
 }
