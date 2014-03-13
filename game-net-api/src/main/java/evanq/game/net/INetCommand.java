@@ -9,16 +9,10 @@ package evanq.game.net;
  * @author Evan
  *
  */
-public interface INetCommand<PACKET> {
+public interface INetCommand {
 
 	/**
 	 * 内部收到数据
 	 */
 	void execute();
-	
-	/**
-	 * 供net-api之外扩展
-	 * @param P
-	 */
-	public void execute(PACKET P);
 }

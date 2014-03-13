@@ -7,7 +7,7 @@ package evanq.game.net;
  * @author Evan
  *
  */
-public interface IPacket extends INetCommand<IPacket> {
+public interface IPacket extends INetCommand{
 
 	/**
 	 * 

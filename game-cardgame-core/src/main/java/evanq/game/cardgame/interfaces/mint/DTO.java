@@ -10,9 +10,8 @@ public abstract class DTO extends AbstractPacket {
 	}
 
 	@Override
-	public void execute() {
-
-		
+	public void execute() {	
 	}
+	
 
 }
