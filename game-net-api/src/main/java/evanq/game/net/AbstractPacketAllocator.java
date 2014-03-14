@@ -11,16 +11,22 @@ import java.util.Map;
 public abstract class AbstractPacketAllocator implements IPacketAllocator<Class<? extends AbstractPacket>,AbstractPacket>{
 	
 	protected Map<Integer,Class<? extends AbstractPacket>> packetSchema ;
+	protected Map<Class<? extends AbstractPacket>,Integer> reversePacketSchema ;
 	
 	protected AbstractPacketAllocator() {
 		this.packetSchema = newPacketSchemaMap();
-		
+		this.reversePacketSchema = newReversePacketSchema();
 	}
 	
 	protected Map<Integer,Class<? extends AbstractPacket>> newPacketSchemaMap(){
 		return new HashMap<Integer,Class<? extends AbstractPacket>>();
 	}
 	
+	protected Map<Class<? extends AbstractPacket>,Integer> newReversePacketSchema(){
+		return new HashMap<Class<? extends AbstractPacket>,Integer>();
+	}
+	
+
 	@Override
 	public void registerPacketSchema(int packetId, Class<? extends AbstractPacket> clazz) {
 
@@ -40,6 +46,7 @@ public abstract class AbstractPacketAllocator implements IPacketAllocator<Class<
 		}
 
 		packetSchema.put(packetId, clazz);
+		this.reversePacketSchema.put(clazz, packetId);
 	}
 
 	@Override
@@ -47,6 +54,10 @@ public abstract class AbstractPacketAllocator implements IPacketAllocator<Class<
 		return packetSchema.get(packetId);
 	}
 
+	protected int getPacketId(Class<? extends IPacket> clz){
+		return this.reversePacketSchema.get(clz);
+	}
+	
 	@Override
 	public AbstractPacket newPacket(int packetId) throws PacketSchemaException {
 		Class<? extends AbstractPacket> schema = getSchema(packetId);

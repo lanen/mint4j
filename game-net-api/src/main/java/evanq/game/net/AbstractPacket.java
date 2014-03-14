@@ -38,6 +38,10 @@ public abstract class AbstractPacket implements IPacket , Serializable {
 	 * 
 	 */
 	private INetConnection connection;
+
+	public AbstractPacket(){
+		
+	}
 	
 	protected AbstractPacket(NetPacketType packetType){
 		this.packetType = packetType;

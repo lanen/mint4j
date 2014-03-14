@@ -22,6 +22,4 @@ public class LoginController implements CommandListener<LoginDTO> {
 		System.out.println('f');
 	}
 	
-	
-	
 }

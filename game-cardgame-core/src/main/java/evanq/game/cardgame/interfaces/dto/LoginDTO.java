@@ -12,7 +12,7 @@ import evanq.game.net.io.DataWriter;
  * @author Evan cppmain@gmail.com
  *
  */
-public class LoginDTO extends AbstractDTO{
+public class LoginDTO extends AbstractDTO {
 
 	private int loginType;
 	
