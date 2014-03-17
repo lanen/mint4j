@@ -1,48 +1,64 @@
 package evanq.game.cardgame.domain.model.role;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * 角色的宠物
  * @author Evan cppmain@gmail.com
  *
  */
+@Entity
+@Table(name="role_pet")
 public class RolePet {
 
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
-	
+	@Column
 	private int roleId;
-	
+	@Column
 	private int petTemplateId;
-	
+	@Column
 	private int name;
-	
+	@Column
 	private int level;
-	
+	@Column
 	private int exp;
-	
+	@Column
 	private int hp;
-	
+	@Column
 	private int mp;
 	
 	/**
 	 * 力量成长
 	 */
+	@Column
 	private int strGrowth;
 	/**
 	 * 智力成长
 	 */
+	@Column
 	private int wisGrowth;
 	/**
 	 * 耐力成长
 	 */
+	@Column
 	private int vitGrowth;
 	/**
 	 * 敏捷成长
 	 */
+	@Column
 	private int dexGrowth;
-
+	@Column
 	private int showed;
-	
+	@Column
 	private int energy;
 
 	public int getId() {

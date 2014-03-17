@@ -2,65 +2,93 @@ package evanq.game.cardgame.domain.model.role;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 可穿戴的物品，不支持叠加
  * 
  * @author Evan cppmain@gmail.com
  *
  */
+@Entity
+@Table(name="role_item")
 public class RoleItem {
 	
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
+
 	private int id;
 	
+	@Column
 	private int roleId;
 	
 	/**
 	 * 物品管理： 1 装备，2道具，3 仓库 4,快捷栏 5，寄售 6，快递中。。。
 	 */
+	@Column
 	private int tag;
 	
+	@Column
 	private int position;
 	
+	@Column
 	private boolean isBinding;
 	
 	/**
 	 * 是否鉴定
 	 */
+	@Column
 	private byte isIdentified;
 	
 	/**
 	 * 叠加数 (1-99)
 	 */
+	@Column
 	private int overlay;
 	
 	/**
 	 * 强化等级
 	 */
+	@Column
 	private byte strengthen;
 	
 	/**
 	 * 当前持久度
 	 */
+	@Column
 	private int durability;
 	
 	/**
 	 * 冷却时间开始
 	 */
+	@Column
 	private Date cdStartTime;
 	
 	/**
 	 * 冷却时长
 	 */
+	@Column
 	private int cdCount;
 	
+	@Column
 	private int slot_1;
 	
+	@Column
 	private int slot_2;
 	
+	@Column
 	private int slot_3;
 	
+	@Column
 	private int slot_4;
 	
+	@Column
 	private int slot_5;
 
 	public int getId() {

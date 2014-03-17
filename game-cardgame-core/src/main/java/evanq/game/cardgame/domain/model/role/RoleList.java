@@ -1,5 +1,10 @@
 package evanq.game.cardgame.domain.model.role;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * 账号的角色列表
@@ -7,25 +12,35 @@ package evanq.game.cardgame.domain.model.role;
  * @author Evan cppmain@gmail.com
  *
  */
+@Entity
+@Table(name="role_list")
 public class RoleList {
+	
+	@Id
+	@Column(name="actId")
 
+	private int actId;
 	
-	private int id;
-	
+	@Column
 	private int roleId_1;
+	@Column
 	private int roleId_2;
+	@Column
 	private int roleId_3;
+	@Column
 	private int roleId_4;
+	@Column
 	private int roleId_5;
 	
+	@Column
 	private int lastLoginRoleId;
-
-	public int getId() {
-		return id;
+	
+	public int getActId() {
+		return actId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setActId(int actId) {
+		this.actId = actId;
 	}
 
 	public int getRoleId_1() {

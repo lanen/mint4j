@@ -1,5 +1,9 @@
 package evanq.game.cardgame.interfaces.role;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import evanq.game.cardgame.application.UCPlayer;
 import evanq.game.cardgame.infrastructure.mint.CommandExecutor;
 import evanq.game.cardgame.infrastructure.mint.CommandListener;
 import evanq.game.cardgame.interfaces.dto.LoginDTO;
@@ -13,13 +17,24 @@ import evanq.game.cardgame.interfaces.dto.LoginDTO;
  */
 @CommandExecutor(LoginDTO.class)
 public class LoginController implements CommandListener<LoginDTO> {
+
+	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
+	private UCPlayer player;
 	
 	@Override
 	public void action(LoginDTO t) {
-
 		
-		System.out.println('f');
+		player.login();
+		
+	}
+
+	public UCPlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(UCPlayer player) {
+		this.player = player;
 	}
 	
 }

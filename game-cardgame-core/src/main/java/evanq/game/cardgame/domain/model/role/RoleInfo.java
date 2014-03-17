@@ -1,6 +1,14 @@
 package evanq.game.cardgame.domain.model.role;
 
+import java.io.Serializable;
 import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * 
@@ -9,143 +17,189 @@ import java.util.Date;
  * @author Evan cppmain@gmail.com
  *
  */
-public class RoleInfo {
+@Entity
+@Table(name="role_info")
+public class RoleInfo implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4539155667593015468L;
+	
+	@Id
+	@Column(name="id")
+    @GeneratedValue(strategy=GenerationType.AUTO)
 
 	private int id;
-
-	private int name;
+	@Column
+	private String name;
 	/**
 	 * 角色职业
 	 */
+	@Column
 	private int profession;
 	/**
 	 * 角色形象
 	 */
+	@Column
 	private int figure;
 	/**
 	 * 角色性别
 	 */
+	@Column
 	private int sex;
 	/**
 	 * 阵营
 	 */
+	@Column
 	private int camp;
 
 	/**
 	 * 好友数量
 	 */
+	@Column
 	private int friendCount;
 
 	/**
 	 * 当前金币
 	 */
+	@Column
 	private int coin;
 	/**
 	 * 当前充值
 	 */
+	@Column
 	private int gold;
 
 	/**
 	 * vip 等级
 	 */
+	@Column
 	private int vipType;
 	/**
 	 * vip 经验
 	 */
+	@Column
 	private int vipExp;
 
 	/**
 	 * 能量
 	 */
+	@Column
 	private int energy;
 	
 	/**
 	 * 
 	 */
+	@Column
 	private int exp;
 	
 	/**
 	 * 
 	 */
+	@Column
 	private int level;
 	
 	/**
 	 * 
 	 */
+	@Column
 	private int hp;
 	
 	/**
 	 * 
 	 */
+	@Column
 	private int maxHp;
 	/**
 	 * 
 	 */
+	@Column
 	private int mp;
 	/**
 	 * 
 	 */
+	@Column
 	private int maxMp;
 
 	/**
 	 * 
 	 */
+	@Column
 	private int baseStr;
+	@Column
 	private int baseVit;
+	@Column
 	private int baseDex;
+	@Column
 	private int baseWis;
 
 	
-
+	@Column
 	private int sceneId;
+	@Column
 	private int position_x;
+	@Column
 	private int position_y;
+	@Column
 	private int position_z;
 	/**
 	 * 角色朝向
 	 */
+	@Column
 	private int orientation;
 
 	/**
 	 * 背包大小
 	 */
+	@Column
 	private int packageSize;
 
 	/**
 	 * 角色的说说
 	 */
+	@Column
 	private int say;
 	/**
 	 * 阵法
 	 */
+	@Column
 	private int matrix;
 	
 	/**
 	 * 新手引导步骤
 	 */
+	@Column
 	private int guideStep;
 
+	@Column
 	private int isOnline;
 
+	@Column
 	private Date createTime;
 	
+	@Column
 	private Date loginTime;
 	
+	@Column
 	private Date leaveTime;
 
 	/**
 	 * 是否禁言
 	 */
+	@Column
 	private int silence;
 
 	/**
 	 * 声望
 	 */
+	@Column
 	private int prestige;
 
 	/**
 	 * 当前关卡
 	 */
+	@Column
 	private int mission;
 
 	public int getId() {
@@ -156,11 +210,11 @@ public class RoleInfo {
 		this.id = id;
 	}
 
-	public int getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(int name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 

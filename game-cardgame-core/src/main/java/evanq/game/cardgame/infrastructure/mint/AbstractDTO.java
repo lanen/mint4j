@@ -18,6 +18,7 @@ public abstract class AbstractDTO extends AbstractPacket {
 
 	@Override
 	public void execute() {
+		//TODO 这里可以优化到协议号-> 方法（Method）
 		CommandExecutorRegistry.getInstance().action(this);
 	}
 

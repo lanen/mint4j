@@ -72,7 +72,6 @@ public class CommandExecutorRegistry  {
 				CommandListener<?> cmdListener = resolver.resolver((Class<CommandListener<?>>)clazz);
 				if(null != cmdListener){
 					logger.debug("resolve {} for {}",clazz,dtoClazz);
-					System.out.println(cmdListener);
 					registry.put(dtoClazz, cmdListener);
 				}else{
 					logger.warn("Cannot resolve instance of {}",clazz);

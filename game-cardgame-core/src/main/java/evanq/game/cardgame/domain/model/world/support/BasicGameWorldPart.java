@@ -6,7 +6,6 @@ import evanq.game.cardgame.infrastructure.controller.support.PlayerControllerImp
 
 /**
  * 
- * ����֧�ֳ������
  * 
  * @author Evan cppmain@gmail.com
  *
@@ -20,7 +19,7 @@ public class BasicGameWorldPart implements GameWorldPart {
 	}
 	
 	/**
-	 * ������ע�� IController
+	 * 
 	 */
 	private void initControllers(){
 		

@@ -8,9 +8,12 @@
    	<property name="gameWorldParts">
    		<list>
    			<bean class="evanq.game.cardgame.domain.model.world.support.EntitySystemGameWorldPart"></bean>
+   			<bean class="evanq.game.cardgame.domain.model.world.support.NetworkGameWorldPart"></bean>
+   			<bean class="evanq.game.cardgame.domain.model.world.support.DebugGameWorldPart"></bean>
    		</list>
    	</property>
    
    </bean>
    
+   <import resource="classpath:cardgame-domain-entity.xml"/>
 </beans>

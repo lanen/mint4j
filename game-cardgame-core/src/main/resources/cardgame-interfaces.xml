@@ -9,9 +9,7 @@
    
    
    <bean class="evanq.game.cardgame.interfaces.role.LoginController">
-   	
-   </bean>
-   <bean class="evanq.game.cardgame.interfaces.player.AccountController">
+   		<property name="player" ref="ucPlayer"></property>
    </bean>
    
 </beans>
