@@ -24,11 +24,6 @@ public class DebugGameWorldPart implements GameWorldPart {
 		System.out.println("DebugGameWorldPart.buildPart()");
 		logger.info("buildpart");
 	
-		
-		LoginDTO dto = DefaultPacketAllocator.newPacket(LoginDTO.class);
-		dto.execute();
-		System.out.println(dto);
-		
 	}
 
 }

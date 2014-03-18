@@ -5,6 +5,6 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
         
     <bean id="ucPlayer" class="evanq.game.cardgame.application.impl.UCPlayerImpl">
-    	
+    	<property name="roleService" ref="roleService"></property>
     </bean>
 </beans>

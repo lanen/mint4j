@@ -1,6 +1,6 @@
 package evanq.game.cardgame.domain.model.world.support;
 
-import evanq.game.cardgame.infrastructure.controller.ServiceManager;
+import evanq.game.cardgame.infrastructure.services.ServiceManager;
 
 /**
  * 

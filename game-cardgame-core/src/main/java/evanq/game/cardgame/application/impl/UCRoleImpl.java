@@ -5,18 +5,24 @@ import org.slf4j.LoggerFactory;
 
 import evanq.game.cardgame.application.UCRole;
 import evanq.game.cardgame.domain.model.role.RoleId;
+import evanq.game.cardgame.domain.model.role.RoleInfo;
+import evanq.game.cardgame.domain.service.IRoleService;
 
 public class UCRoleImpl implements UCRole {
 
 	private Logger logger = LoggerFactory.getLogger(UCRoleImpl.class);
 	
+	private IRoleService roleService;
 	
 	@Override
 	public void enterGame(RoleId roleId) {
 
 		logger.info("角色进入游戏");
-	
 		
+		RoleInfo roleInfo = roleService.findRoleInfo(roleId);
+		roleService.enterWorld(roleInfo);
+		
+		//notify
 	}
 
 	@Override
@@ -37,5 +43,12 @@ public class UCRoleImpl implements UCRole {
 		
 	}
 
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
+	}
 	
 }

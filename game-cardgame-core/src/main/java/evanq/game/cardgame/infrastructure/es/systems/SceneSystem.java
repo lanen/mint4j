@@ -6,6 +6,11 @@ import com.artemis.systems.EntityProcessingSystem;
 
 import evanq.game.cardgame.infrastructure.es.components.Scene;
 
+/**
+ * 
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public class SceneSystem extends EntityProcessingSystem {
 
 	public SceneSystem() {

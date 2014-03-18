@@ -1,4 +1,4 @@
-package evanq.game.cardgame.infrastructure.controller;
+package evanq.game.cardgame.infrastructure.services;
 
 /**
  * 

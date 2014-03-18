@@ -4,6 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import evanq.game.cardgame.application.UCPlayer;
+import evanq.game.cardgame.application.UCRole;
+import evanq.game.cardgame.domain.model.role.RoleInfo;
+import evanq.game.cardgame.domain.service.IRoleService;
 
 /**
  * 
@@ -15,12 +18,15 @@ public class UCPlayerImpl implements UCPlayer {
 
 	private Logger logger = LoggerFactory.getLogger(UCPlayerImpl.class);
 	
+	private IRoleService roleService;
 	
 	@Override
 	public void login() {
 		// TODO Auto-generated method stub
 		logger.info("登陆成功");
-		
+	
+		RoleInfo roleInfo = roleService.findRoleInfo(null);
+		roleService.enterWorld(roleInfo);
 	}
 
 	@Override
@@ -52,5 +58,15 @@ public class UCPlayerImpl implements UCPlayer {
 		// TODO Auto-generated method stub
 
 	}
+
+	public IRoleService getRoleService() {
+		return roleService;
+	}
+
+	public void setRoleService(IRoleService roleService) {
+		this.roleService = roleService;
+	}
+	
+	
 
 }
