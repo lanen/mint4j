@@ -1,239 +1,319 @@
 package evanq.game.cardgame.domain.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="item_template")
 public class ItemTemplate {
 
+	@Id
+	@Column
 	private int id;
 	
+	@Column
 	private String name;
 
+	@Column
 	private String description;
 	
 	/**
 	 * 物品的图标
 	 */
+	@Column
 	private int icon;
 	
 	/**
 	 * 物品类型
 	 */
+	@Column
 	private int type;
 	
 	
-	/**
+	/** 
+	 * 大类
 	 * 在包裹中的分页编号 1装备 2宝石 3道具;
 	 */
-	private int itemTag;
+	@Column
+	private int itemType;
 	
+//	/**
+//	 * 小类
+//	 * 物品分类
+//	 */
+//	@Column
+//	private int itemSubType;
 	/**
 	 * 最大堆叠数
 	 */
+	@Column
 	private int maxOverlay;
+	
 	
 	/**
 	 * 
 	 * 最大持久的
 	 */
+	@Column
 	private int maxDurability;
 	
 	/**
 	 * 物品的等级限制
 	 */
+	@Column
 	private int levelRequired;
 	
 	/**
 	 * 需要技能
 	 */
+	@Column
 	private int requiredSkill;
+	
+	/**
+	 * 需要力量
+	 */
+	@Column
+	private int requiredStr;
+	/**
+	 * 需要耐力
+	 */
+	@Column
+	private int requiredVit;
+	/**
+	 * 需要智力
+	 */
+	@Column
+	private int requiredWis;
+	/**
+	 * 需要敏捷
+	 */
+	@Column
+	private int requiredDex;
 	
 	/**
 	 * 需要技能等级
 	 */
+	@Column
 	private int requiredSkillLevel;
 	
 	/**
 	 *  继承触发进入CD
 	 */
+	@Column
 	private int skillTrigger_1;
 	
 	/**
 	 * CD 时间
 	 */
+	@Column
 	private int skillCooldown_1;
 	
 	/**
 	 * 类属CD 时间
 	 */
+	@Column
 	private int skillCatalogCooldown_1;
 	
 	/**
 	 *  继承触发进入CD
 	 */
+	@Column
 	private int skillTrigger_2;
 	
 	/**
 	 * CD 时间
 	 */
+	@Column
 	private int skillCooldown_2;
 	
 	/**
 	 * 类属CD 时间
 	 */
+	@Column
 	private int skillCatalogCooldown_2;
 	
 	/**
 	 *  继承触发进入CD
 	 */
+	@Column
 	private int skillTrigger_3;
 	
 	/**
 	 * CD 时间
 	 */
+	@Column
 	private int skillCooldown_3;
 	
 	/**
 	 * 类属CD 时间
 	 */
+	@Column
 	private int skillCatalogCooldown_3;
 	
 	/**
 	 * 使用类型 1可使用 2不可使用
 	 */
+	@Column
 	private int useType;
 	
 	/**
 	 * 基础品质 1灰 2白 3绿 4蓝 5紫 6橙 7红
 	 */
+	@Column
 	private int baseQuality;
 	
 	/**
 	 * 使用效果
 	 */
+	@Column
 	private String script;
 	
 	/**
 	 * 可否注魂 1不可以 2可以
 	 */
+	@Column
 	private int canInjection;
 	/**
 	 * 基础攻击力
 	 */
+	@Deprecated
 	private int baseAttack;
 	/**
 	 * 攻击类型 1物理攻击 2魔法攻击
 	 */
+	@Column
 	private int attackType;
-	
 	/**
 	 * 武器速度
 	 */
-	private int baseSpeed;
+	@Column
+	private float baseSpeed;
 	
 	/**
 	 * 基础力量
 	 */
-	private int baseStr;
+	@Column
+	private float baseStr;
 	
 	/**
 	 * 基础耐力（体力）
 	 */
-	private int baseVit;
+	@Column
+	private float baseVit;
 	
 	/**
 	 * 基础敏捷
 	 */
-	private int baseDex;
+	@Column
+	private float baseDex;
 	
 	/**
 	 * 基础智力
 	 */
-	private int baseWis;
+	@Column
+	private float baseWis;
 	
 	/**
 	 * 基础物理攻击
 	 */
-	private int basePhysicalAttack;
+	@Column
+	private float basePhysicalAttack;
 	
 	/**
 	 * 基础魔法攻击
 	 */
-	private int baseMagicAttack;
+	@Column
+	private float baseMagicAttack;
 	
 	/**
 	 * 基础物理防御
 	 */
-	private int basePhysicalDefense;
+	@Column
+	private float basePhysicalDefense;
 	
 	/**
 	 * 基础魔法防御
 	 */
-	private int baseMagicDefense;
+	@Column
+	private float baseMagicDefense;
 	
 	/**
 	 * 基础hp追加
 	 */
-	private int baseHpAdditional;
+	@Column
+	private float baseHpAdditional;
 	
 	/**
 	 * 基础mp追加
 	 */
-	private int baseMpAdditional;
+	@Column
+	private float baseMpAdditional;
 	
 	/**
 	 * 基础命中追加
 	 */
-	private int baseHitAdditional;
+	@Column
+	private float baseHitAdditional;
 	/**
 	 * 基础暴击追加
 	 */
-	private int baseCritAdditional;
+	@Column
+	private float baseCritAdditional;
 	
 	/**
 	 * 基础抗暴追加
 	 */
-	private int baseBlockAdditional;
+	@Column
+	private float baseBlockAdditional;
 	
 	/**
 	 * 基础闪避追加
 	 */
-	private int baseDodgeAdditional;
+	@Column
+	private float baseDodgeAdditional;
 	
 	/**
 	 * 基础速度追加
 	 */
-	private int baseSpeedAdditional;
+	@Column
+	private float baseSpeedAdditional;
 	
-	/**
-	 * 基础特效
-	 */
-	private String baseEffects;
 	
 	/**
 	 * 装备位置 0=衣服 1=裤子 2=头盔 3=手套 4=靴子 5=护肩 6=项链 7=戒指 8=主武器 9=副武器 10=双手
 	 */
+	@Column
 	private int bodyType;
 	
 	/**
 	 * 铜币价格
 	 */
+	@Column
 	private int buyingRateCoin;
 	/**
 	 * 基础防御
 	 */
+	@Deprecated
 	private int baseDefense;
 	
 	/**
 	 * 套装的ID
 	 */
+	@Column
 	private int suiteId;
 	
 	/**
 	 * 可以合成的物品的ID
 	 */
+	@Column
 	private int compound;
 	
 	/**
 	 * 合成价格
 	 */
+	@Column
 	private int comprice;
 	
 	/**
@@ -244,17 +324,26 @@ public class ItemTemplate {
 	/**
 	 * 成长所需的经验
 	 */
+	@Column
 	private int maxexp;
 	
 	/**
 	 * 成长的物品的模版ID
 	 */
+	@Column
 	private int growTemp;
 	
 	/**
 	 * 附加技能的ID
 	 */
+	@Column
 	private int additionSkill;
+	
+	/**
+	 * 攻击附加效果
+	 */
+	@Column
+	private int additionEffect;
 
 	public int getId() {
 		return id;
@@ -294,14 +383,6 @@ public class ItemTemplate {
 
 	public void setType(int type) {
 		this.type = type;
-	}
-
-	public int getItemTag() {
-		return itemTag;
-	}
-
-	public void setItemTag(int itemTag) {
-		this.itemTag = itemTag;
 	}
 
 
@@ -369,140 +450,17 @@ public class ItemTemplate {
 		this.attackType = attackType;
 	}
 
-	public int getBaseSpeed() {
+
+	public float getBaseSpeed() {
 		return baseSpeed;
 	}
 
-	public void setBaseSpeed(int baseSpeed) {
+	public void setBaseSpeed(float baseSpeed) {
 		this.baseSpeed = baseSpeed;
-	}
-
-	public int getBaseStr() {
-		return baseStr;
-	}
-
-	public void setBaseStr(int baseStr) {
-		this.baseStr = baseStr;
-	}
-
-	public int getBaseVit() {
-		return baseVit;
-	}
-
-	public void setBaseVit(int baseVit) {
-		this.baseVit = baseVit;
-	}
-
-	public int getBaseDex() {
-		return baseDex;
-	}
-
-	public void setBaseDex(int baseDex) {
-		this.baseDex = baseDex;
-	}
-
-	public int getBaseWis() {
-		return baseWis;
-	}
-
-	public void setBaseWis(int baseWis) {
-		this.baseWis = baseWis;
-	}
-
-	public int getBasePhysicalAttack() {
-		return basePhysicalAttack;
-	}
-
-	public void setBasePhysicalAttack(int basePhysicalAttack) {
-		this.basePhysicalAttack = basePhysicalAttack;
-	}
-
-	public int getBaseMagicAttack() {
-		return baseMagicAttack;
-	}
-
-	public void setBaseMagicAttack(int baseMagicAttack) {
-		this.baseMagicAttack = baseMagicAttack;
-	}
-
-	public int getBasePhysicalDefense() {
-		return basePhysicalDefense;
-	}
-
-	public void setBasePhysicalDefense(int basePhysicalDefense) {
-		this.basePhysicalDefense = basePhysicalDefense;
-	}
-
-	public int getBaseMagicDefense() {
-		return baseMagicDefense;
-	}
-
-	public void setBaseMagicDefense(int baseMagicDefense) {
-		this.baseMagicDefense = baseMagicDefense;
-	}
-
-	public int getBaseHpAdditional() {
-		return baseHpAdditional;
-	}
-
-	public void setBaseHpAdditional(int baseHpAdditional) {
-		this.baseHpAdditional = baseHpAdditional;
-	}
-
-	public int getBaseMpAdditional() {
-		return baseMpAdditional;
-	}
-
-	public void setBaseMpAdditional(int baseMpAdditional) {
-		this.baseMpAdditional = baseMpAdditional;
-	}
-
-	public int getBaseHitAdditional() {
-		return baseHitAdditional;
-	}
-
-	public void setBaseHitAdditional(int baseHitAdditional) {
-		this.baseHitAdditional = baseHitAdditional;
-	}
-
-	public int getBaseCritAdditional() {
-		return baseCritAdditional;
-	}
-
-	public void setBaseCritAdditional(int baseCritAdditional) {
-		this.baseCritAdditional = baseCritAdditional;
-	}
-
-	public int getBaseBlockAdditional() {
-		return baseBlockAdditional;
-	}
-
-	public void setBaseBlockAdditional(int baseBlockAdditional) {
-		this.baseBlockAdditional = baseBlockAdditional;
-	}
-
-	public int getBaseDodgeAdditional() {
-		return baseDodgeAdditional;
-	}
-
-	public void setBaseDodgeAdditional(int baseDodgeAdditional) {
-		this.baseDodgeAdditional = baseDodgeAdditional;
-	}
-
-	public int getBaseSpeedAdditional() {
-		return baseSpeedAdditional;
 	}
 
 	public void setBaseSpeedAdditional(int baseSpeedAdditional) {
 		this.baseSpeedAdditional = baseSpeedAdditional;
-	}
-
-	public String getBaseEffects() {
-		return baseEffects;
-	}
-
-	public void setBaseEffects(String baseEffects) {
-		this.baseEffects = baseEffects;
 	}
 
 	public int getBodyType() {
@@ -527,6 +485,126 @@ public class ItemTemplate {
 
 	public void setBaseDefense(int baseDefense) {
 		this.baseDefense = baseDefense;
+	}
+
+	public float getBaseStr() {
+		return baseStr;
+	}
+
+	public void setBaseStr(float baseStr) {
+		this.baseStr = baseStr;
+	}
+
+	public float getBaseVit() {
+		return baseVit;
+	}
+
+	public void setBaseVit(float baseVit) {
+		this.baseVit = baseVit;
+	}
+
+	public float getBaseDex() {
+		return baseDex;
+	}
+
+	public void setBaseDex(float baseDex) {
+		this.baseDex = baseDex;
+	}
+
+	public float getBaseWis() {
+		return baseWis;
+	}
+
+	public void setBaseWis(float baseWis) {
+		this.baseWis = baseWis;
+	}
+
+	public float getBasePhysicalAttack() {
+		return basePhysicalAttack;
+	}
+
+	public void setBasePhysicalAttack(float basePhysicalAttack) {
+		this.basePhysicalAttack = basePhysicalAttack;
+	}
+
+	public float getBaseMagicAttack() {
+		return baseMagicAttack;
+	}
+
+	public void setBaseMagicAttack(float baseMagicAttack) {
+		this.baseMagicAttack = baseMagicAttack;
+	}
+
+	public float getBasePhysicalDefense() {
+		return basePhysicalDefense;
+	}
+
+	public void setBasePhysicalDefense(float basePhysicalDefense) {
+		this.basePhysicalDefense = basePhysicalDefense;
+	}
+
+	public float getBaseMagicDefense() {
+		return baseMagicDefense;
+	}
+
+	public void setBaseMagicDefense(float baseMagicDefense) {
+		this.baseMagicDefense = baseMagicDefense;
+	}
+
+	public float getBaseHpAdditional() {
+		return baseHpAdditional;
+	}
+
+	public void setBaseHpAdditional(float baseHpAdditional) {
+		this.baseHpAdditional = baseHpAdditional;
+	}
+
+	public float getBaseMpAdditional() {
+		return baseMpAdditional;
+	}
+
+	public void setBaseMpAdditional(float baseMpAdditional) {
+		this.baseMpAdditional = baseMpAdditional;
+	}
+
+	public float getBaseHitAdditional() {
+		return baseHitAdditional;
+	}
+
+	public void setBaseHitAdditional(float baseHitAdditional) {
+		this.baseHitAdditional = baseHitAdditional;
+	}
+
+	public float getBaseCritAdditional() {
+		return baseCritAdditional;
+	}
+
+	public void setBaseCritAdditional(float baseCritAdditional) {
+		this.baseCritAdditional = baseCritAdditional;
+	}
+
+	public float getBaseBlockAdditional() {
+		return baseBlockAdditional;
+	}
+
+	public void setBaseBlockAdditional(float baseBlockAdditional) {
+		this.baseBlockAdditional = baseBlockAdditional;
+	}
+
+	public float getBaseDodgeAdditional() {
+		return baseDodgeAdditional;
+	}
+
+	public void setBaseDodgeAdditional(float baseDodgeAdditional) {
+		this.baseDodgeAdditional = baseDodgeAdditional;
+	}
+
+	public float getBaseSpeedAdditional() {
+		return baseSpeedAdditional;
+	}
+
+	public void setBaseSpeedAdditional(float baseSpeedAdditional) {
+		this.baseSpeedAdditional = baseSpeedAdditional;
 	}
 
 	public int getSuiteId() {
@@ -680,6 +758,55 @@ public class ItemTemplate {
 
 	public void setSkillCatalogCooldown_3(int skillCatalogCooldown_3) {
 		this.skillCatalogCooldown_3 = skillCatalogCooldown_3;
+	}
+
+	public int getItemType() {
+		return itemType;
+	}
+
+	public void setItemType(int itemType) {
+		this.itemType = itemType;
+	}
+
+
+	public int getRequiredStr() {
+		return requiredStr;
+	}
+
+	public void setRequiredStr(int requiredStr) {
+		this.requiredStr = requiredStr;
+	}
+
+	public int getRequiredVit() {
+		return requiredVit;
+	}
+
+	public void setRequiredVit(int requiredVit) {
+		this.requiredVit = requiredVit;
+	}
+
+	public int getRequiredWis() {
+		return requiredWis;
+	}
+
+	public void setRequiredWis(int requiredWis) {
+		this.requiredWis = requiredWis;
+	}
+
+	public int getRequiredDex() {
+		return requiredDex;
+	}
+
+	public void setRequiredDex(int requiredDex) {
+		this.requiredDex = requiredDex;
+	}
+
+	public int getAdditionEffect() {
+		return additionEffect;
+	}
+
+	public void setAdditionEffect(int additionEffect) {
+		this.additionEffect = additionEffect;
 	}	
 	
 }

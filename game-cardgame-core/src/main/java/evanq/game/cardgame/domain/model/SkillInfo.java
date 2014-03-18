@@ -1,13 +1,22 @@
 package evanq.game.cardgame.domain.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * 技能信息
  * @author Evan cppmain@gmail.com
  *
  */
+@Entity
+@Table(name="skill_info")
 public class SkillInfo {
 
+	@Id
+	@Column
 	/**
 	 * 技能ID
 	 */
@@ -16,36 +25,43 @@ public class SkillInfo {
 	/**
 	 * 技能名称
 	 */
+	@Column
 	private String skillName;
 	
 	/**
 	 * 技能组
 	 */
+	@Column
 	private int skillGroup;
 	
 	/**
 	 * 技能等级
 	 */
+	@Column
 	private int level;
 	
 	/**
 	 * 技能图标
 	 */
+	@Column
 	private int icon;
 	
 	/**
 	 * 技能图标类型
 	 */
+	@Column
 	private int type;
 	
 	/**
 	 * 技能类型
 	 */
+	@Column
 	private int skillType;
 	
 	/**
 	 * 职业限制
 	 */
+	@Column
 	private int profession;
 	
 	/**
@@ -57,91 +73,111 @@ public class SkillInfo {
 	/**
 	 * 技能所需武器
 	 */
+	@Column
 	private int weaponRequired;
-	
+	@Column
+	private int weaponTypeRequired;
 	/**
 	 * 技能所需等级
 	 */
+	
+	@Column
 	private int levelRequired;
 	
 	/**
 	 * 技能所需物品
 	 */
+	@Column
 	private int itemRequired;
 	
 	/**
 	 * 技能所需物品数量
 	 */
+	@Column
 	private int itemCountRequired;
 	
 	/**
 	 * 升级等级所需金钱
 	 */
+	@Column
 	private int levelUpMoney;
 	
 	/**
 	 * 主动；被动
 	 */
+	@Column
 	private int castType;
 	
 	/**
 	 * CD 时间
 	 */
+	@Column
 	private int castCD;
 	
 	/**
 	 * 技能的距离类型 1远程 2近身
 	 */
+	@Column
 	private int distanceType;
 	
 	/**
 	 * 技能的范围类型 1单体 2全体 ..
 	 */
+	@Column
 	private int rangeType;
 	
 	/**
 	 * 技能的属性类型 1物理 2魔法
 	 */
+	@Column
 	private int attibuteType;
 	
 	/**
 	 * 技能的目标类型 1=自己 2=队友 3=敌方
 	 */
+	@Column
 	private int targetType;
 
 	/**
 	 * 技能能量消耗
 	 */
+	@Column
 	private int expendMp;
 	
 	/**
 	 * 技能血量消耗
 	 */
+	@Column
 	private int expendHp;
 	
 	/**
 	 * 技能的效果ID
 	 */
+	@Column
 	private int effectId;
 	
 	/**
 	 * 技能的释放特效
 	 */
+	@Column
 	private int castEffectId;
 
 	/**
 	 * 技能的承受特效
 	 */
+	@Column
 	private int hitEffectId;
 	
 	/**
 	 * 技能的投射特效
 	 */
+	@Column
 	private int flyEffectId;
 
 	/**
 	 * 全屏特效
 	 */
+	@Column
 	private int aoeEffectId;
 
 	public int getSkillId() {
@@ -358,6 +394,14 @@ public class SkillInfo {
 
 	public void setAoeEffectId(int aoeEffectId) {
 		this.aoeEffectId = aoeEffectId;
+	}
+
+	public int getWeaponTypeRequired() {
+		return weaponTypeRequired;
+	}
+
+	public void setWeaponTypeRequired(int weaponTypeRequired) {
+		this.weaponTypeRequired = weaponTypeRequired;
 	}
 	
 }

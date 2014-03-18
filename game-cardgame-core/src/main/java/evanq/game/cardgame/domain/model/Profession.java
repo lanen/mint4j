@@ -1,5 +1,10 @@
 package evanq.game.cardgame.domain.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * 
  * 职业表
@@ -7,207 +12,233 @@ package evanq.game.cardgame.domain.model;
  * @author Evan cppmain@gmail.com
  *
  */
+@Entity
+@Table(name="profession")
 public class Profession {
 
-	
+	@Id
+	@Column
 	private int id;
-	
+
+	@Column
 	private String name;
 	
+	@Column
 	private String description;
 	
 	/**
 	 * 力量成长
 	 */
-	private int perLevelStr;
+	@Column
+	private float perLevelStr;
 	
 	/**
 	 * 敏捷成长
 	 */
-	private int perLevelDex;
+	@Column
+	private float perLevelDex;
 	
 	/**
 	 * 耐力成长
 	 */
-	private int perLevelVit;
+	@Column
+	private float perLevelVit;
 	
 	/**
 	 * 智力成长
 	 */
-	private int perLevelWis;
+	@Column
+	private float perLevelWis;
 	
 	/**
-	 * 
+	 * 职业耐力对血量加成
 	 */
-	private int perHPVit;
+	@Column
+	private float perHPVit;
 	
 	/**
-	 * 
+	 * 职业力量对物理攻击加成
 	 */
-	private int perPhyAttStr;
+	@Column
+	private float perPhyAttStr;
 	
 	/**
-	 * 
+	 * 职业力量对物理防御加成
 	 */
-	private int perPhyDefStr;
+	@Column
+	private float perPhyDefStr;
 	
 	/**
-	 * 
+	 * 耐力对物理防御加成
 	 */
-	private int perPhyDefVit;
+	@Column
+	private float perPhyDefVit;
 	
 	/**
-	 * 
+	 * 智力对魔法攻击加成
 	 */
-	private int perMigAttWis;
+	@Column
+	private float perMigAttWis;
 	
 	/**
-	 * 
+	 * 智力对魔法防御加成
 	 */
-	private int perMigDefWis;
+	@Column
+	private float perMigDefWis;
 	
 	/**
-	 * 
+	 * 耐力对魔法防御加成
 	 */
-	private int perMigDefVit;
+	@Column
+	private float perMigDefVit;
 	
 	/**
-	 * 
+	 * 敏捷对速度加成
 	 */
-	private int perSpeedDex;
+	@Column
+	private float perSpeedDex;
 	
 	/**
 	 * 
 	 * 普通攻击技能
 	 */
+	@Column
 	private int ordinarySkill;
 	
+	/**
+	 * 职业升级脚本绑定
+	 * 暂时一个思路
+	 * 天赋
+	 */
+	private String upgradeScript;
+	
+	//攻击距离 ： 如果如果需要增加
+
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getDescription() {
 		return description;
 	}
-	
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	public int getPerLevelStr() {
+
+	public float getPerLevelStr() {
 		return perLevelStr;
 	}
-	
-	public void setPerLevelStr(int perLevelStr) {
+
+	public void setPerLevelStr(float perLevelStr) {
 		this.perLevelStr = perLevelStr;
 	}
-	
-	public int getPerLevelDex() {
+
+	public float getPerLevelDex() {
 		return perLevelDex;
 	}
-	
-	public void setPerLevelDex(int perLevelDex) {
+
+	public void setPerLevelDex(float perLevelDex) {
 		this.perLevelDex = perLevelDex;
 	}
-	
-	public int getPerLevelVit() {
+
+	public float getPerLevelVit() {
 		return perLevelVit;
 	}
-	
-	public void setPerLevelVit(int perLevelVit) {
+
+	public void setPerLevelVit(float perLevelVit) {
 		this.perLevelVit = perLevelVit;
 	}
-	
-	public int getPerLevelWis() {
+
+	public float getPerLevelWis() {
 		return perLevelWis;
 	}
-	
-	public void setPerLevelWis(int perLevelWis) {
+
+	public void setPerLevelWis(float perLevelWis) {
 		this.perLevelWis = perLevelWis;
 	}
-	
-	public int getPerHPVit() {
+
+	public float getPerHPVit() {
 		return perHPVit;
 	}
-	
-	public void setPerHPVit(int perHPVit) {
+
+	public void setPerHPVit(float perHPVit) {
 		this.perHPVit = perHPVit;
 	}
-	
-	public int getPerPhyAttStr() {
+
+	public float getPerPhyAttStr() {
 		return perPhyAttStr;
 	}
-	
-	public void setPerPhyAttStr(int perPhyAttStr) {
+
+	public void setPerPhyAttStr(float perPhyAttStr) {
 		this.perPhyAttStr = perPhyAttStr;
 	}
-	
-	public int getPerPhyDefStr() {
+
+	public float getPerPhyDefStr() {
 		return perPhyDefStr;
 	}
-	
-	public void setPerPhyDefStr(int perPhyDefStr) {
+
+	public void setPerPhyDefStr(float perPhyDefStr) {
 		this.perPhyDefStr = perPhyDefStr;
 	}
-	
-	public int getPerPhyDefVit() {
+
+	public float getPerPhyDefVit() {
 		return perPhyDefVit;
 	}
-	
-	public void setPerPhyDefVit(int perPhyDefVit) {
+
+	public void setPerPhyDefVit(float perPhyDefVit) {
 		this.perPhyDefVit = perPhyDefVit;
 	}
-	
-	public int getPerMigAttWis() {
+
+	public float getPerMigAttWis() {
 		return perMigAttWis;
 	}
-	
-	public void setPerMigAttWis(int perMigAttWis) {
+
+	public void setPerMigAttWis(float perMigAttWis) {
 		this.perMigAttWis = perMigAttWis;
 	}
-	
-	public int getPerMigDefWis() {
+
+	public float getPerMigDefWis() {
 		return perMigDefWis;
 	}
-	
-	public void setPerMigDefWis(int perMigDefWis) {
+
+	public void setPerMigDefWis(float perMigDefWis) {
 		this.perMigDefWis = perMigDefWis;
 	}
-	
-	public int getPerMigDefVit() {
+
+	public float getPerMigDefVit() {
 		return perMigDefVit;
 	}
-	
-	public void setPerMigDefVit(int perMigDefVit) {
+
+	public void setPerMigDefVit(float perMigDefVit) {
 		this.perMigDefVit = perMigDefVit;
 	}
-	
-	public int getPerSpeedDex() {
+
+	public float getPerSpeedDex() {
 		return perSpeedDex;
 	}
-	
-	public void setPerSpeedDex(int perSpeedDex) {
+
+	public void setPerSpeedDex(float perSpeedDex) {
 		this.perSpeedDex = perSpeedDex;
 	}
-	
+
 	public int getOrdinarySkill() {
 		return ordinarySkill;
 	}
-	
+
 	public void setOrdinarySkill(int ordinarySkill) {
 		this.ordinarySkill = ordinarySkill;
 	}
-		
 }
