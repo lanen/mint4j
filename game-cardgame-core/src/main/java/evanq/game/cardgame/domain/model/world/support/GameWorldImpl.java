@@ -1,5 +1,7 @@
 package evanq.game.cardgame.domain.model.world.support;
 
+import evanq.game.cardgame.infrastructure.WorldUtils;
+
 
 /**
  * 
@@ -15,10 +17,7 @@ public class GameWorldImpl extends AbstractGameWorld  {
 
 	@Override
 	public void start() {
-		
-		//
 		initialze();
-		WorldUtils.services().atfterStart();
 	}
 
 	@Override

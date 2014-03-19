@@ -7,7 +7,9 @@
    <bean class="evanq.game.cardgame.domain.model.world.support.GameWorldImpl" >
    	<property name="gameWorldParts">
    		<list>
+   			<!-- 
    			<bean class="evanq.game.cardgame.infrastructure.es.EntitySystemGameWorldPart"></bean>
+   			 -->
    			<bean class="evanq.game.cardgame.domain.model.world.support.NetworkGameWorldPart"></bean>
    			<bean class="evanq.game.cardgame.domain.model.world.support.DebugGameWorldPart"></bean>
    		</list>
@@ -17,7 +19,7 @@
    
    <import resource="classpath:cardgame-domain-entity.xml"/>
 
-	<bean id="roleService" class="evanq.game.cardgame.infrastructure.services.support.RoleServiceImpl">
+	<bean id="roleService" class="evanq.game.cardgame.domain.service.impl.RoleServiceImpl">
 		<property name="roleRepository" ref="roleRepository"></property>
 	</bean>   
 </beans>

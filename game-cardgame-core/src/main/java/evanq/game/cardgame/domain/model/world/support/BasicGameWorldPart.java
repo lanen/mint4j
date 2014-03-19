@@ -1,5 +1,8 @@
 package evanq.game.cardgame.domain.model.world.support;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import evanq.game.cardgame.domain.model.world.GameWorldPart;
 
 /**
@@ -10,22 +13,10 @@ import evanq.game.cardgame.domain.model.world.GameWorldPart;
  */
 public class BasicGameWorldPart implements GameWorldPart {
 
+	private Logger logger = LoggerFactory.getLogger(BasicGameWorldPart.class);
+	
 	@Override
 	public void buildPart() {
-		System.out.println("BasicGameWorldPart.buildPart()");
-		initControllers();
+		logger.info("BasicGameWorldPart.buildPart()");
 	}
-	
-	/**
-	 * 
-	 */
-	private void initControllers(){
-		
-		WorldUtils.services = new ServiceManagerImpl();
-		
-//		MovementController movementController = new MovementController();
-//		WorldUtils.controllers.add(MovementController.class,movementController);
-
-	}
-	
 }

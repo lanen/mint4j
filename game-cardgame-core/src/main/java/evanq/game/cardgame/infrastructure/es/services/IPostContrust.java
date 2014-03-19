@@ -1,4 +1,4 @@
-package evanq.game.cardgame.infrastructure.services;
+package evanq.game.cardgame.infrastructure.es.services;
 
 /**
  * 

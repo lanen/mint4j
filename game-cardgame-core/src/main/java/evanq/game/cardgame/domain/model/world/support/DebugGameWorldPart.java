@@ -21,9 +21,11 @@ public class DebugGameWorldPart implements GameWorldPart {
 	
 	@Override
 	public void buildPart() {
-		System.out.println("DebugGameWorldPart.buildPart()");
-		logger.info("buildpart");
+		logger.info("DebugGameWorldPart.buildPart()");
 	
+		LoginDTO loginDto = DefaultPacketAllocator.newPacket(LoginDTO.class);
+		loginDto.execute();
+		
 	}
 
 }
