@@ -11,14 +11,51 @@ public class Scene {
 	private int id;
 	
 	private String name;
+	private String description;
 	
-	private int type;
 	
-	private int resourceId;
+	/**
+	 * 
+	 */
+	private int iconType;
 	
-	private int portalX;
+	private int icon;
 	
-	private int protalY;
+	/**
+	 * 
+	 * 地图
+	 */
+	private int mapId;
+	
+	
+	/**
+	 * 
+	 */
+	private int sceneType;
+
+	/**
+	 * 
+	 * 场景状态
+	 */
+	private int sceneState;
+	
+	/**
+	 * 进入场景时候触发的脚本
+	 */
+	private String enterScript;
+	
+	/**
+	 *（角色） 离开场景触发的脚本
+	 */
+	private String leaveScript;
+	
+	
+	/**
+	 * 
+	 * 在场景处于关闭状态时候，角色转移到指定场景（副本场景关闭了,转移脚本）
+	 */
+	private String tranformScript;
+	
 	
 	public int getId() {
 		return id;
@@ -35,38 +72,76 @@ public class Scene {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	public int getType() {
-		return type;
+
+	public String getDescription() {
+		return description;
 	}
-	
-	public void setType(int type) {
-		this.type = type;
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
-	
-	public int getResourceId() {
-		return resourceId;
-		
+
+	public int getIconType() {
+		return iconType;
 	}
-	
-	public void setResourceId(int resourceId) {
-		this.resourceId = resourceId;
+
+	public void setIconType(int iconType) {
+		this.iconType = iconType;
 	}
-	
-	public int getPortalX() {
-		return portalX;
+
+	public int getIcon() {
+		return icon;
 	}
-	
-	public void setPortalX(int portalX) {
-		this.portalX = portalX;
+
+	public void setIcon(int icon) {
+		this.icon = icon;
 	}
-	
-	public int getProtalY() {
-		return protalY;
+
+	public int getMapId() {
+		return mapId;
 	}
-	
-	public void setProtalY(int protalY) {
-		this.protalY = protalY;
+
+	public void setMapId(int mapId) {
+		this.mapId = mapId;
 	}
-	
+
+	public int getSceneType() {
+		return sceneType;
+	}
+
+	public void setSceneType(int sceneType) {
+		this.sceneType = sceneType;
+	}
+
+	public int getSceneState() {
+		return sceneState;
+	}
+
+	public void setSceneState(int sceneState) {
+		this.sceneState = sceneState;
+	}
+
+	public String getEnterScript() {
+		return enterScript;
+	}
+
+	public void setEnterScript(String enterScript) {
+		this.enterScript = enterScript;
+	}
+
+	public String getLeaveScript() {
+		return leaveScript;
+	}
+
+	public void setLeaveScript(String leaveScript) {
+		this.leaveScript = leaveScript;
+	}
+
+	public String getTranformScript() {
+		return tranformScript;
+	}
+
+	public void setTranformScript(String tranformScript) {
+		this.tranformScript = tranformScript;
+	}
 }

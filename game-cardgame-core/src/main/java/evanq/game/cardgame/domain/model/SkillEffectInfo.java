@@ -2,7 +2,7 @@ package evanq.game.cardgame.domain.model;
 
 /**
  * 
- * 技能效果
+ * 释放技能，产生的效果。附带buf
  * 
  * @author Evan cppmain@gmail.com
  *

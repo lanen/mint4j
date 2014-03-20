@@ -1,7 +1,8 @@
 package evanq.game.cardgame.domain.model;
 
 /**
- * 技能、物品的效果
+ * 技能、物品的效果，
+ * 使用传送技能，从这个表中读取传送的特效，传送的脚本
  * @author Evan cppmain@gmail.com
  *
  */
@@ -12,36 +13,46 @@ public class Effect {
 	private String name;
 	private String description;
 	
+	/**
+	 * 资源icon
+	 */
 	private int icon;
+	
+	/** 决定资源路径 */
 	private int iconType;
 	
 	
 	/**
-	 * 效果是针对：血蓝，能量，经验，属性，触发buff或hot，
+	 * 效果是针对：无任何效果，血蓝，能量，经验，属性，触发buff或hot，传送，召唤
 	 */
 	private int effectType;
+
 	
 	/**
-	 * buff与debuf = 1; hot 与 dot =2;
-	 * 
-	 * 这两者1 影响属性；2影响血量
+	 * 效果存活 类型: 时间，次数
 	 */
-	private int triggerType;
+	private int intervalType;
 	
-	
-	/**
-	 * 效果存活 类型
-	 */
-	private int lifeType;
 	/**
 	 * 存活时间
 	 */
-	private int lifeTime;
+	private int deadline;
+	
 	/**
 	 * 存活次数
 	 */
-	private int lifeCount;
+	private int allCount;
 
+	/**
+	 * 间隔时间
+	 */
+	private int intervalTime;
+	
+	/**
+	 * 开始摇动时间
+	 */
+	private int shakeDeadline;
+	
 	private String script;
 
 	public int getId() {
@@ -92,36 +103,45 @@ public class Effect {
 		this.effectType = effectType;
 	}
 
-	public int getTriggerType() {
-		return triggerType;
+	public int getIntervalType() {
+		return intervalType;
 	}
 
-	public void setTriggerType(int triggerType) {
-		this.triggerType = triggerType;
+	public void setIntervalType(int intervalType) {
+		this.intervalType = intervalType;
 	}
 
-	public int getLifeType() {
-		return lifeType;
+	
+	public int getDeadline() {
+		return deadline;
 	}
 
-	public void setLifeType(int lifeType) {
-		this.lifeType = lifeType;
+	public void setDeadline(int deadline) {
+		this.deadline = deadline;
 	}
 
-	public int getLifeTime() {
-		return lifeTime;
+	public int getShakeDeadline() {
+		return shakeDeadline;
 	}
 
-	public void setLifeTime(int lifeTime) {
-		this.lifeTime = lifeTime;
+	public void setShakeDeadline(int shakeDeadline) {
+		this.shakeDeadline = shakeDeadline;
 	}
 
-	public int getLifeCount() {
-		return lifeCount;
+	public int getAllCount() {
+		return allCount;
 	}
 
-	public void setLifeCount(int lifeCount) {
-		this.lifeCount = lifeCount;
+	public void setAllCount(int allCount) {
+		this.allCount = allCount;
+	}
+
+	public int getIntervalTime() {
+		return intervalTime;
+	}
+
+	public void setIntervalTime(int intervalTime) {
+		this.intervalTime = intervalTime;
 	}
 
 	public String getScript() {
@@ -131,6 +151,5 @@ public class Effect {
 	public void setScript(String script) {
 		this.script = script;
 	}
-	
 	
 }
