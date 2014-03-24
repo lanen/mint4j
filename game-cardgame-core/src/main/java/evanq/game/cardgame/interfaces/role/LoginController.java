@@ -27,6 +27,11 @@ public class LoginController implements CommandListener<LoginDTO> {
 		
 		player.login();
 		
+		//TODO step 2. 登陆日志
+		
+		//TODO step 3. 登陆授权（针对管理员）
+		
+		
 	}
 
 	public UCPlayer getPlayer() {

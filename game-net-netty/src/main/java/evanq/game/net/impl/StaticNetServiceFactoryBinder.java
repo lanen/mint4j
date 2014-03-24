@@ -30,7 +30,6 @@ public class StaticNetServiceFactoryBinder implements INetServiceFactoryBinder {
 	}
 	
 	static void init(){
-		System.out.println("初始化静态绑定");
 		
 		
 	}
