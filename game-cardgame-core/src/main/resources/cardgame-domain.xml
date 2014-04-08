@@ -9,9 +9,10 @@
    		<list>
    			<!-- 
    			<bean class="evanq.game.cardgame.infrastructure.es.EntitySystemGameWorldPart"></bean>
-   			 -->
    			<bean class="evanq.game.cardgame.domain.model.world.support.NetworkGameWorldPart"></bean>
    			<bean class="evanq.game.cardgame.domain.model.world.support.DebugGameWorldPart"></bean>
+   			 -->
+   			<bean class="evanq.game.infrastructure.mint.world.impl.GameCommandWorldPart"></bean>
    		</list>
    	</property>
    

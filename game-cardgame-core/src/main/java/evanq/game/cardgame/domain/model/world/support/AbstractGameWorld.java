@@ -3,8 +3,8 @@ package evanq.game.cardgame.domain.model.world.support;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import evanq.game.cardgame.domain.model.world.GameWorld;
-import evanq.game.cardgame.domain.model.world.GameWorldPart;
+import evanq.game.infrastructure.mint.world.GameWorld;
+import evanq.game.infrastructure.mint.world.GameWorldPart;
 
 /**
  * 

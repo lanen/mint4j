@@ -3,8 +3,8 @@ package evanq.game.cardgame.domain.model.world.support;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import evanq.game.cardgame.domain.model.world.GameWorldPart;
-import evanq.game.cardgame.infrastructure.mint.Opcode;
+import evanq.game.infrastructure.mint.protocol.Opcode;
+import evanq.game.infrastructure.mint.world.GameWorldPart;
 import evanq.game.net.INetService;
 import evanq.game.net.sapi.NetServiceFactory;
 
@@ -20,6 +20,9 @@ public class NetworkGameWorldPart implements GameWorldPart {
 	public void buildPart() {
 		
 		logger.info("build network part");
+		
+		
+		
 		
 		//调试网络通讯		
 		SocketServer(50000);

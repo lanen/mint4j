@@ -36,12 +36,12 @@
 		</tx:attributes>
 	</tx:advice>
    	<aop:config>
-   	 	<aop:pointcut id="pcut" expression="execution(* evanq.game.cardgame.infrastructure.persistence.hibernate.impl.*.*(..))"/> 
+   	 	<aop:pointcut id="pcut" expression="execution(* evanq.game.infrastructure.persistence.hibernate.impl.*.*(..))"/> 
    	 	<aop:advisor advice-ref="txAdvice" pointcut-ref="pcut"/>
    	</aop:config> 
    
    	<!--  -->
-    <bean id="roleRepository" class="evanq.game.cardgame.infrastructure.persistence.hibernate.impl.RoleRepositoryHibernateJPA">
+    <bean id="roleRepository" class="evanq.game.infrastructure.persistence.hibernate.impl.RoleRepositoryHibernateJPA">
   	</bean>
   	
    

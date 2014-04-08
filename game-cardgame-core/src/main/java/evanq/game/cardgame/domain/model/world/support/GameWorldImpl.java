@@ -1,6 +1,6 @@
 package evanq.game.cardgame.domain.model.world.support;
 
-import evanq.game.cardgame.infrastructure.WorldUtils;
+import evanq.game.infrastructure.WorldUtils;
 
 
 /**

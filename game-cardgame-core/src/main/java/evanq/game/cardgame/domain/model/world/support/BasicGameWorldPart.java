@@ -3,7 +3,7 @@ package evanq.game.cardgame.domain.model.world.support;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import evanq.game.cardgame.domain.model.world.GameWorldPart;
+import evanq.game.infrastructure.mint.world.GameWorldPart;
 
 /**
  * 

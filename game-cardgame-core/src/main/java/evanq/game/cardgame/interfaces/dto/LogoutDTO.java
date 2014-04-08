@@ -2,7 +2,7 @@ package evanq.game.cardgame.interfaces.dto;
 
 import java.io.IOException;
 
-import evanq.game.cardgame.infrastructure.mint.AbstractDTO;
+import evanq.game.infrastructure.mint.AbstractDTO;
 import evanq.game.net.NetPacketType;
 import evanq.game.net.io.DataReader;
 import evanq.game.net.io.DataWriter;
