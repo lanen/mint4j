@@ -54,7 +54,8 @@ public abstract class AbstractPacketAllocator implements IPacketAllocator<Class<
 		return packetSchema.get(packetId);
 	}
 
-	protected int getPacketId(Class<? extends IPacket> clz){
+	public int getPacketId(Class<? extends IPacket> clz){
+		if(! this.reversePacketSchema.containsKey(clz))return AbstractPacket.DUMMY_PACKET_ID;
 		return this.reversePacketSchema.get(clz);
 	}
 	

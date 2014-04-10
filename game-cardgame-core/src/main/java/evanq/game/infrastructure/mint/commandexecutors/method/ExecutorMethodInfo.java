@@ -1,7 +1,21 @@
 package evanq.game.infrastructure.mint.commandexecutors.method;
 
+import java.util.HashMap;
+import java.util.Map;
+
+
+/**
+ * 
+ * 方法执行器的 的描述信息
+ * @author Evan cppmain@gmail.com
+ *
+ */
 public final class ExecutorMethodInfo {
 
+	
+	private static final Map<Integer,ExecutorMethodInfo> cache = new HashMap<Integer,ExecutorMethodInfo>();
+	
+	public static final ExecutorMethodInfo DUMMY = new ExecutorMethodInfo(0);
 	/**
 	 * 该方法对应的命令编号
 	 */
@@ -10,6 +24,17 @@ public final class ExecutorMethodInfo {
 	
 	private int hash;
 
+	public ExecutorMethodInfo(int cmdId){
+		
+		this.commandId = cmdId;
+		
+		cache.put(this.commandId, this);
+	}
+
+	
+	public int getCommandId() {
+		return commandId;
+	}
 
 	@Override
 	public int hashCode() {
@@ -35,12 +60,13 @@ public final class ExecutorMethodInfo {
 		return false;
 	}
 
+	public static ExecutorMethodInfo valueOf(int cmd){
+		if(!cache.containsKey(cmd))return DUMMY;
+		return cache.get(cmd);
+	}
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
 		return super.toString();
 	}
-	
-	
 }

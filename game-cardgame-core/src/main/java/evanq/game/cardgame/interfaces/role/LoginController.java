@@ -5,8 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import evanq.game.cardgame.application.UCPlayer;
 import evanq.game.cardgame.interfaces.dto.LoginDTO;
-import evanq.game.infrastructure.mint.CommandExecutor;
-import evanq.game.infrastructure.mint.CommandListener;
+import evanq.game.infrastructure.mint.commandexecutors.annotation.Executor;
 
 /**
  * 
@@ -15,13 +14,14 @@ import evanq.game.infrastructure.mint.CommandListener;
  * @author Evan cppmain@gmail.com
  *
  */
-@CommandExecutor(LoginDTO.class)
-public class LoginController implements CommandListener<LoginDTO> {
+/*@CommandExecutor(LoginDTO.class)*/
+@Executor
+public class LoginController /*implements CommandListener<LoginDTO>*/ {
 
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
 	
 	private UCPlayer player;
-	
+	/*
 	@Override
 	public void action(LoginDTO t) {
 		
@@ -32,8 +32,13 @@ public class LoginController implements CommandListener<LoginDTO> {
 		//TODO step 3. 登陆授权（针对管理员）
 		
 		
-	}
+	}*/
 
+	@Executor(LoginDTO.class)
+	public void executor_login(LoginDTO t){
+		System.out.println("LoginController.executor_login()");
+		
+	}
 	public UCPlayer getPlayer() {
 		return player;
 	}

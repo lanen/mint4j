@@ -1,5 +1,6 @@
 package evanq.game.infrastructure.mint;
 
+import evanq.game.infrastructure.mint.commandexecutors.DispatchCommand;
 import evanq.game.net.AbstractPacket;
 import evanq.game.net.NetPacketType;
 
@@ -21,7 +22,9 @@ public abstract class AbstractDTO extends AbstractPacket {
 		
 		
 		//TODO 这里可以优化到协议号-> 方法（Method）
-		CommandExecutorRegistry.getInstance().action(this);
+		//CommandExecutorRegistry.getInstance().action(this);
+		
+		DispatchCommand.getInstance().dispatch(this);
 	}
 
 }

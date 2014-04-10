@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import evanq.game.cardgame.interfaces.dto.LoginDTO;
 import evanq.game.infrastructure.WorldUtils;
+import evanq.game.infrastructure.mint.commandexecutors.method.MethodCommandAdaptor;
 import evanq.game.infrastructure.mint.commandexecutors.method.MethodCommandMapping;
+import evanq.game.net.DefaultPacketAllocator;
 import evanq.game.utils.OrderComparator;
 
 /**
@@ -16,13 +19,13 @@ import evanq.game.utils.OrderComparator;
 public class DispatchCommand {
 	
 
+	//这些是命令与命令执行器的映射
 	private List<CommandMapping> commandMappings;
 	
+	//这些适配器是为了执行命令
 	private List<CommandAdaptor> commandAdaptors;
 	
 	private DispatchCommand() {
-
-			
 	}
 	
 	/**
@@ -54,6 +57,7 @@ public class DispatchCommand {
 			MethodCommandMapping bean = (MethodCommandMapping)WorldUtils.beanResolver().getBean(MethodCommandMapping.class, true);
 			bean.setOrder(1);
 			this.commandMappings.add(bean);
+			OrderComparator.sort(this.commandMappings);
 		}
 	}
 	
@@ -63,7 +67,14 @@ public class DispatchCommand {
 	 */
 	protected void initCommandAdaptors(){
 		
-		this.commandAdaptors = new ArrayList<CommandAdaptor>();
+		
+		if(null == this.commandAdaptors){
+			
+			this.commandAdaptors = new ArrayList<CommandAdaptor>();
+			
+			MethodCommandAdaptor bean =(MethodCommandAdaptor) WorldUtils.beanResolver().getBean(MethodCommandAdaptor.class,true);
+			this.commandAdaptors.add(bean);
+		}
 		
 		//TODO 
 		
@@ -72,8 +83,7 @@ public class DispatchCommand {
 	public void initDispatchCommand(){
 			
 		initCommandAdaptors();
-		initCommandMappings();
-
+		initCommandMappings();		
 	}
 	
 	
@@ -81,23 +91,28 @@ public class DispatchCommand {
 		
 		//step 1: 查找 CommandMapping 获取 CommandExecutor
 		//step 2  执行 CommandExecutor
-		
-		
-		CommandExecutorChain executor = getExecutor(command);
-		
+			
+		CommandExecutionChain executor = getExecutor(command);
+
+		if(null == executor){
+			System.out.println("找不到");
+			return;
+		}
 		CommandAdaptor commandAdaptor = getCommandAdaptor(executor.getExecutor());
-		
-		commandAdaptor.execute(command, executor.getExecutor());
+		if(null != commandAdaptor){
+			commandAdaptor.execute(command, executor.getExecutor());
+		}else{
+			//TODO NOT COMMAND FOOUND
+		}
 		
 	}
 	
-	CommandExecutorChain getExecutor(Object command){
-		
-		int opcode = 0;
+	CommandExecutionChain getExecutor(Object command){
+		//遍历所有的映射器，查找到处理器的适配器
 		
 		for (CommandMapping cm : commandMappings) {
 			try {
-				CommandExecutorChain executor = cm.getExecutor(opcode);
+				CommandExecutionChain executor = cm.getExecutor(command);
 				if(null != executor){
 					return executor;
 				}
@@ -108,6 +123,12 @@ public class DispatchCommand {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * 判断是否支持，命令与执行器是否兼容
+	 * @param command
+	 * @return
+	 */
 	CommandAdaptor getCommandAdaptor(Object command){
 		for (CommandAdaptor a : commandAdaptors) {
 			if(a.supports(command)){

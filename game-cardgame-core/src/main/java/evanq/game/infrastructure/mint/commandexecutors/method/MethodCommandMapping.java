@@ -1,7 +1,8 @@
 package evanq.game.infrastructure.mint.commandexecutors.method;
 
+import evanq.game.infrastructure.WorldUtils;
 import evanq.game.infrastructure.mint.commandexecutors.AbstractCommandMapping;
-import evanq.game.infrastructure.mint.commandexecutors.CommandExecutorChain;
+import evanq.game.net.AbstractPacket;
 
 /**
  * 
@@ -15,15 +16,24 @@ public class MethodCommandMapping extends AbstractCommandMapping<ExecutorMethodI
 	
 
 	@Override
-	protected Object getExecutorInternal(int opcode) {
-		// TODO Auto-generated method stub
+	protected ExecutorMethod getExecutorInternal(Object command) {
+		if(command instanceof AbstractPacket){
+			AbstractPacket  p = (AbstractPacket)command;
+			ExecutorMethodInfo valueOf = ExecutorMethodInfo.valueOf(p.getPacketId());
+			return getExecutorMethod(valueOf);
+		}
 		return null;
 	}
 
 	@Override
-	protected boolean isExecutor(Class<?> beanType) {
-		return false;
+	protected ExecutorMethodInfo getExecutorMethodInfo(ExecutorMethod exeMethod) {
+		// TODO Auto-generated method stub
+		return WorldUtils.commandExecutorResolver().getExecutorMethodInfo(exeMethod);
 	}
 
-	
+	@Override
+	protected boolean isExecutor(Class<?> beanType) {
+		return true;
+	}
+
 }

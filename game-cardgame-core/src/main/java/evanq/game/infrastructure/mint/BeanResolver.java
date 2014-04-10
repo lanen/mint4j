@@ -30,4 +30,11 @@ public interface BeanResolver {
 	
 	public <T> String[] getBeanNamesForType(Class<T> type);
 	
+	/**
+	 * 从spring 配置文件中获取alias
+	 * @param alias
+	 * @return
+	 */
+	public String[] getAliases(String alias);
+	
 }

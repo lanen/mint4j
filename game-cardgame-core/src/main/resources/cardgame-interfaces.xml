@@ -4,12 +4,20 @@
     xsi:schemaLocation="http://www.springframework.org/schema/beans
         http://www.springframework.org/schema/beans/spring-beans.xsd">        
         
-   <!-- 扫描 CommandListener -->
-   <alias name="CommandBasePackage" alias="evanq.game.cardgame.interfaces"/>
+   <!-- 用于扫描 CommandExecutor -->
+   <alias name="CommandExecutorPackage" alias="evanq.game.cardgame.interfaces"/>
    
    
    <bean class="evanq.game.cardgame.interfaces.role.LoginController">
    		<property name="player" ref="ucPlayer"></property>
    </bean>
    
+   <bean class="evanq.game.demo.method.test.HandlerOne">
+   </bean>
+   
+   <bean class="evanq.game.demo.method.test.HandlerOne">
+   </bean>
+   
+   <bean class="evanq.game.demo.method.test.HandlerOne">
+   </bean>
 </beans>

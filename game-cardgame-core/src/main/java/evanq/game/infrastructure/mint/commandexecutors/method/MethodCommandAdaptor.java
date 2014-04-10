@@ -1,21 +1,36 @@
 package evanq.game.infrastructure.mint.commandexecutors.method;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
-import evanq.game.infrastructure.mint.commandexecutors.CommandAdaptor;
+import evanq.game.infrastructure.mint.commandexecutors.AbstractCommandAdaptor;
 
-public class MethodCommandAdaptor implements CommandAdaptor {
+/**
+ * @author Evan cppmain@gmail.com
+ *
+ */
+public class MethodCommandAdaptor extends AbstractCommandAdaptor {
 
-	
-	
+
 	@Override
-	public boolean supports(Object executor) {
-		return false;
+	protected boolean supportsInternal(ExecutorMethod executorMethod) {
+		return true;
 	}
 
-	@Override
-	public void execute(Object command, Object executor) {
+	protected void executeInternal(Object command, ExecutorMethod executorMethod){
+	
+		Method method = executorMethod.getMethod();
+		Object instance = executorMethod.getExecutor();
 		
+		try {
+			method.invoke(instance,new Object[]{ command });
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		} catch (IllegalArgumentException e) {
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			e.printStackTrace();
+		}
 	}
 	
 }

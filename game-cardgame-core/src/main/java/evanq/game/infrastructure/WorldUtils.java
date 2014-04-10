@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import evanq.game.infrastructure.mint.BeanResolver;
+import evanq.game.infrastructure.mint.commandexecutors.CommandExecutorResolver;
 
 /**
  * 
@@ -29,6 +30,7 @@ public final class WorldUtils {
 	}
 
 	
+	/////////////////////////////////////////////
 	private static BeanResolver beanResolver;
 	
 	public static BeanResolver beanResolver(){
@@ -45,5 +47,21 @@ public final class WorldUtils {
 		
 		beanResolver = resolver;
 	}
-
+	/////////////////////////////////////////////
+	private static CommandExecutorResolver commandExecutorResolver;
+	public static CommandExecutorResolver commandExecutorResolver(){
+		return commandExecutorResolver;
+	}
+	public static void setCommandExecutorResolver(CommandExecutorResolver resolver){
+		if(null == resolver){
+			throw new NullArgumentException("CommandExecutorResolver is null");
+		}
+		if(null != commandExecutorResolver && !commandExecutorResolver.equals(resolver)){
+			logger.info("替换 commandExecutorResolver");
+		}
+		
+		commandExecutorResolver = resolver;
+	}
+	
+	/////////////////////////////////////////////
 }

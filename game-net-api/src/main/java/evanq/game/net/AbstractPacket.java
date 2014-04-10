@@ -9,6 +9,12 @@ import evanq.game.net.io.Serializable;
  */
 public abstract class AbstractPacket implements IPacket , Serializable {
 
+	/**
+	 * 
+	 */
+	public static final int DUMMY_PACKET_ID =  0;
+	
+	
 	static class Struct{
 		
 		/**编解码器方式*/

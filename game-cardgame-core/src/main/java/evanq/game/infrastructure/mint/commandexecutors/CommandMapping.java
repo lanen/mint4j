@@ -16,6 +16,6 @@ public interface CommandMapping {
 	 * @return
 	 * @throws Exception
 	 */
-	public CommandExecutorChain getExecutor(int opcode) throws Exception;
+	public CommandExecutionChain getExecutor(Object command) throws Exception;
 	
 }
